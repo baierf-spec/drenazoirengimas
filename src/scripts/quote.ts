@@ -174,7 +174,7 @@ export function initQuote() {
       }
       if ([...photos, ...ready].reduce((n, f) => n + f.size, 0) > LIMITS.total)
         throw new Error(
-          "Bendras paruoštų nuotraukų dydis negali viršyti 10 MB.",
+          "Bendras paruoštų nuotraukų dydis negali viršyti 3 MB.",
         );
       photos.push(...ready);
       renderPhotos();
@@ -286,7 +286,7 @@ export async function compressPhoto(file: File): Promise<File> {
     ctx.fillStyle = "#fff";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-    const blob = await new Promise<Blob>((resolve, reject) =>
+    let blob = await new Promise<Blob>((resolve, reject) =>
       canvas.toBlob(
         (b) =>
           b ? resolve(b) : reject(new Error("Nuotraukos paruošti nepavyko.")),
@@ -294,6 +294,17 @@ export async function compressPhoto(file: File): Promise<File> {
         0.82,
       ),
     );
+    for (const quality of [0.7, 0.55, 0.4]) {
+      if (blob.size <= 550 * 1024) break;
+      blob = await new Promise<Blob>((resolve, reject) =>
+        canvas.toBlob(
+          (b) =>
+            b ? resolve(b) : reject(new Error("Nuotraukos paruošti nepavyko.")),
+          "image/jpeg",
+          quality,
+        ),
+      );
+    }
     if (blob.size > LIMITS.file)
       throw new Error("Paruošta nuotrauka per didelė. Pasirinkite mažesnę.");
     return new File([blob], "objekto-nuotrauka.jpg", { type: "image/jpeg" });

@@ -1,0 +1,58 @@
+---
+import Article from "../../layouts/Article.astro";
+import ProjectPhoto from "../../components/ProjectPhoto.astro";
+import { publicProjects } from "../../data/projects";
+import { projectTypes } from "../../lib/projects";
+export function getStaticPaths() {
+  return publicProjects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+const { project: p } = Astro.props;
+const ordered = [
+  p.images[p.cover],
+  ...p.images.filter((_, i) => i !== p.cover),
+];
+---
+
+<Article
+  title={p.title}
+  description={(p.title + ". " + p.description).slice(0, 155)}
+  ogImage={p.images[p.cover].src}
+>
+  <p class="project-meta">
+    {[
+      p.project_type ? projectTypes[p.project_type] : "",
+      p.location,
+      p.completion_date,
+    ]
+      .filter(Boolean)
+      .join(" · ")}
+  </p>
+  <div class="project-description">
+    {p.description
+      .split(/\n+/)
+      .filter(Boolean)
+      .map((text) => (
+        <p>{text}</p>
+      ))}
+  </div>
+  <div class="project-photos">
+    {ordered.map((image, i) => (
+      <figure>
+        <ProjectPhoto image={image} priority={i === 0} />
+      </figure>
+    ))}
+  </div>
+  <h2>Turite panašią problemą?</h2>
+  <p>Aprašykite savo situaciją ir objekto vietą.</p>
+  <a class="button" href="/gauti-pasiulyma/" data-event="primary_cta_click">
+    Gauti pasiūlymą →
+  </a>
+  <p>
+    <a class="text-link" href="/projektai/">
+      ← Visi projektai
+    </a>
+  </p>
+</Article>

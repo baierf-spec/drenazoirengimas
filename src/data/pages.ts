@@ -1,3 +1,4 @@
+import { publicProjects } from "./projects";
 import { articles } from "./articles";
 import { reviewedLocationArticles } from "./locations";
 export interface PageMeta {
@@ -15,13 +16,6 @@ const articleTitles: Record<string, string> = {
   "drenazas-ar-lietaus-nuotekos": "Drenažas ir lietaus nuotekos: kuo skiriasi?",
 };
 export const pages: PageMeta[] = [
-  {
-    path: "/gallery-manager/",
-    title: "Privatus projektų galerijos valdymas",
-    description:
-      "Svetainės savininko privati sąsaja projektams ir nuotraukoms tvarkyti.",
-    indexable: false,
-  },
   {
     path: "/",
     title: "Drenažo įrengimas sklypui ir pamatams",
@@ -61,7 +55,7 @@ export const pages: PageMeta[] = [
     title: "Drenažo projektai ir darbų galerija",
     description:
       "Drenažo ir lietaus vandens nuvedimo projektai: darbų nuotraukos, pradinė situacija ir pasirinkti sprendimai.",
-    indexable: false,
+    indexable: publicProjects.length > 0,
   },
   {
     path: "/gauti-pasiulyma/",
@@ -91,6 +85,14 @@ export const pages: PageMeta[] = [
       "Šio puslapio nėra. Grįžkite į pradžią ir raskite informaciją apie sklypo, pamatų drenažą bei lietaus vandens nuvedimą.",
     indexable: false,
   },
+  ...publicProjects.map((p) => ({
+    path: `/projektai/${p.slug}/`,
+    title: p.title,
+    description: (p.title + ". " + p.description)
+      .replace(/\s+/g, " ")
+      .slice(0, 155),
+    indexable: true,
+  })),
 ].map((p) => ({ ...p, title: p.title + suffix }));
 export const pageMeta = (path: string) =>
   pages.find((page) => page.path === path);

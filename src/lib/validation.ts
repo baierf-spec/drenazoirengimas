@@ -2,8 +2,8 @@ import { z } from "zod";
 export const LIMITS = {
   photos: 5,
   file: 2 * 1024 * 1024,
-  total: 10 * 1024 * 1024,
-  request: 11 * 1024 * 1024,
+  total: 3 * 1024 * 1024,
+  request: 4 * 1024 * 1024,
 } as const;
 export const problemIds = [
   "foundations",

@@ -37,7 +37,7 @@ async function walk(dir, relative = "") {
   }
 }
 await walk(client);
-const source = `import app from './worker/index.ts';\nconst files=${JSON.stringify(files)};\nconst assets={async fetch(request){const u=new URL(request.url);let key=u.pathname;let item=files[key];if(!item&&files[key+'/index.html']){u.pathname+='/';return Response.redirect(u.href,301)}if(!item&&key.endsWith('/'))item=files[key+'index.html'];const status=item?200:404;item??=files['/404.html'];if(!item)return new Response('Not found',{status:404});const bytes=Uint8Array.from(atob(item[0]),c=>c.charCodeAt(0));return new Response(request.method==='HEAD'?null:bytes,{status,headers:{'Content-Type':item[1]}})}};\nexport default {fetch(request,env,ctx){return app.fetch(request,{...env,SITE_ORIGIN:env.SITE_ORIGIN||'https://drenazoirengimas.lt',ASSETS:assets},ctx)},scheduled:app.scheduled};`;
+const source = `import app from './worker/index.ts';\nconst files=${JSON.stringify(files)};\nconst assets={async fetch(request){const u=new URL(request.url);let key=u.pathname;let item=files[key];if(!item&&files[key+'/index.html']){u.pathname+='/';return Response.redirect(u.href,301)}if(!item&&key.endsWith('/'))item=files[key+'index.html'];const status=item?200:404;item??=files['/404.html'];if(!item)return new Response('Not found',{status:404});const bytes=Uint8Array.from(atob(item[0]),c=>c.charCodeAt(0));return new Response(request.method==='HEAD'?null:bytes,{status,headers:{'Content-Type':item[1]}})}};\nexport default {fetch(request,env,ctx){return app.fetch(request,{...env,SITE_ORIGIN:env.SITE_ORIGIN||'https://drenazoirengimas.lt',ASSETS:assets},ctx)}};`;
 await mkdir(path.join(out, "server"), { recursive: true });
 await build({
   stdin: {

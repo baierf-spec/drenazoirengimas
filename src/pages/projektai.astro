@@ -1,6 +1,9 @@
 ---
 import Article from "../layouts/Article.astro";
 import { site } from "../data/site";
+import { publicProjects } from "../data/projects";
+import { projectTypes } from "../lib/projects";
+import ProjectPhoto from "../components/ProjectPhoto.astro";
 ---
 
 <Article
@@ -12,22 +15,45 @@ import { site } from "../data/site";
     problemas.
   </p>
   <div data-gallery-production={String(site.production)}>
-    <!--gallery:start-->
-    <div class="notice gallery-empty">
-      <h2>Projektų galerija ruošiama</h2>
-      <p>
-        Čia bus publikuojami užbaigti drenažo ir lietaus vandens nuvedimo
-        projektai: darbų nuotraukos, pradinė situacija ir pasirinktas
-        sprendimas.
-      </p>
-      <p>
-        Turite vandens problemą? Aprašykite ją – pradėti galite ir neturėdami
-        projekto ar tikslių trasos matmenų.
-      </p>
-      <a class="button" href="/gauti-pasiulyma/" data-event="primary_cta_click">
-        Gauti pasiūlymą →
-      </a>
-    </div>
-    <!--gallery:end-->
+    {publicProjects.length > 0 ? (
+      <div class="public-project-grid">
+        {publicProjects.map((p) => (
+          <a class="project-card" href={`/projektai/${p.slug}/`}>
+            <ProjectPhoto image={p.images[p.cover]} card />
+            <div>
+              {p.project_type && (
+                <span class="eyebrow">{projectTypes[p.project_type]}</span>
+              )}
+              <h2>{p.title}</h2>
+              {p.location && <p class="small">{p.location}</p>}
+              <p>{p.description.slice(0, 190)}</p>
+              <span class="text-link">Peržiūrėti projektą →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <>
+        <div class="notice gallery-empty">
+          <h2>Projektų galerija ruošiama</h2>
+          <p>
+            Čia bus publikuojami užbaigti drenažo ir lietaus vandens nuvedimo
+            projektai: darbų nuotraukos, pradinė situacija ir pasirinktas
+            sprendimas.
+          </p>
+          <p>
+            Turite vandens problemą? Aprašykite ją – pradėti galite ir
+            neturėdami projekto ar tikslių trasos matmenų.
+          </p>
+          <a
+            class="button"
+            href="/gauti-pasiulyma/"
+            data-event="primary_cta_click"
+          >
+            Gauti pasiūlymą →
+          </a>
+        </div>
+      </>
+    )}
   </div>
 </Article>

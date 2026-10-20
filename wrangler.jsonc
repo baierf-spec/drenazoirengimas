@@ -15,22 +15,8 @@
     "ALLOWED_ORIGINS": "https://drenazoirengimas.lt",
     "LEADS_ENABLED": "false",
     "SEO_INDEXABLE": "false",
-    "GALLERY_ENABLED": "false",
-    "CUSTOMER_CONFIRMATION": "false",
   },
-  "d1_databases": [
-    {
-      "binding": "DB",
-      "database_name": "drenazoirengimas-leads",
-      "database_id": "a133ad8d-5f63-4ff4-a5d2-4e4765b4a01b",
-      "migrations_dir": "migrations",
-    },
-  ],
-  "r2_buckets": [
-    { "binding": "PHOTOS", "bucket_name": "drenazoirengimas-private-photos" },
-  ],
   // Default binding sends to verified account destinations only.
   "send_email": [{ "name": "EMAIL" }],
-  "triggers": { "crons": ["*/15 * * * *"] },
   "observability": { "enabled": false },
 }

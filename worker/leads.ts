@@ -1,13 +1,7 @@
 import { LIMITS, imageType, validateLead } from "../src/lib/validation";
-import type { Env, LeadRecord, StoredLead } from "./types";
-import {
-  configured,
-  digest,
-  sign,
-  limitedBody,
-  validateTurnstile,
-} from "./security";
-import { deliverLead } from "./email";
+import type { Env } from "./types";
+import { configured, digest, limitedBody, validateTurnstile } from "./security";
+import { sendLead } from "./email";
 export const json = (
   body: unknown,
   status = 200,
@@ -24,8 +18,9 @@ export const json = (
 export async function receiveLead(
   request: Request,
   env: Env,
-  ctx: Pick<ExecutionContext, "waitUntil">,
+  _ctx?: Pick<ExecutionContext, "waitUntil">,
 ): Promise<Response> {
+  void _ctx;
   if (request.method !== "POST")
     return json({ error: "Leidžiamas tik POST metodas." }, 405, {
       Allow: "POST",
@@ -93,7 +88,7 @@ export async function receiveLead(
       return json(
         {
           error:
-            "Kiekviena paruošta nuotrauka turi būti iki 2 MB, visos kartu – iki 10 MB.",
+            "Kiekviena paruošta nuotrauka turi būti iki 2 MB, visos kartu – iki 3 MB.",
         },
         413,
       );
@@ -106,120 +101,93 @@ export async function receiveLead(
       );
     checked.push({ file, bytes, mime });
   }
-  const fp = await digest(
+  const fingerprint = await digest(
     JSON.stringify(lead) +
-      (await Promise.all(
-        checked.map(async (item) =>
-          digest(
-            [
-              ...new Uint8Array(
-                await crypto.subtle.digest("SHA-256", item.bytes),
-              ),
-            ].join(","),
-          ),
-        ),
-      )),
+      (
+        await Promise.all(
+          checked.map(async (item) => {
+            const hash = new Uint8Array(
+              await crypto.subtle.digest("SHA-256", item.bytes),
+            );
+            return Array.from(hash).join(",");
+          }),
+        )
+      ).join("|"),
   );
-  try {
-    // A committed identical retry can succeed without reusing an already consumed Turnstile token.
-    const previous = await env.DB.prepare(
-      "SELECT * FROM drainage_leads WHERE id=?",
-    )
-      .bind(lead.requestId)
-      .first<LeadRecord>();
-    if (previous) {
-      if (previous.fingerprint !== fp)
-        return json(
-          {
-            error:
-              "Ankstesnio siuntimo turinys pasikeitė. Įkelkite formą iš naujo.",
-          },
-          409,
-        );
-      return json({ id: previous.id, status: "received" }, 200);
-    }
-    const now = Date.now();
-    const day = Math.floor(now / 864e5);
-    const ip = request.headers.get("CF-Connecting-IP") || "unknown";
-    const rateKey = await sign(`${ip}:${day}`, env.IP_HASH_SECRET!);
-    const rate = await env.DB.prepare(
-      "INSERT INTO drainage_rate_limits (key,count,expires_at) VALUES (?,1,?) ON CONFLICT(key) DO UPDATE SET count=count+1 RETURNING count",
-    )
-      .bind(rateKey, now + 864e5)
-      .first<{ count: number }>();
-    if (!rate || rate.count > 10)
-      return json({ error: "Per daug bandymų. Pabandykite vėliau." }, 429, {
-        "Retry-After": "3600",
-      });
-    if (!(await validateTurnstile(token, request, env, lead.requestId)))
+  const now = Date.now();
+  for (const [id, entry] of deliveries)
+    if (entry.expires < now) deliveries.delete(id);
+  const previous = deliveries.get(lead.requestId);
+  if (previous) {
+    if (previous.fingerprint !== fingerprint)
       return json(
-        { error: "Apsaugos patikra nepavyko. Patvirtinkite ją dar kartą." },
-        403,
+        { error: "Siuntimo turinys pasikeitė. Atnaujinkite formą." },
+        409,
       );
-    const keys: string[] = [];
-    try {
-      for (const item of checked) {
-        const key = `leads/${lead.requestId}/${crypto.randomUUID()}.${item.mime === "image/jpeg" ? "jpg" : item.mime === "image/png" ? "png" : "webp"}`;
-        await env.PHOTOS.put(key, item.bytes, {
-          httpMetadata: { contentType: item.mime },
-          customMetadata: { createdAt: String(now) },
-        });
-        keys.push(key);
-      }
-      const stored: StoredLead = { ...lead, consentVersion: "2026-10-19-v1" };
-      const inserted = await env.DB.prepare(
-        "INSERT INTO drainage_leads (id,created_at,payload,photos,fingerprint) VALUES (?,?,?,?,?) ON CONFLICT(id) DO NOTHING",
-      )
-        .bind(
-          lead.requestId,
-          now,
-          JSON.stringify(stored),
-          JSON.stringify(keys),
-          fp,
-        )
-        .run();
-      if (!inserted.meta.changes) {
-        await Promise.all(keys.map((k) => env.PHOTOS.delete(k)));
-        const concurrent = await env.DB.prepare(
-          "SELECT * FROM drainage_leads WHERE id=?",
-        )
-          .bind(lead.requestId)
-          .first<LeadRecord>();
-        if (concurrent?.fingerprint === fp)
-          return json({ id: concurrent.id, status: "received" }, 200);
-        return json(
-          {
-            error:
-              "Šis siuntimo numeris jau panaudotas. Įkelkite formą iš naujo.",
-          },
-          409,
-        );
-      }
-      const record: LeadRecord = {
-        id: lead.requestId,
-        created_at: now,
-        payload: JSON.stringify(stored),
-        photos: JSON.stringify(keys),
-        fingerprint: fp,
-        admin_sent: 0,
-        customer_sent: 0,
-        attempts: 0,
-        next_attempt: 0,
-        lease_until: 0,
-      };
-      ctx.waitUntil(deliverLead(record, env));
-      return json({ id: lead.requestId, status: "received" }, 201);
-    } catch {
-      await Promise.allSettled(keys.map((k) => env.PHOTOS.delete(k)));
-      throw new Error("storage_failed");
-    }
-  } catch {
-    return json(
-      {
-        error:
-          "Užklausos išsaugoti nepavyko. Duomenys liko formoje – bandykite dar kartą.",
-      },
-      503,
+    return previous.result.then((ok) =>
+      deliveryResponse(ok, lead.requestId, 200),
     );
   }
+  if (deliveries.size >= 256)
+    return json(
+      { error: "Siuntimas laikinai užimtas. Pabandykite vėliau." },
+      503,
+    );
+  // Best-effort per-isolate abuse protection; Turnstile is always verified server-side.
+  const rateKey = await digest(
+    (request.headers.get("CF-Connecting-IP") || "unknown") +
+      Math.floor(now / 3600000),
+  );
+  for (const [key, rate] of rates) if (rate.expires < now) rates.delete(key);
+  const rate = rates.get(rateKey) || { count: 0, expires: now + 3600000 };
+  if (rate.count >= 10 || rates.size >= 2048)
+    return json({ error: "Per daug bandymų. Pabandykite vėliau." }, 429, {
+      "Retry-After": "3600",
+    });
+  rate.count++;
+  rates.set(rateKey, rate);
+  // Re-check after the asynchronous digest so simultaneous requests share one delivery.
+  const concurrent = deliveries.get(lead.requestId);
+  if (concurrent) {
+    if (concurrent.fingerprint !== fingerprint)
+      return json({ error: "Siuntimo turinys pasikeitė." }, 409);
+    return concurrent.result.then((ok) =>
+      deliveryResponse(ok, lead.requestId, 200),
+    );
+  }
+  const operation = (async () => {
+    if (!(await validateTurnstile(token, request, env, lead.requestId)))
+      return "challenge" as const;
+    await sendLead(lead, checked, env);
+    return "sent" as const;
+  })().catch(() => "failed" as const);
+  deliveries.set(lead.requestId, {
+    fingerprint,
+    expires: now + 10 * 60000,
+    result: operation,
+  });
+  const delivery = await operation;
+  if (delivery !== "sent") deliveries.delete(lead.requestId);
+  return deliveryResponse(delivery, lead.requestId, 201);
+}
+type DeliveryResult = "sent" | "challenge" | "failed";
+const deliveries = new Map<
+  string,
+  { fingerprint: string; expires: number; result: Promise<DeliveryResult> }
+>();
+const rates = new Map<string, { count: number; expires: number }>();
+function deliveryResponse(result: DeliveryResult, id: string, status: number) {
+  if (result === "sent") return json({ id, status: "sent" }, status);
+  if (result === "challenge")
+    return json(
+      { error: "Apsaugos patikra nepavyko. Patvirtinkite ją dar kartą." },
+      403,
+    );
+  return json(
+    {
+      error:
+        "Užklausos išsiųsti nepavyko. Duomenys liko formoje – bandykite dar kartą.",
+    },
+    503,
+  );
 }

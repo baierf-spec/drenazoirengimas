@@ -1,0 +1,28 @@
+---
+import type { Project } from "../lib/projects";
+interface Props {
+  image: Project["images"][number];
+  priority?: boolean;
+  card?: boolean;
+}
+const { image, priority = false, card = false } = Astro.props;
+---
+
+<img
+  src={image.src}
+  srcset={
+    image.variants.length
+      ? image.variants.map((v) => `${v.src} ${v.width}w`).join(", ")
+      : undefined
+  }
+  sizes={
+    card
+      ? "(max-width: 600px) 90vw, (max-width: 1024px) 45vw, 420px"
+      : "(max-width: 768px) 90vw, 760px"
+  }
+  width={image.width}
+  height={image.height}
+  alt={image.alt}
+  loading={priority ? "eager" : "lazy"}
+  decoding="async"
+/>

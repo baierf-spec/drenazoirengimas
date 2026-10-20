@@ -17,15 +17,14 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:built": "node scripts/check-build.mjs",
-    "check": "npm run lint && npm run typecheck && npm run build && npm run audit:seo && npm test && npm run test:built",
+    "check": "npm run lint && npm run typecheck && npm run build && npm run audit:seo && npm test && npm run test:built && npm run audit:projects",
     "deploy": "npm run build:production && wrangler deploy",
     "deploy:dry-run": "wrangler deploy --dry-run --outdir .wrangler-dry-run",
-    "db:migrate:local": "wrangler d1 migrations apply drenazoirengimas-leads --local",
-    "db:migrate:remote": "wrangler d1 migrations apply drenazoirengimas-leads --remote",
     "optimize:images": "node scripts/optimize-images.mjs",
     "format": "prettier --write src worker tests scripts *.mjs *.json *.jsonc *.md .github",
     "check:secrets": "node scripts/check-secrets.mjs",
-    "audit:seo": "node scripts/audit-seo.mjs"
+    "audit:seo": "node scripts/audit-seo.mjs",
+    "audit:projects": "node scripts/audit-projects.mjs"
   },
   "dependencies": {
     "@fontsource-variable/manrope": "5.3.0",

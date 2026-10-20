@@ -25,31 +25,15 @@ export async function sign(value: string, secret: string) {
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("");
 }
-export async function signedPhotoUrl(key: string, env: Env, expires: number) {
-  const url = new URL("/api/photo", env.SITE_ORIGIN);
-  url.searchParams.set("key", key);
-  url.searchParams.set("expires", String(expires));
-  url.searchParams.set(
-    "sig",
-    await sign(`${key}:${expires}`, env.PHOTO_SIGNING_SECRET!),
-  );
-  return url.href;
-}
 export function configured(env: Env) {
   return (
     env.LEADS_ENABLED === "true" &&
     Boolean(
-      env.DB &&
-      env.PHOTOS &&
-      env.TURNSTILE_SECRET_KEY &&
       env.EMAIL &&
+      env.TURNSTILE_SECRET_KEY &&
       env.EMAIL_FROM &&
       env.ADMIN_EMAIL &&
       env.BUSINESS_REPLY_TO &&
-      env.IP_HASH_SECRET &&
-      env.IP_HASH_SECRET.length >= 32 &&
-      env.PHOTO_SIGNING_SECRET &&
-      env.PHOTO_SIGNING_SECRET.length >= 32 &&
       env.SITE_ORIGIN,
     )
   );

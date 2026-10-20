@@ -8,7 +8,7 @@ import { site } from "../data/site";
   description="Kaip naudojami drenažo užklausos kontaktai, aprašymas bei nuotraukos. Saugojimas, gavėjai, analitikos pasirinkimas ir jūsų teisės."
 >
   <p slot="intro">
-    Atnaujinta 2026 m. spalio 19 d. Ši informacija aprašo svetainėje įgyvendintą
+    Atnaujinta 2026 m. spalio 20 d. Ši informacija aprašo svetainėje įgyvendintą
     duomenų srautą.
   </p>
   <h2>Duomenų valdytojas</h2>
@@ -50,17 +50,18 @@ import { site } from "../data/site";
     svetainė pati nežada jų atlikti.
   </p>
   <p>
-    Infrastruktūrai naudojamas „Cloudflare“ („Workers“, D1, privati R2 saugykla
-    ir „Turnstile“), pranešimams – „Resend“. Duomenys gali būti tvarkomi
-    paslaugų teikėjų infrastruktūroje už EEE ribų, taikant sutartines apsaugos
-    priemones. Išsamesnės informacijos galite prašyti duomenų valdytojo.
+    Infrastruktūrai, apsaugai ir laiškų siuntimui naudojamas „Cloudflare“
+    („Workers“, „Turnstile“, „Email Routing“). Užklausą ir nuotraukų priedus
+    gauna administratoriaus el. pašto paslaugos teikėjas. Svetainė jų nesaugo
+    atskiroje užklausų duomenų bazėje ar failų saugykloje. Paslaugų teikėjai
+    gali tvarkyti duomenis už EEE ribų pagal taikomas sutartines apsaugos
+    priemones.
   </p>
   <h2>Nuotraukos ir laiškai</h2>
   <p>
-    Nuotraukos saugomos privačioje saugykloje. Administratoriui siunčiamame
-    laiške pateikiamos pasirašytos nuorodos, galiojančios iki 7 dienų. Viešo
-    failų katalogo nėra. Jei pateikiate el. paštą, galime išsiųsti gavimo
-    patvirtinimą; atsakymai siunčiami į veiklos kontaktinį adresą.
+    Nuotraukos siunčiamos kaip laiško priedai tik užklausą administruojančiam
+    gavėjui. Jų nepublikuojame galerijoje. Šioje versijoje automatinis laiškas
+    klientui nesiunčiamas.
   </p>
   <h2>Projektų galerija</h2>
   <p>
@@ -71,27 +72,25 @@ import { site } from "../data/site";
     kreiptis dėl jų pašalinimo, susisiekite su duomenų valdytoju.
   </p>
   <p>
-    Privati galerijos valdymo sąsaja skirta savininkui. Prisijungimą tikrina
-    „Cloudflare Access“, naudodamas savininko el. paštą ir prisijungimo sesiją.
-    Publikuotos darbų nuotraukos saugomos tol, kol yra reikalingos darbų
-    pristatymui arba kol pašalinamos.
+    Galerijos turinį savininkas atnaujina per „GitHub“. Vieši failai ir jų
+    ankstesnės versijos gali išlikti saugyklos istorijoje, todėl ten negalima
+    kelti klientų užklausų, privačių nuotraukų ar kitų nereikalingų asmens
+    duomenų.
   </p>
   <h2>Kiek laiko saugoma?</h2>
   <p>
-    Šios sistemos užklausos ir nuotraukos automatiškai šalinamos po 90 dienų.
-    Apsaugos nuo piktnaudžiavimo įrašai – po paros. El. laiškų kopijos gali būti
-    saugomos administratoriaus ir gavėjų pašto sistemose; jų ištrynimą
-    valdytojas turi užtikrinti atskirai pagal savo dokumentuotą saugojimo
-    tvarką.
+    Svetainė užklausą apdoroja siuntimo metu. Laiškus ir priedus
+    administratorius saugo pašto dėžutėje tiek, kiek reikia atsakymui ir
+    tolesniam bendravimui, ir šalina pagal savo dokumentuotą saugojimo tvarką.
+    Svetainė automatiškai nešalina laiškų iš gavėjo pašto dėžutės.
   </p>
   <h2>Saugumas ir būtinos technologijos</h2>
   <p>
-    „Turnstile“ tikrina automatinių siuntimų požymius. Ribojant siuntimų dažnį
-    trumpam saugomas vienai dienai susietas IP adreso kriptografinis atvaizdas;
-    pats IP adresas nėra įrašomas į užklausų duomenų bazę. Infrastruktūros
-    paslaugos gali tvarkyti techninius žurnalus pagal savo taisykles. Apsauga
-    grindžiama teisėtu interesu užtikrinti sistemos saugumą (6 straipsnio 1
-    dalies f punktas).
+    „Turnstile“ tikrina automatinių siuntimų požymius. Siuntimo procesas trumpam
+    operatyviojoje atmintyje laiko technines kontrolines sumas ir bandymų
+    skaitiklius. Formos turinys ir nuotraukos į šiuos įrašus neįtraukiami.
+    Infrastruktūros paslaugos gali tvarkyti techninius žurnalus pagal savo
+    taisykles. Apsauga grindžiama teisėtu interesu užtikrinti sistemos saugumą.
   </p>
   <h2>Analitika ir slapukų pasirinkimas</h2>
   <p>
