@@ -3,6 +3,8 @@ import path from "node:path";
 import assert from "node:assert/strict";
 import { load } from "cheerio";
 const root = path.resolve("dist/client");
+const configuredGa4 = JSON.parse(await readFile("site.config.json", "utf8"))
+  .analytics.ga4Id;
 const pages = [];
 async function walk(dir) {
   for (const entry of await readdir(dir, { withFileTypes: true })) {
@@ -19,6 +21,16 @@ for (const file of pages) {
   const html = await readFile(file, "utf8");
   const $ = load(html);
   assert.equal($("html").attr("lang"), "lt", file);
+  assert.equal(
+    JSON.parse($("#analytics-config").text()).ga4,
+    configuredGa4,
+    "GA4 config on " + file,
+  );
+  assert.equal(
+    $('script[src*="googletagmanager.com"]').length,
+    0,
+    "No GA4 script before consent: " + file,
+  );
   assert.equal($("head > title").length, 1);
   assert.equal($("h1").length, 1, file + " requires one h1");
   assert.ok($("head > title").text().length > 10, file);

@@ -81,3 +81,7 @@ wrangler.jsonc saugo techninį Worker vardą, assets / EMAIL binding ir suderina
 ## Turinio valdymas
 
 Decap `/admin/` redaguoja tą patį site.config.json — antros nustatymų kopijos nėra. Nauji business laukai saugo CTA, teritorijas ir poraštės tekstą. Canonical / indeksavimo infrastruktūra CMS paslėpta. OAuth raktai pridedami tik Cloudflare; jie nepriskiriami veiklos konfigūracijai. Žr. CMS_SETUP.md.
+
+## Google Analytics
+
+analytics.ga4Id dabar G-NF15227P2D (savininko pateiktas viešas matavimo ID). Pakeitus šį lauką ir įdiegus build jis naudojamas visuose lankytojų puslapiuose. Gtag skriptas ir page_view siunčiami tik po analytics sutikimo; query parametrai, klientų kontaktai ir failų vardai nesiunčiami. Atsisakius GA4 nekraunamas. CMS/OAuth nėra lankytojų analitikos dalis. Cloudflare papildomo GA4 kintamojo nereikia.

@@ -31,3 +31,9 @@ Data: 2026-10-20. Tikrinama GitHub/Cloudflare versija su Decap, be DB/R2/Netlify
 - Tikras užklausų pristatymas Inbox/Spam ir priedai šio CMS pakeitimo metu netestuoti ir nepakeisti. Esami Cloudflare el. pašto / Turnstile nustatymai vis dar būtini.
 
 Niekas nepublikuota per Netlify, Sites preview ar naują infrastruktūrą. CMS kodas įkeliamas į esamą GitHub main; tikrą Cloudflare build ir `/admin/` HTTP rezultatą reikia patikrinti po commit. Gyvo OAuth workflow baigimas yra atskiras likęs žingsnis, aiškiai aprašytas CMS_SETUP.md.
+
+## Analitika ir produkcijos būklė po CMS commit
+
+2026-10-20: GitHub main CMS commit db1e671, jo GitHub Actions Quality checks — SUCCESS. Tačiau pakartotinė tikro domeno patikra vis dar grąžino /admin/ 404 ir /auth 404; tai senas deployment, ne OAuth secrets klaida. Cloudflare paskyroje reikia patikrinti, ar Workers Builds prijungtas prie šios main šakos, ir įdiegti naujausią commit. Automatinio Cloudflare publikavimo nelaikome patvirtintu vien pagal sėkmingus GitHub Actions.
+
+Pridėtas vartotojo GA4 G-NF15227P2D į esamą analytics.ga4Id. Visi lankytojų puslapiai gauna tą pačią konfigūraciją, gtag įkeliamas tik po analytics sutikimo. Admin/OAuth analitikos nekrauna. Opt-in ir atsisakymo logika patikrinta esamais UI testais; visų viešų build puslapių GA4 ID ir skripto nebuvimas iki sutikimo tikrinamas test:built. Realus GA4 Realtime gavimas nepatvirtintas be produkcijos diegimo ir Analytics paskyros prieigos.
