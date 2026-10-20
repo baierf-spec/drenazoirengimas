@@ -1,0 +1,82 @@
+---
+import Base from "./Base.astro";
+import Icon from "../components/Icon.astro";
+import { services, site } from "../data/site";
+const {
+  title,
+  description,
+  service = false,
+  schema: extraSchema = [],
+} = Astro.props;
+const url = new URL(Astro.url.pathname, site.origin).href;
+const schema: Record<string, unknown>[] = [
+  ...extraSchema,
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Pradžia",
+        item: site.origin + "/",
+      },
+      { "@type": "ListItem", position: 2, name: title, item: url },
+    ],
+  },
+];
+if (service)
+  schema.push({
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: title,
+    description,
+  });
+---
+
+<Base
+  title={`${title} | drenazoirengimas.lt`}
+  description={description}
+  schema={schema}
+>
+  <div class="page-heading">
+    <div class="container">
+      <nav class="breadcrumbs" aria-label="Puslapio vieta">
+        <a href="/">Pradžia</a>
+        <span aria-hidden="true">›</span>
+        <span>{title}</span>
+      </nav>
+      <h1>{title}</h1>
+      <slot name="intro" />
+    </div>
+  </div>
+  <div class="container article-layout">
+    <article class="article-body">
+      <slot />
+    </article>
+    <aside class="article-aside">
+      <Icon name="camera" size={34} />
+      <h2 style="margin-top:16px">Pradėkime nuo jūsų situacijos</h2>
+      <p>
+        Aprašykite problemą ir vietovę. Jei galite, pridėkite nuotraukas – jos
+        padės pasiruošti pokalbiui.
+      </p>
+      <a class="button" href="/gauti-pasiulyma/" data-event="primary_cta_click">
+        Gauti pasiūlymą <Icon name="arrow" size={17} />
+      </a>
+      <div class="related-links">
+        {services
+          .filter((s) => Astro.url.pathname !== `/${s.slug}/`)
+          .map((s) => (
+            <a href={`/${s.slug}/`}>{s.title} →</a>
+          ))}
+        <a href="/drenazo-kaina/">Kainos skaičiuoklė →</a>
+        <a href="/vanduo-sklype/">Vanduo sklype: nuo ko pradėti? →</a>
+        <a href="/sklypo-drenazas/#molingas-gruntas">
+          Drenažas molingame grunte →
+        </a>
+        <a href="/diagnostika/">Ar reikia drenažo? →</a>
+      </div>
+    </aside>
+  </div>
+</Base>

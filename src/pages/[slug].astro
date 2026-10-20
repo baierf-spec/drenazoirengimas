@@ -1,0 +1,82 @@
+---
+import Article from "../layouts/Article.astro";
+import { reviewedLocationArticles } from "../data/locations";
+import { articles } from "../data/articles";
+import WaterDiagram from "../components/WaterDiagram.astro";
+export function getStaticPaths() {
+  return [...articles, ...reviewedLocationArticles()].map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+}
+const { article } = Astro.props;
+---
+
+<Article
+  title={article.title}
+  description={article.description}
+  service={article.service}
+>
+  <p slot="intro">{article.intro}</p>
+  {article.image && (
+    <figure>
+      <img
+        src={`/images/${article.image}.webp`}
+        width="640"
+        height="480"
+        alt={article.imageAlt || `Iliustracija: ${article.title.toLowerCase()}`}
+        loading="eager"
+        srcset={`/images/${article.image}-320.webp 320w, /images/${article.image}.webp 640w`}
+        sizes="(max-width: 850px) calc(100vw - 40px), 720px"
+      />
+      <figcaption>
+        Iliustracinis vaizdas. Tai nėra atliktų darbų pavyzdys.
+      </figcaption>
+    </figure>
+  )}
+  {article.sections.map((section) => (
+    <section id={section.id}>
+      <h2>{section.title}</h2>
+      {section.text.map((p) => (
+        <p>{p}</p>
+      ))}
+      {section.list && (
+        <ul>
+          {section.list.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      )}
+    </section>
+  ))}
+  {article.service && <WaterDiagram />}
+  {article.sources && (
+    <section class="article-sources">
+      <h2>Techninė informacija</h2>
+      <p>
+        Gamintojo medžiaga padeda suprasti principus, bet nepakeičia konkretaus
+        objekto įvertinimo.
+      </p>
+      <ul>
+        {article.sources.map((source) => (
+          <li>
+            <a href={source.url} target="_blank" rel="noopener noreferrer">
+              {source.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+  <div class="notice">
+    <strong>Sprendimas parenkamas įvertinus objektą.</strong> Čia pateikta
+    informacija nėra projektinis ar individualus inžinerinis sprendinys. Darbų
+    apimtis, derinimai ir atsakomybės nustatomi su pasirinktu rangovu.
+  </div>
+  <h2>Kitas žingsnis</h2>
+  <p>
+    Galite <a href="/diagnostika/">atsakyti į trumpą klausimyną</a>,{" "}
+    <a href="/drenazo-kaina/">peržiūrėti kainą lemiančius veiksnius</a> arba{" "}
+    <a href="/gauti-pasiulyma/">pateikti savo situaciją įvertinti</a>.
+  </p>
+</Article>

@@ -1,0 +1,119 @@
+---
+import Base from "../layouts/Base.astro";
+import Icon from "../components/Icon.astro";
+import { problems } from "../data/site";
+---
+
+<Base
+  title="Ar reikia drenažo? Situacijos klausimynas | drenazoirengimas.lt"
+  description="Pasirinkite vandens problemą, kada ji pastebima ir ką žinote apie nuvedimą. Klausimynas padės pasiruošti objekto įvertinimui."
+  simple
+>
+  <section class="flow-shell">
+    <ol class="progress" aria-label="Klausimyno žingsniai">
+      <li class="active" aria-current="step">
+        <span>1</span>Problema
+      </li>
+      <li>
+        <span>2</span>Detalės
+      </li>
+      <li>
+        <span>3</span>Rezultatai
+      </li>
+    </ol>
+    <noscript>
+      <p class="no-js-note">
+        Klausimynui reikalingas „JavaScript“. Galite{" "}
+        <a href="/vanduo-sklype/">skaityti apie vandens problemas sklype</a>.
+      </p>
+    </noscript>
+    <form id="diagnostic-form">
+      <fieldset class="flow-step" data-step="0">
+        <legend>
+          <h1>Kas geriausiai apibūdina jūsų situaciją?</h1>
+        </legend>
+        <p class="step-intro">Pasirinkite pagrindinę problemą.</p>
+        <div class="problem-options">
+          {problems.map((p, i) => (
+            <label class="problem-option">
+              <input
+                type="radio"
+                name="problem"
+                value={p.id}
+                checked={i === 0}
+                required
+              />
+              <img
+                src={`/images/${p.id}.webp`}
+                width="640"
+                height="480"
+                srcset={`/images/${p.id}-320.webp 320w, /images/${p.id}.webp 640w`}
+                sizes="(max-width: 600px) 40vw, 260px"
+                alt=""
+              />
+              <span>{p.title}</span>
+            </label>
+          ))}
+        </div>
+        <div class="step-actions">
+          <button class="button" type="button" data-diagnostic-next>
+            Toliau <Icon name="arrow" size={18} />
+          </button>
+        </div>
+      </fieldset>
+      <fieldset class="flow-step" data-step="1" hidden>
+        <legend>Dar dvi svarbios detalės</legend>
+        <label class="field">
+          <span>Kada labiausiai pastebite problemą?</span>
+          <select name="when">
+            <option value="rain">Po lietaus</option>
+            <option value="thaw">Po polaidžio</option>
+            <option value="always">Nuolat, nepriklausomai nuo lietaus</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Ar žinote, kur būtų galima nuvesti vandenį?</span>
+          <select name="outlet">
+            <option value="unknown">Nežinau / nesu tikras</option>
+            <option value="known">Turiu galimą vietą</option>
+          </select>
+        </label>
+        <div class="step-actions">
+          <button
+            type="button"
+            class="button button-outline"
+            data-diagnostic-back
+          >
+            Atgal
+          </button>
+          <button type="submit" class="button">
+            Peržiūrėti rezultatą <Icon name="arrow" size={18} />
+          </button>
+        </div>
+      </fieldset>
+      <section class="flow-step" data-step="2" hidden>
+        <h2>Ką verta įvertinti?</h2>
+        <div class="result-panel">
+          <h2 id="diagnostic-result" />
+          <p id="diagnostic-next" />
+          <p>
+            <strong>
+              Tai orientacinė informacija, ne diagnozė ar techninis projektas.
+            </strong>{" "}
+            Rezultatas padeda pasiruošti objekto įvertinimui.
+          </p>
+          <a class="button" href="/gauti-pasiulyma/">
+            Gauti pasiūlymą <Icon name="arrow" size={18} />
+          </a>
+        </div>
+        <button type="button" class="text-link" data-diagnostic-reset>
+          Pradėti iš naujo
+        </button>
+      </section>
+    </form>
+  </section>
+  <script>
+    import { initDiagnostic } from "../scripts/tools";
+    initDiagnostic();
+  </script>
+</Base>

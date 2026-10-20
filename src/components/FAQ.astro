@@ -1,0 +1,23 @@
+---
+import { faq, faqLinks } from "../data/site";
+const { limit = faq.length } = Astro.props;
+---
+
+<div class="faq-list">
+  {faq.slice(0, limit).map(([q, a]) => (
+    <details>
+      <summary>
+        {q}
+        <span aria-hidden="true">+</span>
+      </summary>
+      <p>
+        {a}
+        {faqLinks[q] && (
+          <a class="faq-more" href={faqLinks[q].href}>
+            {faqLinks[q].label} →
+          </a>
+        )}
+      </p>
+    </details>
+  ))}
+</div>

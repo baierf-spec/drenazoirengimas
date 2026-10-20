@@ -1,0 +1,61 @@
+---
+import Article from "../layouts/Article.astro";
+import PriceSources from "../components/PriceSources.astro";
+import Estimator from "../components/Estimator.astro";
+---
+
+<Article
+  title="Kiek kainuoja drenažo įrengimas?"
+  description="Orientacinis drenažo kainos modelis ir kainą lemiantys veiksniai. Palyginkite darbų apimtį, medžiagas, priėjimą ir gerbūvio atkūrimą."
+>
+  <p slot="intro">
+    Vien metro kaina neparodo viso projekto biudžeto. Pažiūrėkite, kaip ilgis ir
+    darbų sąlygos keičia orientacinį scenarijų.
+  </p>
+  <h2>Apytikslė drenažo kaina</h2>
+  <p>
+    Skaičiuoklė skirta biudžeto pokalbiui pradėti. Jos dydžiai yra planavimo
+    prielaidos; tai nėra šios svetainės ar rangovo kainoraštis.
+  </p>
+  <Estimator />
+  <noscript>
+    <p class="no-js-note">
+      Interaktyviam skaičiavimui reikalingas „JavaScript“. Pavyzdys: 40 m ×
+      25–45 €/m + 600–1 600 € rezervas = apytiksliai 1 600–3 400 €.
+    </p>
+  </noscript>
+  <PriceSources />
+  <h2>Ką reiškia skaičiuoklės prielaidos?</h2>
+  <p>
+    Bazinis 25–45 €/m intervalas naudojamas kaip planavimo prielaida. Kombinuoto
+    scenarijaus 40–70 €/m, 25 % riboto priėjimo priedas ir papildomų darbų
+    rezervai yra iliustracinės modelio prielaidos, o ne patvirtinti paslaugos
+    tarifai.
+  </p>
+  <p>
+    Modelis apvalina intervalą iki 100 €. Jis neįvertina individualių grunto
+    tyrimų, projektavimo, konkrečių prijungimo sąlygų, siurblinių, sudėtingo
+    vandens priėmimo sprendimo ar hidroizoliacijos darbų. PVM įtraukimas ir
+    reali darbų kaina turi būti aiškiai nurodyti rangovo pasiūlyme.
+  </p>
+  <h2>Kas dažniausiai keičia galutinę sąmatą?</h2>
+  <ul>
+    <li>Kasimo gylis, gruntas, komunikacijos ir pamatų sąlygos.</li>
+    <li>Trasos ilgis, vamzdžiai, filtravimo sluoksnis bei šuliniai.</li>
+    <li>Vandens priėmimo ir nuvedimo sprendimas.</li>
+    <li>Technikos privažiavimas ir darbo vieta.</li>
+    <li>Grunto išvežimas, vejos, trinkelių ar terasos atkūrimas.</li>
+    <li>Projektavimo ar derinimų poreikis.</li>
+  </ul>
+  <h2>Kaip palyginti du pasiūlymus?</h2>
+  <p>
+    Paprašykite atskirti medžiagas, žemės darbus, nuvedimą, papildomus darbus ir
+    gerbūvio atstatymą. Palyginimas prasmingas tik tada, kai abiejų pasiūlymų
+    apimtis vienoda.
+  </p>
+  <p>
+    Tikslesniam pasiūlymui pateikite{" "}
+    <a href="/gauti-pasiulyma/">objekto vietą ir situaciją</a>. Tikslių metrų
+    žinoti nebūtina.
+  </p>
+</Article>

@@ -1,0 +1,247 @@
+---
+const id = "drainage-section";
+---
+
+<figure class="water-diagram" aria-labelledby={`${id}-caption`}>
+  <svg
+    class="drainage-illustration"
+    viewBox="0 0 960 480"
+    width="960"
+    height="480"
+    role="img"
+    aria-labelledby={`${id}-title ${id}-desc`}
+  >
+    <title
+      id={`${id}-title`}
+    >Pamatų drenažo pjūvis: nuo grunto iki surinkimo šulinio</title>
+    <desc id={`${id}-desc`}>
+      Principinė iliustracija: prie namo pamatų parodyti grunto sluoksniai,
+      geotekstilė, drenažinė skalda ir perforuotas vamzdis. Mėlynos rodyklės
+      žymi vandens patekimą iš grunto į vamzdį ir judėjimą surinkimo bei
+      apžiūros šulinio link. Vandens nuvedimo vieta įvertinama atskirai. Tai
+      nėra techninis projektas.
+    </desc>
+    <defs>
+      <linearGradient id="drainage-sky" x2="0" y2="1">
+        <stop stop-color="#eaf4fa" />
+        <stop offset="1" stop-color="#fbfdfe" />
+      </linearGradient>
+      <linearGradient id="drainage-earth" x2="0" y2="1">
+        <stop stop-color="#cbb18e" />
+        <stop offset="1" stop-color="#a88c6c" />
+      </linearGradient>
+      <linearGradient id="drainage-concrete" x2="1" y2="0">
+        <stop stop-color="#b5c3c8" />
+        <stop offset=".7" stop-color="#e0e7ea" />
+        <stop offset="1" stop-color="#a6b6be" />
+      </linearGradient>
+      <linearGradient
+        id="drainage-pipe"
+        gradientUnits="userSpaceOnUse"
+        x1="0"
+        y1="349"
+        x2="0"
+        y2="399"
+      >
+        <stop stop-color="#859ba7" />
+        <stop offset=".4" stop-color="#354e5d" />
+        <stop offset="1" stop-color="#162e3b" />
+      </linearGradient>
+      <pattern
+        id="drainage-gravel"
+        width="28"
+        height="24"
+        patternUnits="userSpaceOnUse"
+      >
+        <rect width="28" height="24" fill="#b9c6ca" />
+        <path d="m2 7 7-5 6 5-3 7-8-1Zm15 9 5-6 5 5-4 7-6-1Z" fill="#78909a" />
+        <path d="m0 21 4-5 5 3-2 5m14-20 4-3" fill="#e8eff1" />
+      </pattern>
+      <pattern
+        id="drainage-soil"
+        width="42"
+        height="34"
+        patternUnits="userSpaceOnUse"
+      >
+        <circle cx="7" cy="9" r="1.7" fill="#735b45" opacity=".3" />
+        <path d="m21 24 5-2m8-16 4 2" stroke="#e5d1b6" stroke-width="2" />
+      </pattern>
+      <pattern
+        id="drainage-ribs"
+        width="13"
+        height="13"
+        patternUnits="userSpaceOnUse"
+      >
+        <path d="M4 0v13" stroke="#afbec5" stroke-width="3" opacity=".55" />
+      </pattern>
+      <marker
+        id="drainage-arrow"
+        markerWidth="7"
+        markerHeight="7"
+        refX="5"
+        refY="3.5"
+        orient="auto"
+      >
+        <path
+          d="m0 0 6 3.5-6 3.5"
+          fill="none"
+          stroke="#047fbd"
+          stroke-width="1.5"
+        />
+      </marker>
+    </defs>
+    <rect width="960" height="480" fill="url(#drainage-sky)" />
+    <!-- Architecture is illustrative; no depth, slope or structural dimensions are prescribed. -->
+    <path d="M0 211h960v269H0Z" fill="url(#drainage-earth)" />
+    <path d="M0 294h960v186H0Z" fill="#ad957b" opacity=".5" />
+    <path d="M0 211h960v269H0Z" fill="url(#drainage-soil)" />
+    <path d="M0 205h960v11H0Z" fill="#5d8445" />
+    <path d="M432 203h245v241H432Z" fill="url(#drainage-gravel)" />
+    <path
+      d="M438 208v228h233V208"
+      fill="none"
+      stroke="#f3f8f9"
+      stroke-width="8"
+    />
+    <path
+      d="M438 208v228h233V208"
+      fill="none"
+      stroke="#6d8998"
+      stroke-width="2"
+      stroke-dasharray="5 6"
+    />
+    <path
+      d="M154 86 278 29l136 57"
+      fill="#17384c"
+      stroke="#0d283b"
+      stroke-width="8"
+    />
+    <path d="M172 88h224v117H172Z" fill="#edf1ed" />
+    <path
+      d="M190 112h57v67h-57m76-67h44v67h-44"
+      fill="#b7d4df"
+      stroke="#7895a4"
+      stroke-width="3"
+    />
+    <path d="M333 117h46v88h-46Z" fill="#8d7866" />
+    <path d="M172 205h224v183H172Z" fill="url(#drainage-concrete)" />
+    <path d="M155 388h258v29H155Z" fill="#9bafb7" />
+    <path d="M393 207v190" stroke="#213b49" stroke-width="11" />
+    <path
+      d="M172 251h216m-216 45h216m-216 45h216"
+      stroke="#92a5ad"
+      stroke-width="2"
+      opacity=".5"
+    />
+    <path
+      d="M510 374h280"
+      fill="none"
+      stroke="url(#drainage-pipe)"
+      stroke-width="49"
+    />
+    <path
+      d="M510 374h280"
+      fill="none"
+      stroke="url(#drainage-ribs)"
+      stroke-width="49"
+    />
+    <ellipse
+      cx="510"
+      cy="374"
+      rx="23"
+      ry="26"
+      fill="#173141"
+      stroke="#c7d6dd"
+      stroke-width="5"
+    />
+    <path
+      d="M537 361h8m18 0h8m18 0h8m18 0h8m18 0h8"
+      stroke="#0c202d"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+    <path
+      d="M779 195h69v222h-69Z"
+      fill="url(#drainage-concrete)"
+      stroke="#718b98"
+      stroke-width="2"
+    />
+    <path d="M794 210h39v187h-39Z" fill="#344f5f" />
+    <path d="M768 187h91v19h-91Z" fill="#143549" />
+    <path
+      d="M779 374h-30m84 0h69"
+      stroke="url(#drainage-pipe)"
+      stroke-width="27"
+    />
+    <g
+      fill="none"
+      stroke="#047fbd"
+      stroke-width="4"
+      marker-end="url(#drainage-arrow)"
+      class="drainage-flow"
+    >
+      <path d="M719 253h-42m-132-12v73m69-52v52m-140-63v65" />
+      <path d="M553 375h165m101 0h80" />
+    </g>
+    <g fill="#087fb9">
+      <circle cx="544" cy="231" r="4" />
+      <circle cx="614" cy="249" r="3" />
+      <circle cx="475" cy="238" r="3" />
+    </g>
+    <g fill="#fff" stroke="#bdcfdb" stroke-width="1.5">
+      <circle cx="372" cy="233" r="15" />
+      <circle cx="634" cy="317" r="15" />
+      <circle cx="442" cy="405" r="15" />
+      <circle cx="578" cy="389" r="15" />
+      <circle cx="816" cy="224" r="15" />
+    </g>
+    <g
+      fill="#0b3653"
+      font-family="sans-serif"
+      font-size="16"
+      text-anchor="middle"
+      font-weight="700"
+    >
+      <text x="372" y="239">
+        1
+      </text>
+      <text x="634" y="323">
+        2
+      </text>
+      <text x="442" y="411">
+        3
+      </text>
+      <text x="578" y="395">
+        4
+      </text>
+      <text x="816" y="230">
+        5
+      </text>
+    </g>
+  </svg>
+  <ol class="diagram-legend" aria-label="Drenažo sistemos elementai">
+    <li>
+      <span>1</span>Namo pamatai
+    </li>
+    <li>
+      <span>2</span>Drenažinė skalda
+    </li>
+    <li>
+      <span>3</span>Geotekstilė
+    </li>
+    <li>
+      <span>4</span>Perforuotas vamzdis
+    </li>
+    <li>
+      <span>5</span>Surinkimo / apžiūros šulinys
+    </li>
+  </ol>
+  <figcaption id={`${id}-caption`} class="diagram-caption">
+    Surinktas vanduo nuvedamas į objektui tinkamą vietą.
+    <span>
+      Principinė iliustracija, ne techninis projektas. Grunto sluoksniai,
+      filtras, gylis ir nuolydis parenkami įvertinus objektą; šulinys savaime
+      nėra galutinė vandens priėmimo vieta.
+    </span>
+  </figcaption>
+</figure>

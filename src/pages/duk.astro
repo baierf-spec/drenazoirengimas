@@ -1,0 +1,31 @@
+---
+import Article from "../layouts/Article.astro";
+import { faq } from "../data/site";
+import FAQ from "../components/FAQ.astro";
+---
+
+<Article
+  title="Dažniausi klausimai apie drenažą"
+  schema={[
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faq.map(([name, text]) => ({
+        "@type": "Question",
+        name,
+        acceptedAnswer: { "@type": "Answer", text },
+      })),
+    },
+  ]}
+  description="Atsakymai apie drenažo poreikį, kainą, vandens nuvedimą, gerbūvio atkūrimą, nuotraukų pateikimą ir užklausos kelią."
+>
+  <p slot="intro">
+    Trumpai ir aiškiai apie sprendimą, sąmatą ir pirmą pokalbį.
+  </p>
+  <FAQ />
+  <h2>Neradote savo situacijos?</h2>
+  <p>
+    <a href="/diagnostika/">Pradėkite nuo klausimyno</a> arba{" "}
+    <a href="/gauti-pasiulyma/">pateikite savo klausimą su objekto vieta</a>.
+  </p>
+</Article>

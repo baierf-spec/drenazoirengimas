@@ -1,0 +1,231 @@
+---
+import { site, propertyTypes, problems } from "../data/site";
+import Icon from "./Icon.astro";
+---
+
+<div class="flow-shell quote-shell">
+  <ol class="progress" aria-label="Užklausos žingsniai">
+    <li class="active" aria-current="step">
+      <span>1</span>Objektas
+    </li>
+    <li>
+      <span>2</span>Detalės
+    </li>
+    <li>
+      <span>3</span>Kontaktai
+    </li>
+  </ol>
+  <noscript>
+    <p class="no-js-note">
+      Užklausos vedliui ir apsaugai nuo automatinių siuntimų reikia įjungto
+      „JavaScript“. Pateikta informacija be jo nebus išsiųsta.
+    </p>
+  </noscript>
+  <form
+    id="quote-form"
+    action="/api/leads"
+    method="post"
+    enctype="multipart/form-data"
+    data-turnstile={site.turnstile}
+    novalidate
+  >
+    <input type="hidden" name="requestId" />
+    <input type="hidden" name="source" value="/gauti-pasiulyma/" />
+    <input type="hidden" name="diagnostic" />
+    <input type="hidden" name="estimate" />
+    <label class="hp" aria-hidden="true">
+      Jūsų svetainė
+      <input name="website" type="text" tabindex="-1" autocomplete="off" />
+    </label>
+    <fieldset class="flow-step" data-step="0">
+      <legend>
+        <h1>Papasakokite apie savo objektą</h1>
+      </legend>
+      <p class="step-intro">Tai padės specialistui pasiruošti pokalbiui.</p>
+      <div class="property-options">
+        {propertyTypes.map(([value, label, icon], i) => (
+          <label class="option-card">
+            <Icon name={icon} size={43} />
+            <span>{label}</span>
+            <input
+              type="radio"
+              name="property"
+              value={value}
+              checked={i === 0}
+              required
+            />
+          </label>
+        ))}
+      </div>
+      <div class="step-actions">
+        <button type="button" class="button" data-next>
+          Toliau <Icon name="arrow" size={19} />
+        </button>
+      </div>
+    </fieldset>
+    <fieldset class="flow-step" data-step="1">
+      <legend>Kas vyksta jūsų sklype?</legend>
+      <p class="step-intro">
+        Tikslių metrų ar techninių duomenų žinoti nebūtina.
+      </p>
+      <label class="field">
+        <span>Objekto vieta *</span>
+        <input
+          name="location"
+          required
+          minlength="2"
+          maxlength="120"
+          placeholder="Pvz., Vilniaus r., Riešė"
+          autocomplete="address-level2"
+        />
+      </label>
+      <label class="field">
+        <span>Pagrindinė problema *</span>
+        <select name="problem" required>
+          {problems.map((p) => (
+            <option value={p.id}>{p.title}</option>
+          ))}
+          <option value="new">Drenažas naujam namui</option>
+          <option value="rain">Lietaus vandens nuvedimas</option>
+          <option value="unknown">Nežinau – reikia įvertinti</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>Kada norėtumėte pradėti darbus?</span>
+        <select name="timing">
+          <option value="soon">Kuo greičiau</option>
+          <option value="month">Per mėnesį</option>
+          <option value="quarter">Per 1–3 mėnesius</option>
+          <option value="later">Planuoju vėliau</option>
+        </select>
+      </label>
+      <label class="field">
+        <span>
+          Papildoma informacija <small>(neprivaloma)</small>
+        </span>
+        <textarea
+          name="message"
+          maxlength="2000"
+          rows="3"
+          placeholder="Kada kaupiasi vanduo? Ar sklypas jau sutvarkytas?"
+        />
+      </label>
+      <div class="upload-zone">
+        <strong class="field-label">
+          <Icon name="camera" size={19} /> Parodykite situaciją nuotraukose
+        </strong>
+        <p class="small">
+          Nuotraukos neprivalomos. Naudingiausia – problema iš arti ir bendras
+          sklypo vaizdas. Venkite žmonių, numerių bei kitų asmens duomenų.
+        </p>
+        <label class="field">
+          <span class="small">Pasirinkite iki 5 nuotraukų</span>
+          <input
+            id="photos"
+            type="file"
+            name="photos"
+            multiple
+            accept="image/jpeg,image/png,image/webp"
+            aria-describedby="upload-help"
+          />
+        </label>
+        <p id="upload-help" class="upload-help">
+          JPG, PNG arba WebP, iki 8 MB kiekviena. Nuotraukos automatiškai
+          sumažinamos. HEIC nuotraukas pirmiausia konvertuokite į JPG.
+        </p>
+        <ul class="photo-list" aria-label="Pridėtos nuotraukos" />
+        <p
+          class="form-status"
+          id="upload-status"
+          role="status"
+          aria-live="polite"
+        />
+      </div>
+      <div class="step-actions">
+        <button type="button" class="button button-outline" data-back>
+          Atgal
+        </button>
+        <button type="button" class="button" data-next>
+          Toliau <Icon name="arrow" size={18} />
+        </button>
+      </div>
+    </fieldset>
+    <fieldset class="flow-step" data-step="2">
+      <legend>Kaip su jumis susisiekti?</legend>
+      <p class="step-intro">
+        Palikite kontaktus pokalbiui apie savo situaciją.
+      </p>
+      <label class="field">
+        <span>Vardas *</span>
+        <input
+          name="name"
+          required
+          minlength="2"
+          maxlength="100"
+          placeholder="Jūsų vardas"
+          autocomplete="given-name"
+        />
+      </label>
+      <label class="field">
+        <span>Telefonas *</span>
+        <input
+          name="phone"
+          type="tel"
+          required
+          maxlength="24"
+          placeholder="+370 612 34567"
+          autocomplete="tel"
+          inputmode="tel"
+        />
+      </label>
+      <label class="field">
+        <span>
+          El. paštas <small>(neprivalomas)</small>
+        </span>
+        <input
+          name="email"
+          type="email"
+          maxlength="254"
+          placeholder="jusu@pastas.lt"
+          autocomplete="email"
+        />
+        <small>Jei nurodysite, atsiųsime užklausos gavimo patvirtinimą.</small>
+      </label>
+      <label class="check-field">
+        <input type="checkbox" name="consent" value="yes" required />
+        <span>
+          Susipažinau su{" "}
+          <a href="/privatumo-politika/" target="_blank" rel="noopener">
+            privatumo informacija
+          </a>{" "}
+          ir sutinku, kad mano užklausos duomenys būtų naudojami susisiekti bei
+          perduoti tinkamam paslaugos teikėjui. *
+        </span>
+      </label>
+      <div class="form-note">
+        Jūsų informacija bus naudojama užklausai įvertinti. Darbų užsakymas,
+        kaina ir sąlygos derinami su pasirinktu rangovu. Ši forma neįpareigoja
+        užsakyti.
+      </div>
+      <div
+        id="turnstile-container"
+        class="turnstile-container"
+        aria-label="Apsauga nuo automatinių siuntimų"
+      />
+      <div class="step-actions">
+        <button type="button" class="button button-outline" data-back>
+          Atgal
+        </button>
+        <button class="button" type="submit">
+          Pateikti užklausą <Icon name="arrow" size={18} />
+        </button>
+      </div>
+    </fieldset>
+    <p id="quote-error" class="form-error" role="alert" hidden />
+    <p id="quote-status" class="form-status" aria-live="polite" role="status" />
+  </form>
+</div>
+<script>
+  import { initQuote } from "../scripts/quote";
+  initQuote();
+</script>

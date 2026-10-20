@@ -1,0 +1,42 @@
+---
+import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
+const { overlay = false, simple = false } = Astro.props;
+---
+
+<header class:list={["header", { overlay, simple }]}>
+  <div class="container header-inner">
+    <Logo light={overlay} />
+    {simple ? (
+      <a class="close-link" href="/" aria-label="Grįžti į pradžią">
+        <Icon name="close" />
+      </a>
+    ) : (
+      <>
+        <button
+          class="menu-toggle"
+          aria-controls="navigation"
+          aria-expanded="false"
+          aria-label="Atidaryti meniu"
+        >
+          <Icon name="menu" />
+        </button>
+        <nav id="navigation" aria-label="Pagrindinė navigacija">
+          <a href="/#paslaugos">Paslaugos</a>
+          <a href="/#procesas">Kaip vyksta darbai</a>
+          <a href="/drenazo-kaina/">Kainos</a>
+          <a href="/projektai/">Projektai</a>
+          <a href="/vanduo-sklype/">Patarimai</a>
+          <a href="/#kontaktai">Kontaktai</a>
+          <a
+            href="/gauti-pasiulyma/"
+            class="button button-small"
+            data-event="primary_cta_click"
+          >
+            Gauti pasiūlymą
+          </a>
+        </nav>
+      </>
+    )}
+  </div>
+</header>

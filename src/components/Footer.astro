@@ -1,0 +1,68 @@
+---
+import Logo from "./Logo.astro";
+import Icon from "./Icon.astro";
+import { site } from "../data/site";
+---
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <Logo light />
+      <p>
+        Drenažas be spėlionių.
+        <br />
+        Pirmiausia įvertinimas. Tada – sprendimas.
+      </p>
+      <p class="small">
+        Svetainė padeda pateikti užklausą nepriklausomam paslaugos teikėjui.
+        Darbų galimybės ir sąlygos derinamos individualiai.
+      </p>
+    </div>
+    <div>
+      <strong>Sprendimai</strong>
+      <a href="/pamatu-drenazas/">Pamatų drenažas</a>
+      <a href="/sklypo-drenazas/">Sklypo drenažas</a>
+      <a href="/lietaus-vandens-nuvedimas/">Lietaus vandens nuvedimas</a>
+    </div>
+    <div>
+      <strong>Verta žinoti</strong>
+      <a href="/drenazo-kaina/">Drenažo kaina</a>
+      <a href="/vanduo-sklype/">Vanduo sklype</a>
+      <a href="/drenazas-ar-lietaus-nuotekos/">Drenažas ar lietaus nuotekos?</a>
+      <a href="/duk/">Dažniausi klausimai</a>
+    </div>
+    <div>
+      <strong>Pradėkime nuo jūsų situacijos</strong>
+      <a href="/gauti-pasiulyma/">
+        Gauti pasiūlymą <Icon name="arrow" size={16} />
+      </a>
+      {site.phone && (
+        <a href={`tel:${site.phone}`} data-event="phone_click">
+          {site.phone}
+        </a>
+      )}
+      {site.email && <a href={`mailto:${site.email}`}>{site.email}</a>}
+      <a href="/privatumo-politika/">Privatumo informacija</a>
+      <button class="text-button cookie-settings" type="button">
+        Slapukų nustatymai
+      </button>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© {new Date().getFullYear()} drenazoirengimas.lt</span>
+    <span>Vilnius · Kaunas · Užklausos iš visos Lietuvos</span>
+  </div>
+</footer>
+<div class="mobile-cta">
+  <a class="button" href="/gauti-pasiulyma/" data-event="primary_cta_click">
+    Gauti pasiūlymą <Icon name="arrow" size={18} />
+  </a>
+  <a
+    class="button button-navy"
+    href={site.phone ? `tel:${site.phone}` : "/gauti-pasiulyma/?photos=1"}
+    data-event={site.phone ? "phone_click" : "primary_cta_click"}
+  >
+    <Icon name={site.phone ? "phone" : "camera"} size={18} />
+    {site.phone ? "Skambinti" : "Nuotraukos"}
+  </a>
+</div>

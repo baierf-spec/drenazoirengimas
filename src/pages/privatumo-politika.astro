@@ -1,0 +1,123 @@
+---
+import Article from "../layouts/Article.astro";
+import { site } from "../data/site";
+---
+
+<Article
+  title="Privatumo ir slapukų informacija"
+  description="Kaip naudojami drenažo užklausos kontaktai, aprašymas bei nuotraukos. Saugojimas, gavėjai, analitikos pasirinkimas ir jūsų teisės."
+>
+  <p slot="intro">
+    Atnaujinta 2026 m. spalio 19 d. Ši informacija aprašo svetainėje įgyvendintą
+    duomenų srautą.
+  </p>
+  <h2>Duomenų valdytojas</h2>
+  {site.controller ? (
+    <p>
+      {site.controller}
+      {site.controllerAddress && `, ${site.controllerAddress}`}. Privatumo
+      klausimais: <a href={`mailto:${site.email}`}>{site.email}</a>.
+    </p>
+  ) : (
+    <p>Dėl privatumo klausimų kreipkitės svetainėje nurodytais kontaktais.</p>
+  )}
+  <h2>Kokius duomenis renkame?</h2>
+  <p>
+    Aktyvioje užklausos formoje prašoma vardo, telefono, objekto vietovės,
+    objekto ir problemos tipo, planuojamo termino. El. paštas, komentaras ir
+    nuotraukos yra neprivalomi. Prie užklausos gali būti pridėtas jūsų
+    klausimyno ar orientacinio skaičiavimo rezultatas, puslapio kelias ir
+    sutikimo versija.
+  </p>
+  <p>
+    Nesiųskite žmonių atvaizdų, dokumentų, transporto numerių ar kitų
+    nereikalingų asmens duomenų. Naršyklė prieš siuntimą sumažina nuotraukas ir
+    perrašo jas be originalių metaduomenų.
+  </p>
+  <h2>Kam naudojama informacija?</h2>
+  <p>
+    Duomenys reikalingi atsakyti į jūsų užklausą, aptarti situaciją ir
+    pasirengti galimam pasiūlymui. Jūsų prašymu inicijuoti veiksmai grindžiami
+    BDAR 6 straipsnio 1 dalies b punktu. Informacijos perdavimas nepriklausomam
+    paslaugos teikėjui atliekamas gavus formoje išreikštą sutikimą (6 straipsnio
+    1 dalies a punktas). Rinkodaros sutikimas šia forma nerenkamas.
+  </p>
+  <h2>Kas gauna duomenis?</h2>
+  <p>
+    Užklausą gauna svetainės administratorius. Jums sutikus, būtina informacija
+    gali būti perduota tinkamam nepriklausomam rangovui užklausai aptarti.
+    Konkretus rangovas ir sutarties sąlygos suderinami prieš užsakant darbus;
+    svetainė pati nežada jų atlikti.
+  </p>
+  <p>
+    Infrastruktūrai naudojamas „Cloudflare“ („Workers“, D1, privati R2 saugykla
+    ir „Turnstile“), pranešimams – „Resend“. Duomenys gali būti tvarkomi
+    paslaugų teikėjų infrastruktūroje už EEE ribų, taikant sutartines apsaugos
+    priemones. Išsamesnės informacijos galite prašyti duomenų valdytojo.
+  </p>
+  <h2>Nuotraukos ir laiškai</h2>
+  <p>
+    Nuotraukos saugomos privačioje saugykloje. Administratoriui siunčiamame
+    laiške pateikiamos pasirašytos nuorodos, galiojančios iki 7 dienų. Viešo
+    failų katalogo nėra. Jei pateikiate el. paštą, galime išsiųsti gavimo
+    patvirtinimą; atsakymai siunčiami į veiklos kontaktinį adresą.
+  </p>
+  <h2>Projektų galerija</h2>
+  <p>
+    Galerijoje skelbiamos paslaugos teikėjo parinktos darbų nuotraukos ir
+    aprašymai. Tikslūs klientų adresai ir nereikalingi asmens duomenys neturėtų
+    būti viešinami. Nuotraukos optimizuojamos ir skelbiamos be originalių EXIF
+    vietos duomenų. Jei nuotraukoje pastebėjote savo asmens duomenis ir norite
+    kreiptis dėl jų pašalinimo, susisiekite su duomenų valdytoju.
+  </p>
+  <p>
+    Privati galerijos valdymo sąsaja skirta savininkui. Prisijungimą tikrina
+    „Cloudflare Access“, naudodamas savininko el. paštą ir prisijungimo sesiją.
+    Publikuotos darbų nuotraukos saugomos tol, kol yra reikalingos darbų
+    pristatymui arba kol pašalinamos.
+  </p>
+  <h2>Kiek laiko saugoma?</h2>
+  <p>
+    Šios sistemos užklausos ir nuotraukos automatiškai šalinamos po 90 dienų.
+    Apsaugos nuo piktnaudžiavimo įrašai – po paros. El. laiškų kopijos gali būti
+    saugomos administratoriaus ir gavėjų pašto sistemose; jų ištrynimą
+    valdytojas turi užtikrinti atskirai pagal savo dokumentuotą saugojimo
+    tvarką.
+  </p>
+  <h2>Saugumas ir būtinos technologijos</h2>
+  <p>
+    „Turnstile“ tikrina automatinių siuntimų požymius. Ribojant siuntimų dažnį
+    trumpam saugomas vienai dienai susietas IP adreso kriptografinis atvaizdas;
+    pats IP adresas nėra įrašomas į užklausų duomenų bazę. Infrastruktūros
+    paslaugos gali tvarkyti techninius žurnalus pagal savo taisykles. Apsauga
+    grindžiama teisėtu interesu užtikrinti sistemos saugumą (6 straipsnio 1
+    dalies f punktas).
+  </p>
+  <h2>Analitika ir slapukų pasirinkimas</h2>
+  <p>
+    Pasirenkami „Google Analytics 4“ ir „Cloudflare Web Analytics“ įkeliami tik
+    jums leidus analitiką. Be sutikimo jų užklausos nesiunčiamos. Analitikai
+    neperduodami vardai, telefonai, el. paštai, komentarai, nuotraukų
+    pavadinimai ar formos turinys.
+  </p>
+  <p>
+    Jei įjungtas GA4, jis gali naudoti <code>_ga</code> ir <code>_ga_*</code>{" "}
+    analitinius slapukus; jų trukmė priklauso nuo paskyros konfigūracijos,
+    paprastai iki 2 metų. Pasirinkimas naršyklės vietinėje saugykloje saugomas
+    180 dienų. Klausimyno ir skaičiuoklės kontekstas laikomas tik šio skirtuko
+    sesijoje ir pašalinamas pateikus užklausą. Pasirinkimą galite pakeisti
+    puslapio apačioje per „Slapukų nustatymai“.
+  </p>
+  <h2>Jūsų teisės</h2>
+  <p>
+    Galite prašyti susipažinti su duomenimis, juos ištaisyti, ištrinti ar
+    apriboti tvarkymą, nesutikti su tvarkymu, kai taikoma – gauti duomenų kopiją
+    ir atšaukti sutikimą. Atšaukimas nepakeičia iki jo atlikto tvarkymo
+    teisėtumo. Kreipkitės paskelbtu duomenų valdytojo kontaktu. Skundą galite
+    pateikti{" "}
+    <a href="https://vdai.lrv.lt/" target="_blank" rel="noopener noreferrer">
+      Valstybinei duomenų apsaugos inspekcijai
+    </a>
+    .
+  </p>
+</Article>

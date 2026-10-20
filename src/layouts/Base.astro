@@ -1,0 +1,138 @@
+---
+import "@fontsource-variable/manrope";
+import "../styles/global.css";
+import { pageMeta } from "../data/pages";
+import { site } from "../data/site";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+interface Props {
+  title: string;
+  description: string;
+  overlay?: boolean;
+  simple?: boolean;
+  noindex?: boolean;
+  schema?: Record<string, unknown>[];
+}
+const {
+  title,
+  description,
+  overlay = false,
+  simple = false,
+  noindex = false,
+  schema = [],
+} = Astro.props;
+const canonicalPath = ["/404", "/404/"].includes(Astro.url.pathname)
+  ? "/404.html"
+  : Astro.url.pathname;
+const meta = pageMeta(canonicalPath);
+const resolvedTitle = meta?.title ?? title;
+const resolvedDescription = meta?.description ?? description;
+const preventIndexing =
+  noindex || meta?.indexable === false || !site.production;
+const canonical = new URL(canonicalPath, site.origin).href;
+const baseSchema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": site.origin + "/#website",
+    name: "Drenažo įrengimas",
+    url: site.origin + "/",
+    inLanguage: "lt-LT",
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": canonical + "#webpage",
+    name: resolvedTitle,
+    description: resolvedDescription,
+    isPartOf: { "@id": site.origin + "/#website" },
+    url: canonical,
+    inLanguage: "lt-LT",
+  },
+  ...schema,
+];
+const config = { ga4: site.ga4, cloudflare: site.cloudflareAnalytics };
+---
+
+<!doctype html>
+<html lang="lt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{resolvedTitle}</title>
+    <meta name="description" content={resolvedDescription} />
+    <link rel="canonical" href={canonical} />
+    <meta
+      name="robots"
+      content={preventIndexing ? "noindex, follow" : "index, follow"}
+    />
+    <meta name="theme-color" content="#082536" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="lt_LT" />
+    <meta property="og:site_name" content="Drenažo įrengimas" />
+    <meta property="og:title" content={resolvedTitle} />
+    <meta property="og:description" content={resolvedDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={`${site.origin}/images/og.jpg`} />
+    <meta
+      property="og:image:alt"
+      content="Iliustracinis namo ir drenažo sistemos pjūvis"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={resolvedTitle} />
+    <meta name="twitter:description" content={resolvedDescription} />
+    <meta name="twitter:image" content={`${site.origin}/images/og.jpg`} />
+    {site.verification && (
+      <meta name="google-site-verification" content={site.verification} />
+    )}
+    {baseSchema.map((item) => (
+      <script
+        type="application/ld+json"
+        set:html={JSON.stringify(item).replace(/</g, "\\u003c")}
+      />
+    ))}
+    <script
+      id="analytics-config"
+      type="application/json"
+      set:html={JSON.stringify(config).replace(/</g, "\\u003c")}
+    />
+    <slot name="head" />
+  </head>
+  <body class:list={[{ "flow-page": simple }]}>
+    <a class="skip-link" href="#main">
+      Pereiti prie turinio
+    </a>
+    <Header overlay={overlay} simple={simple} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    {!simple && <Footer />}
+    <section class="consent-panel" aria-labelledby="consent-title" hidden>
+      <div>
+        <strong id="consent-title">Jūsų privatumo pasirinkimas</strong>
+        <p>
+          Pasirinktinę lankomumo analitiką įjungiame tik jums sutikus. Forma
+          veikia ir jos atsisakius. <a href="/privatumo-politika/">Plačiau</a>
+        </p>
+      </div>
+      <div class="consent-actions">
+        <button
+          type="button"
+          class="button button-outline"
+          data-consent="denied"
+        >
+          Tik būtini
+        </button>
+        <button type="button" class="button" data-consent="granted">
+          Leisti analitiką
+        </button>
+      </div>
+    </section>
+    <script>
+      import "../scripts/site";
+    </script>
+  </body>
+</html>

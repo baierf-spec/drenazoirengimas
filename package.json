@@ -1,0 +1,54 @@
+{
+  "name": "drenazoirengimas",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "dev": "astro dev --host 0.0.0.0 --port 4173",
+    "build": "astro build && node scripts/build-sites.mjs",
+    "build:production": "node scripts/preflight.mjs && npm run build",
+    "preview": "astro preview --host 0.0.0.0",
+    "dev:worker": "wrangler dev",
+    "lint": "eslint src worker tests scripts astro.config.mjs eslint.config.mjs",
+    "typecheck": "astro check && tsc --noEmit -p tsconfig.worker.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:built": "node scripts/check-build.mjs",
+    "check": "npm run lint && npm run typecheck && npm run build && npm run audit:seo && npm test && npm run test:built",
+    "deploy": "npm run build:production && wrangler deploy",
+    "deploy:dry-run": "wrangler deploy --dry-run --outdir .wrangler-dry-run",
+    "db:migrate:local": "wrangler d1 migrations apply drenazoirengimas-leads --local",
+    "db:migrate:remote": "wrangler d1 migrations apply drenazoirengimas-leads --remote",
+    "optimize:images": "node scripts/optimize-images.mjs",
+    "format": "prettier --write src worker tests scripts *.mjs *.json *.jsonc *.md .github",
+    "check:secrets": "node scripts/check-secrets.mjs",
+    "audit:seo": "node scripts/audit-seo.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/manrope": "5.3.0",
+    "astro": "7.4.1",
+    "zod": "4.6.7",
+    "jose": "^6.1.0",
+    "heic-to": "1.6.6"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.11",
+    "@cloudflare/workers-types": "5.20261019.1",
+    "@eslint/js": "^10.0.0",
+    "cheerio": "^1.2.0",
+    "esbuild": "^0.27.3",
+    "eslint": "^10.0.0",
+    "eslint-plugin-astro": "3.2.1",
+    "happy-dom": "21.0.3",
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^1.1.1",
+    "sharp": "^0.34.5",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "8.71.2",
+    "vitest": "5.0.5",
+    "wrangler": "4.151.2"
+  }
+}

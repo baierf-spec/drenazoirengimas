@@ -1,0 +1,93 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<div id="cost-estimator" class="calculator-layout">
+  <form class="calculator-controls" id="estimator-form">
+    <label class="field">
+      <span class="range-label">
+        <span>1. Apytikslis trasos ilgis</span>
+        <output id="length-label">40 m</output>
+      </span>
+      <input
+        type="range"
+        name="length"
+        min="10"
+        max="150"
+        value="40"
+        step="5"
+        aria-label="Apytikslis trasos ilgis metrais"
+      />
+      <span class="range-values">
+        <span>10 m</span>
+        <span>50 m</span>
+        <span>100 m</span>
+        <span>150 m</span>
+      </span>
+    </label>
+    <fieldset class="flow-step">
+      <legend class="field-label">2. Sprendimo apimtis</legend>
+      <div class="segmented">
+        <label>
+          <input type="radio" name="type" value="foundation" checked />
+          Pamatų zona
+        </label>
+        <label>
+          <input type="radio" name="type" value="combined" />
+          Pamatai ir kiemas
+        </label>
+        <label>
+          <input type="radio" name="type" value="plot" />
+          Sklypo drenažas
+        </label>
+      </div>
+    </fieldset>
+    <label class="field">
+      <span>3. Privažiavimas technikai</span>
+      <select name="access">
+        <option value="easy">Įprastas privažiavimas</option>
+        <option value="limited">Ribotas / sudėtingas priėjimas</option>
+      </select>
+    </label>
+    <label class="check-field">
+      <input name="landscaped" type="checkbox" />
+      <span>Yra sutvarkyta veja ar dangos, kurias reikėtų atkurti</span>
+    </label>
+    <p class="small" style="margin-top:18px">
+      Jei ilgio nežinote, naudokite 40 m pavyzdį. Tikslus trasos ilgis
+      nustatomas planuojant sprendinį.
+    </p>
+  </form>
+  <div class="estimate-result" aria-live="polite" aria-atomic="true">
+    <span class="eyebrow">ORIENTACINIS KAINOS INTERVALAS</span>
+    <output class="price" id="estimate-price">
+      1 600 – 3 400 €
+    </output>
+    <p>
+      Tai skaičiavimo modelis, o ne rangovo pasiūlymas. Tiksli kaina – po
+      objekto įvertinimo.
+    </p>
+    <div class="estimate-details">
+      <strong>Kaip apskaičiuojame?</strong>
+      <p id="estimate-formula">
+        40 m × 25–45 €/m + 600–1 600 € papildomų darbų rezervas.
+      </p>
+      <p class="small">
+        Intervalas keičiasi pagal pasirinktą ilgį, darbų apimtį, privažiavimą ir
+        atkūrimo poreikį.
+      </p>
+    </div>
+    <a
+      class="button"
+      href="/gauti-pasiulyma/"
+      id="estimate-cta"
+      data-event="primary_cta_click"
+    >
+      Gauti pasiūlymą <Icon name="arrow" size={18} />
+    </a>
+  </div>
+</div>
+<script>
+  import { initEstimator } from "../scripts/tools";
+  initEstimator();
+</script>

@@ -1,0 +1,36 @@
+---
+import { priceReview } from "../data/price-sources";
+---
+
+<details class="price-sources">
+  <summary>Iš kur šie kainų intervalai?</summary>
+  <p>
+    Skaičiuoklės intervalai yra biudžeto planavimo prielaidos. Į kainą gali
+    įeiti skirtingi darbai, todėl vien metro tarifo nepakanka pasiūlymams
+    palyginti.
+  </p>
+  {priceReview.marketSources.length ? (
+    <ul>
+      {priceReview.marketSources.map((s) => (
+        <li>
+          <a href={s.url} target="_blank" rel="noopener noreferrer">
+            {s.label}
+          </a>{" "}
+          – {s.scope}. Šaltinis peržiūrėtas {s.reviewedAt}.
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p>
+      Patikrintų viešų kainoraščių nuorodų dar nepaskelbta. Rodomi dydžiai nėra
+      patvirtinti rinkos tarifai ar rangovo pasiūlymas.
+    </p>
+  )}
+  <p class="small">
+    Modelio prielaidos peržiūrėtos:{" "}
+    <time datetime={priceReview.modelReviewedAt}>
+      {priceReview.modelReviewedAt}
+    </time>
+    . Ši data nereiškia, kad patikrintos dabartinės rangovų kainos.
+  </p>
+</details>

@@ -1,0 +1,33 @@
+---
+import Article from "../layouts/Article.astro";
+import { site } from "../data/site";
+---
+
+<Article
+  title="Projektai"
+  description="Drenažo ir lietaus vandens nuvedimo projektai: darbų nuotraukos, situacija ir pasirinkti sprendimai."
+>
+  <p slot="intro">
+    Atliktų darbų nuotraukos ir trumpi paaiškinimai apie spręstas vandens
+    problemas.
+  </p>
+  <div data-gallery-production={String(site.production)}>
+    <!--gallery:start-->
+    <div class="notice gallery-empty">
+      <h2>Projektų galerija ruošiama</h2>
+      <p>
+        Čia bus publikuojami užbaigti drenažo ir lietaus vandens nuvedimo
+        projektai: darbų nuotraukos, pradinė situacija ir pasirinktas
+        sprendimas.
+      </p>
+      <p>
+        Turite vandens problemą? Aprašykite ją – pradėti galite ir neturėdami
+        projekto ar tikslių trasos matmenų.
+      </p>
+      <a class="button" href="/gauti-pasiulyma/" data-event="primary_cta_click">
+        Gauti pasiūlymą →
+      </a>
+    </div>
+    <!--gallery:end-->
+  </div>
+</Article>
