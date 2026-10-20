@@ -32,4 +32,4 @@ Projektų įrašai yra src/content/projects/*.json. Nuotraukos įkeliamos per CM
 - [GALLERY_MANAGEMENT.md](GALLERY_MANAGEMENT.md): projektų turinys ir nuotraukos.
 - [ARCHITECTURE.md](ARCHITECTURE.md), [QA.md](QA.md), [SEO_AUDIT.md](SEO_AUDIT.md): architektūra ir patikros.
 
-Pasirenkama analitika ir atėjimo šaltinio įsiminimas įjungiami tik po sutikimo. Conversion events: phone_click, quote_started, quote_submitted, photo_uploaded, diagnostic_started, diagnostic_completed, cost_estimator_completed, primary_cta_click. PII analitikai nesiunčiama. Nekelk .dev.vars, raktų, klientų užklausų ar privačių nuotraukų į GitHub.
+Standartinis Google tag įkeltas tiesiai bendro viešų puslapių head pradžioje. Papildomi analitikos įvykiai, Cloudflare analitika ir atėjimo šaltinio įsiminimas įjungiami tik po sutikimo. Conversion events: phone_click, quote_started, quote_submitted, photo_uploaded, diagnostic_started, diagnostic_completed, cost_estimator_completed, primary_cta_click. PII analitikai nesiunčiama. Nekelk .dev.vars, raktų, klientų užklausų ar privačių nuotraukų į GitHub.

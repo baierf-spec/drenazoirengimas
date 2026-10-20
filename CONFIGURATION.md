@@ -84,4 +84,4 @@ Decap `/admin/` redaguoja tą patį site.config.json — antros nustatymų kopij
 
 ## Google Analytics
 
-analytics.ga4Id dabar G-NF15227P2D (savininko pateiktas viešas matavimo ID). Pakeitus šį lauką ir įdiegus build jis naudojamas visuose lankytojų puslapiuose. Gtag skriptas ir page_view siunčiami tik po analytics sutikimo; query parametrai, klientų kontaktai ir failų vardai nesiunčiami. Atsisakius GA4 nekraunamas. CMS/OAuth nėra lankytojų analitikos dalis. Cloudflare papildomo GA4 kintamojo nereikia.
+analytics.ga4Id dabar G-NF15227P2D (savininko pateiktas viešas matavimo ID). Google pateiktas standartinis async gtag skriptas ir inicializacija įterpiami tiesiai po bendro viešų puslapių <head> pradžios. Gtag įkeliamas atidarius puslapį. Papildomų conversion events, Cloudflare analitikos ir referrer įsiminimo sutikimo logika išlieka atskira. Senas dinaminis GA4 įkėlimas pašalintas, todėl gaunama tik viena inicializacija / page view kiekviename puslapyje. CMS/OAuth žyma nekraunama. Cloudflare papildomo GA4 kintamojo nereikia.

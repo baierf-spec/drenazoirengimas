@@ -66,6 +66,23 @@ const config = {
 <!doctype html>
 <html lang="lt">
   <head>
+    {site.ga4 && (
+      <>
+        <!-- Google tag (gtag.js) -->
+        <script
+          is:inline
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${site.ga4}`}
+        ></script>
+        <script
+          is:inline
+          set:html={`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', ${JSON.stringify(site.ga4)});`}
+        ></script>
+      </>
+    )}
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{resolvedTitle}</title>
@@ -141,8 +158,8 @@ const config = {
       <div>
         <strong id="consent-title">Jūsų privatumo pasirinkimas</strong>
         <p>
-          Lankomumo analitiką ir atėjimo šaltinio įsiminimą įjungiame tik jums
-          sutikus. Forma veikia ir jos atsisakius.{" "}
+          Papildomus analitikos įvykius ir atėjimo šaltinio įsiminimą įjungiame
+          tik jums sutikus. Forma veikia ir jos atsisakius.{" "}
           <a href="/privatumo-politika/">Plačiau</a>
         </p>
       </div>

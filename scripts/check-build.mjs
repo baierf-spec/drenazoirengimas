@@ -28,9 +28,24 @@ for (const file of pages) {
   );
   assert.equal(
     $('script[src*="googletagmanager.com"]').length,
-    0,
-    "No GA4 script before consent: " + file,
+    configuredGa4 ? 1 : 0,
+    "Exactly one shared Google tag: " + file,
   );
+  if (configuredGa4) {
+    assert.equal(
+      $('head > script[src*="googletagmanager.com"]').attr("src"),
+      "https://www.googletagmanager.com/gtag/js?id=" + configuredGa4,
+    );
+    assert.ok(
+      $("head > script")
+        .toArray()
+        .some((el) =>
+          $(el)
+            .text()
+            .includes("gtag('config', " + JSON.stringify(configuredGa4) + ")"),
+        ),
+    );
+  }
   assert.equal($("head > title").length, 1);
   assert.equal($("h1").length, 1, file + " requires one h1");
   assert.ok($("head > title").text().length > 10, file);

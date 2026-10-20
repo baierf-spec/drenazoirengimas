@@ -52,46 +52,13 @@ const config = JSON.parse(
   document.querySelector("#analytics-config")?.textContent || "{}",
 ) as { ga4?: string; cloudflare?: string; attribution?: boolean };
 let initialized = false;
-function safeReferrer() {
-  try {
-    const url = new URL(document.referrer);
-    return url.origin + url.pathname;
-  } catch {
-    return "";
-  }
-}
-
 function activate() {
   if (config.attribution) rememberEntrySource();
   else forgetEntrySource();
   setAnalyticsConsent(true);
   if (initialized) return;
   initialized = true;
-  if (config.ga4) {
-    window.dataLayer ??= [];
-    window.gtag = function () {
-      // The official gtag queue expects an IArguments object.
-      // eslint-disable-next-line prefer-rest-params
-      window.dataLayer!.push(arguments);
-    };
-    window.gtag("js", new Date());
-    window.gtag("config", config.ga4, {
-      send_page_view: false,
-      page_location: location.origin + location.pathname,
-      page_referrer: safeReferrer(),
-      allow_google_signals: false,
-      allow_ad_personalization_signals: false,
-    });
-    window.gtag("event", "page_view", {
-      page_location: location.origin + location.pathname,
-      page_path: location.pathname,
-      page_title: document.title,
-    });
-    const script = document.createElement("script");
-    script.async = true;
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(config.ga4)}`;
-    document.head.append(script);
-  }
+  // GA4 is initialized once by the shared HTML head, not by this consent handler.
   if (config.cloudflare) {
     const script = document.createElement("script");
     script.defer = true;

@@ -254,14 +254,14 @@ describe("interactive UI against the built Astro pages", () => {
       "100 m",
     );
   });
-  it("does not load optional analytics before consent and allows a deliberate decision", async () => {
+  it("does not load optional Cloudflare analytics before consent and allows a deliberate decision", async () => {
     page("");
     document.querySelector("#analytics-config")!.textContent = JSON.stringify({
-      ga4: "G-TEST123",
+      cloudflare: "cf-test-token",
     });
     await import("../src/scripts/site");
     expect(
-      document.querySelector('script[src*="googletagmanager"]'),
+      document.querySelector('script[src*="cloudflareinsights"]'),
     ).toBeNull();
     expect(document.querySelector<HTMLElement>(".consent-panel")!.hidden).toBe(
       false,
@@ -270,32 +270,27 @@ describe("interactive UI against the built Astro pages", () => {
       .querySelector<HTMLButtonElement>('[data-consent="denied"]')!
       .click();
     expect(
-      document.querySelector('script[src*="googletagmanager"]'),
+      document.querySelector('script[src*="cloudflareinsights"]'),
     ).toBeNull();
     expect(JSON.parse(localStorage.getItem("drainage-consent")!).value).toBe(
       "denied",
     );
   });
-  it("starts configured analytics only after an explicit opt-in", async () => {
+  it("does not duplicate the Google tag already included in the HTML head", async () => {
     page("");
     document.querySelector("#analytics-config")!.textContent = JSON.stringify({
       ga4: "G-TEST123",
     });
+    const gtag = vi.fn();
+    window.gtag = gtag;
     await import("../src/scripts/site");
     document
       .querySelector<HTMLButtonElement>('[data-consent="granted"]')!
       .click();
     expect(
-      document.querySelector('script[src*="googletagmanager"]'),
-    ).not.toBeNull();
-    const configCommand = window.dataLayer!.find(
-      (item) => (item as IArguments)[0] === "config",
-    ) as IArguments;
-    expect(Array.isArray(configCommand)).toBe(false);
-    expect(configCommand[1]).toBe("G-TEST123");
-    expect(
-      (configCommand[2] as { page_location: string }).page_location,
-    ).not.toContain("?");
+      document.querySelectorAll('script[src*="googletagmanager"]'),
+    ).toHaveLength(1);
+    expect(gtag).not.toHaveBeenCalled();
     expect(JSON.parse(localStorage.getItem("drainage-consent")!).value).toBe(
       "granted",
     );
