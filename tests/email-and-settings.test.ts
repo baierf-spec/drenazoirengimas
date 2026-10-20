@@ -52,15 +52,12 @@ it("sanitizes external referrers and ignores internal/invalid/credential URLs", 
   ])
     expect(externalReferrer(url)).toBe("");
 });
-it("hides public phone by default and supports explicit on/off", async () => {
-  vi.stubEnv("PUBLIC_PHONE", "+37061234567");
-  vi.stubEnv("PUBLIC_SHOW_PHONE", "false");
-  vi.resetModules();
-  expect((await import("../src/data/site")).site.phone).toBe("");
-  vi.stubEnv("PUBLIC_SHOW_PHONE", "true");
-  vi.resetModules();
-  expect((await import("../src/data/site")).site.phone).toBe("+37061234567");
-  vi.stubEnv("PUBLIC_SHOW_PHONE", "");
-  vi.resetModules();
-  expect((await import("../src/data/site")).site.phone).toBe("");
+it("hides public phone by default and supports explicit on/off in config", async () => {
+  const { publicSettings, siteConfig } = await import("../shared/site-config");
+  const config = structuredClone(siteConfig);
+  config.contact.phone = "+37061234567";
+  config.contact.showPhone = false;
+  expect(publicSettings(config).phone).toBe("");
+  config.contact.showPhone = true;
+  expect(publicSettings(config).phone).toBe("+37061234567");
 });

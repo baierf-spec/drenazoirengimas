@@ -27,6 +27,7 @@ import Icon from "./Icon.astro";
     method="post"
     enctype="multipart/form-data"
     data-turnstile={site.turnstile}
+    data-attribution={String(site.attributionEnabled)}
     novalidate
   >
     <input type="hidden" name="requestId" />

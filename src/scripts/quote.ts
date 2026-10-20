@@ -200,7 +200,10 @@ export function initQuote() {
       return;
     }
     const data = new FormData(form);
-    data.set("referrer", entrySource());
+    data.set(
+      "referrer",
+      form.dataset.attribution === "true" ? entrySource() : "",
+    );
     data.delete("photos");
     photos.forEach((photo) => data.append("photos", photo));
     const validation = validateLead(data);

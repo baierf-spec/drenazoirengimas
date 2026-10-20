@@ -1,3 +1,4 @@
+import { runtimeSettings } from "../shared/site-config";
 import type { Env } from "./types";
 import type { Lead } from "../src/lib/validation";
 export type LeadPhoto = { bytes: ArrayBuffer; mime: string };
@@ -69,13 +70,14 @@ export function renderLeadEmail(lead: Lead, photoCount: number) {
   return { text, html };
 }
 export async function sendLead(lead: Lead, photos: LeadPhoto[], env: Env) {
-  if (!env.EMAIL || !env.EMAIL_FROM || !env.ADMIN_EMAIL)
+  const settings = runtimeSettings(env as unknown as Record<string, unknown>);
+  if (!env.EMAIL || !settings.emailFrom || !settings.adminEmail)
     throw new Error("email_not_configured");
   const content = renderLeadEmail(lead, photos.length);
   await env.EMAIL.send({
-    from: env.EMAIL_FROM,
-    to: env.ADMIN_EMAIL,
-    replyTo: lead.email || env.BUSINESS_REPLY_TO,
+    from: settings.emailFrom,
+    to: settings.adminEmail,
+    replyTo: lead.email || settings.replyTo,
     subject: "Nauja drenažo užklausa – drenazoirengimas.lt",
     ...content,
     attachments: photos.map((photo, i) => ({

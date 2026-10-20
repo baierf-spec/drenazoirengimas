@@ -1,0 +1,205 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "site": {
+      "type": "object",
+      "properties": {
+        "origin": {
+          "type": "string",
+          "format": "uri"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        }
+      },
+      "required": [
+        "origin",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "contact": {
+      "type": "object",
+      "properties": {
+        "showPhone": {
+          "type": "boolean"
+        },
+        "phone": {
+          "type": "string",
+          "maxLength": 30
+        },
+        "email": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "email",
+              "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+            },
+            {
+              "type": "string",
+              "const": ""
+            }
+          ]
+        }
+      },
+      "required": [
+        "showPhone",
+        "phone",
+        "email"
+      ],
+      "additionalProperties": false
+    },
+    "privacy": {
+      "type": "object",
+      "properties": {
+        "controllerName": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "controllerAddress": {
+          "type": "string",
+          "maxLength": 300
+        }
+      },
+      "required": [
+        "controllerName",
+        "controllerAddress"
+      ],
+      "additionalProperties": false
+    },
+    "turnstile": {
+      "type": "object",
+      "properties": {
+        "siteKey": {
+          "type": "string",
+          "maxLength": 100
+        }
+      },
+      "required": [
+        "siteKey"
+      ],
+      "additionalProperties": false
+    },
+    "analytics": {
+      "type": "object",
+      "properties": {
+        "ga4Id": {
+          "type": "string"
+        },
+        "cloudflareToken": {
+          "type": "string",
+          "maxLength": 200
+        },
+        "googleVerification": {
+          "type": "string",
+          "maxLength": 200
+        }
+      },
+      "required": [
+        "ga4Id",
+        "cloudflareToken",
+        "googleVerification"
+      ],
+      "additionalProperties": false
+    },
+    "features": {
+      "type": "object",
+      "properties": {
+        "leadsEnabled": {
+          "type": "boolean"
+        },
+        "indexingEnabled": {
+          "type": "boolean"
+        },
+        "referrerAttribution": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "leadsEnabled",
+        "indexingEnabled",
+        "referrerAttribution"
+      ],
+      "additionalProperties": false
+    },
+    "email": {
+      "type": "object",
+      "properties": {
+        "from": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "email",
+              "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+            },
+            {
+              "type": "string",
+              "enum": [
+                "env:EMAIL_FROM",
+                "env:ADMIN_EMAIL",
+                "env:BUSINESS_REPLY_TO"
+              ]
+            }
+          ]
+        },
+        "to": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "email",
+              "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+            },
+            {
+              "type": "string",
+              "enum": [
+                "env:EMAIL_FROM",
+                "env:ADMIN_EMAIL",
+                "env:BUSINESS_REPLY_TO"
+              ]
+            }
+          ]
+        },
+        "replyTo": {
+          "anyOf": [
+            {
+              "type": "string",
+              "format": "email",
+              "pattern": "^(?:[A-Za-z0-9_'+\\-]+\\.)*[A-Za-z0-9_'+\\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\\-]*\\.)+[A-Za-z]{2,}$"
+            },
+            {
+              "type": "string",
+              "enum": [
+                "env:EMAIL_FROM",
+                "env:ADMIN_EMAIL",
+                "env:BUSINESS_REPLY_TO"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "from",
+        "to",
+        "replyTo"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "site",
+    "contact",
+    "privacy",
+    "turnstile",
+    "analytics",
+    "features",
+    "email"
+  ],
+  "additionalProperties": false,
+  "title": "Svetainės nustatymai"
+}

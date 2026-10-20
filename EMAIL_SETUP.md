@@ -1,27 +1,23 @@
-# Užklausos ir nuotraukos tiesiai į paštą
+# Užklausų siuntimas paštu
 
-Dabartinė versija siunčia vieną administratoriaus laišką su klientų nuotraukų priedais per Cloudflare EMAIL binding. Nėra Resend, D1, R2, migracijų ar cron. Klientui automatinis patvirtinimo laiškas nesiunčiamas.
+Visi adresų pasirinkimai dabar yra **site.config.json → email**. Detalūs nustatymai ir pirkėjo perdavimas – CONFIGURATION.md. Naudojamas Cloudflare EMAIL binding; nėra Resend, D1 ar R2.
 
-1. Cloudflare Email Service → Email Routing prijunk drenazoirengimas.lt. Jei domene jau yra kito pašto MX/SPF įrašai, jų neperrašyk aklai: patikrink suderinamumą.
-2. Destination Addresses pridėk savo gavėjo paštą ir paspausk gautą patvirtinimo nuorodą. Siuntimas į patvirtintus paskyros gavėjus galimas nemokamu režimu. Siuntėjo adresas turi būti iš prijungto routing domeno. Naudok tik Cloudflare pateiktus DNS įrašus.
-3. Worker runtime Variables and Secrets įrašyk EMAIL_FROM (paprastas siuntėjo adresas), ADMIN_EMAIL (patvirtintas gavėjas), BUSINESS_REPLY_TO (tavo veikiantis atsakymų paštas), TURNSTILE_SECRET_KEY. EMAIL yra konfigūracijoje esantis send_email binding, ne API raktas.
-4. Build variables įrašyk PUBLIC_PHONE, PUBLIC_CONTACT_EMAIL, PUBLIC_CONTROLLER_NAME, PUBLIC_CONTROLLER_ADDRESS, PUBLIC_TURNSTILE_SITE_KEY, PUBLIC_SITE_MODE=production. Viešas kontaktinis paštas ir privatus ADMIN_EMAIL gali skirtis. PUBLIC_* reikšmėms pritaikyti reikia naujo build.
-5. Kai domenas ir siuntimas paruošti, wrangler.jsonc nustatyk LEADS_ENABLED=true. Serverio reikšmes derink su Wrangler, kad vėlesnis deploy jų neatšauktų. Iki aktyvavimo palik false. SEO_INDEXABLE įjunk atskirai po domeno / turinio patikros.
-6. Išsiųsk bandomąją užklausą su keliomis nuotraukomis. Patikrink Inbox / Spam, priedų atidarymą ir Atsakyti: jeigu klientas pateikė el. paštą, atsakymas adresuojamas jam, kitaip BUSINESS_REPLY_TO.
+1. Cloudflare Email Routing prijunk svetainės domeną ir patvirtink tikrą užklausų gavėją per Destination Addresses.
+2. JSON faile nurodyk email.from (siuntėjas iš prijungto domeno), email.to (patvirtintas savininko gavėjas), email.replyTo (veikiantis veiklos adresas). Saugykla vieša: adresus galima įrašyti tiesiogiai tik jei galima juos viešinti GitHub.
+3. Esamos env:EMAIL_FROM / env:ADMIN_EMAIL / env:BUSINESS_REPLY_TO nuorodos palaiko jau veikiančius privačius Cloudflare nustatymus. Kiekvieną nuorodą gali pakeisti tikru adresu tame pačiame JSON; po to senas Cloudflare laukas nebenaudojamas. Nėra fallback į kitą gavėją.
+4. JSON turnstile.siteKey turi būti tikras viešas Site key, o Cloudflare runtime – jo TURNSTILE_SECRET_KEY. Slapto rakto į GitHub nekelk.
+5. JSON features.leadsEnabled=true įjungia užklausas. Išsaugok commit ir sulauk sėkmingo build/deploy. PUBLIC_* ir LEADS_ENABLED Cloudflare laukai nebereikalingi ir nebeužgožia config.
+6. Išsiųsk kontrolinę užklausą ir patikrink Inbox / Spam, nuotraukų priedus, telefono ir el. pašto nuorodas. Reply-To rodo kliento paštą, jei pateiktas, kitu atveju email.replyTo.
 
-Iki 5 nuotraukų; naršyklė mažina iki 1600 px ir perrašo JPEG be originalių EXIF. Serveris leidžia iki 2 MiB vienai nuotraukai ir 3 MiB visoms kartu. Laukelyje tinka JPG/PNG/WebP. Per didelį rinkinį sumažink arba pašalink dalį nuotraukų. Failų originalūs vardai gavėjui nesiunčiami.
+Laiškas turi HTML ir plain-text versijas; matomi kontaktai, vieta, objektas / problema / terminas, neprivalomas komentaras, nuotraukų informacija ir atėjimo šaltinio domenas. Techniniai UUID lieka delivery header, ne laiško turinyje. Klientui automatinis laiškas šioje owner-only versijoje nesiunčiamas.
 
-Sėkmė rodoma tik EMAIL.send priėmus laišką, tačiau tai nėra galutinio pristatymo į Inbox garantija. Siuntimo klaidos atveju forma rodo klaidą ir leidžia bandyti dar kartą. Nėra foninio pakartojimo iš duomenų bazės. Retais tinklo sutrikimo atvejais galimas dubliuotas laiškas su tuo pačiu užklausos numeriu.
+Iki 5 nuotraukų: naršyklė sumažina iki 1600 px ir perrašo JPEG be originalių EXIF. Serveris tikrina MIME / parašą, leidžia iki 2 MiB vienam failui ir 3 MiB visiems kartu. Nuotraukos niekur viešai nepublikuojamos. EMAIL.send priėmimas nėra Inbox garantija; nėra patvarios eilės ar foninio retry. Klaidos atveju duomenys lieka formoje ir klientas bando dar kartą; galimas dubliavimas retų tinklo nutrūkimų metu.
 
-Šaltiniai (tikrinta 2026-10-20):
+Atėjimo šaltinį valdo features.referrerAttribution. Įjungus ir lankytojui leidus analitiką, įsimenamas pirmas išorinis domenas šiame skirtuke iki 24 valandų. Pilnas adresas, paieškos užklausa ar URL parametrai nesaugomi. Jei šaltinis neperduotas / sutikimo nėra, laiške rodoma „Nenustatytas“. Tai nėra konkretaus reklamos paspaudimo įrodymas.
+
+Šaltiniai:
 
 - https://developers.cloudflare.com/email-service/
 - https://developers.cloudflare.com/email-service/api/send-emails/workers-api/
 - https://developers.cloudflare.com/email-service/configuration/send-bindings/
 - https://developers.cloudflare.com/email-service/platform/limits/
-
-## Laiško išvaizda ir atėjimo šaltinis
-
-Pranešime yra tvarkingas HTML išdėstymas ir tekstinė versija. Rodomi tik kliento kontaktai, vieta, situacija, terminas, neprivalomas komentaras ir nuotraukų priedų informacija. Techniniai UUID / sutikimo versija / tušti klausimyno laukai iš laiško turinio pašalinti. Reply-To ir nuotraukų priedai išsaugoti.
-
-Leidus analitiką, šio skirtuko sesijoje iki 24 valandų įsimenamas pirmo atėjimo domenas. Jei naršyklė jo neperduoda arba lankytojas nesutinka, laiške nurodoma „Nenustatytas“. Nenustatomas konkretus Google paieškos raktažodis ar mokama reklama vien iš referrer domeno. Pilni šaltinio adresai / parametrai nesaugomi.

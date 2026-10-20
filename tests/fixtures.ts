@@ -3,9 +3,6 @@ import type { Env } from "../worker/types";
 export function fixture() {
   const env: Env = {
     ASSETS: { fetch: async () => new Response("asset") } as unknown as Fetcher,
-    SITE_ORIGIN: "https://drenazoirengimas.lt",
-    ALLOWED_ORIGINS: "https://drenazoirengimas.lt",
-    LEADS_ENABLED: "true",
     TURNSTILE_SECRET_KEY: "server-test-secret",
     EMAIL_FROM: "forms@example.test",
     ADMIN_EMAIL: "admin@example.test",

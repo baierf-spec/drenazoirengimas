@@ -8,7 +8,7 @@ const root = path.resolve(".audit-production");
 execFileSync(
   path.resolve("node_modules/.bin/astro"),
   ["build", "--outDir", root],
-  { stdio: "inherit", env: { ...process.env, PUBLIC_SITE_MODE: "production" } },
+  { stdio: "inherit", env: { ...process.env, SITE_AUDIT_MODE: "production" } },
 );
 const files = [];
 async function walk(dir) {

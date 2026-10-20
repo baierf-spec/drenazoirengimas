@@ -12,7 +12,7 @@
     "build:production": "node scripts/preflight.mjs && npm run build",
     "preview": "astro preview --host 0.0.0.0",
     "dev:worker": "wrangler dev",
-    "lint": "eslint src worker tests scripts astro.config.mjs eslint.config.mjs",
+    "lint": "eslint src shared worker tests scripts astro.config.mjs eslint.config.mjs",
     "typecheck": "astro check && tsc --noEmit -p tsconfig.worker.json",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -21,10 +21,12 @@
     "deploy": "npm run build:production && wrangler deploy",
     "deploy:dry-run": "wrangler deploy --dry-run --outdir .wrangler-dry-run",
     "optimize:images": "node scripts/optimize-images.mjs",
-    "format": "prettier --write src worker tests scripts *.mjs *.json *.jsonc *.md .github",
+    "format": "prettier --write src shared worker tests scripts *.mjs *.json *.jsonc *.md .github",
     "check:secrets": "node scripts/check-secrets.mjs",
     "audit:seo": "node scripts/audit-seo.mjs",
-    "audit:projects": "node scripts/audit-projects.mjs"
+    "audit:projects": "node scripts/audit-projects.mjs",
+    "config:check": "node scripts/preflight.mjs",
+    "config:schema": "node scripts/config-schema.mjs"
   },
   "dependencies": {
     "@fontsource-variable/manrope": "5.3.0",

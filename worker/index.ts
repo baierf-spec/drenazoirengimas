@@ -1,3 +1,4 @@
+import { runtimeSettings } from "../shared/site-config";
 import type { Env } from "./types";
 import { receiveLead, json } from "./leads";
 const securityHeaders: Record<string, string> = {
@@ -12,17 +13,20 @@ export async function handleRequest(
   request: Request,
   env: Env,
   ctx: Pick<ExecutionContext, "waitUntil">,
+  settings = runtimeSettings(env as unknown as Record<string, unknown>),
 ): Promise<Response> {
   const url = new URL(request.url);
   const preview =
-    url.hostname !== "drenazoirengimas.lt" || env.SEO_INDEXABLE !== "true";
+    url.hostname !== new URL(settings.origin).hostname ||
+    !settings.indexingEnabled;
   let response: Response;
   if (
-    url.hostname === "www.drenazoirengimas.lt" ||
-    (url.hostname === "drenazoirengimas.lt" && url.protocol === "http:")
+    url.hostname === "www." + new URL(settings.origin).hostname ||
+    (url.hostname === new URL(settings.origin).hostname &&
+      url.protocol === "http:")
   ) {
     url.protocol = "https:";
-    url.hostname = "drenazoirengimas.lt";
+    url.hostname = new URL(settings.origin).hostname;
     return Response.redirect(url.href, 301);
   }
   let decodedPath: string;

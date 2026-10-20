@@ -38,7 +38,7 @@ try {
   );
   execFileSync("node_modules/.bin/astro", ["build", "--outDir", output], {
     stdio: "inherit",
-    env: { ...process.env, PUBLIC_SITE_MODE: "production" },
+    env: { ...process.env, SITE_AUDIT_MODE: "production" },
   });
   const html = await readFile(
       output + "/projektai/qa-fixture/index.html",

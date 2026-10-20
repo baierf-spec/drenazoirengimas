@@ -1,22 +1,5 @@
-export const site = {
-  origin: "https://drenazoirengimas.lt",
-  name: "drenazoirengimas.lt",
-  production: import.meta.env.PUBLIC_SITE_MODE === "production",
-  phone:
-    import.meta.env.PUBLIC_SHOW_PHONE === "true" &&
-    /^\+370\d{8}$/.test(import.meta.env.PUBLIC_PHONE || "")
-      ? import.meta.env.PUBLIC_PHONE
-      : "",
-  email: import.meta.env.PUBLIC_CONTACT_EMAIL || "",
-  controller: import.meta.env.PUBLIC_CONTROLLER_NAME || "",
-  controllerAddress: import.meta.env.PUBLIC_CONTROLLER_ADDRESS || "",
-  turnstile: import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "",
-  ga4: /^G-[A-Z0-9]+$/.test(import.meta.env.PUBLIC_GA4_ID || "")
-    ? import.meta.env.PUBLIC_GA4_ID
-    : "",
-  cloudflareAnalytics: import.meta.env.PUBLIC_CF_ANALYTICS_TOKEN || "",
-  verification: import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION || "",
-};
+import { publicSettings } from "../../shared/site-config";
+export const site = publicSettings(undefined, import.meta.env.SITE_AUDIT_MODE);
 export const problems = [
   {
     id: "foundations",

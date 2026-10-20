@@ -1,7 +1,8 @@
 import { defineConfig } from "astro/config";
+import settings from "./site.config.json" with { type: "json" };
 export default defineConfig({
   server: { host: "0.0.0.0", port: 4173 },
-  site: "https://drenazoirengimas.lt",
+  site: settings.site.origin,
   output: "static",
   trailingSlash: "always",
   build: { inlineStylesheets: "auto" },

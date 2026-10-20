@@ -7,12 +7,14 @@
     "skipLibCheck": true,
     "lib": ["ES2022", "WebWorker"],
     "types": ["@cloudflare/workers-types"],
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    "resolveJsonModule": true
   },
   "include": [
     "worker/**/*.ts",
     "src/lib/validation.ts",
     "src/lib/estimator.ts",
-    "src/lib/diagnostic.ts"
+    "src/lib/diagnostic.ts",
+    "shared/**/*.ts"
   ]
 }

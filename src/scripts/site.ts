@@ -62,7 +62,8 @@ function safeReferrer() {
 }
 
 function activate() {
-  rememberEntrySource();
+  if (config.attribution) rememberEntrySource();
+  else forgetEntrySource();
   setAnalyticsConsent(true);
   if (initialized) return;
   initialized = true;

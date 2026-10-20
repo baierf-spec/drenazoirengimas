@@ -1,3 +1,4 @@
+import { runtimeSettings } from "../shared/site-config";
 import type { Env } from "./types";
 export const encoder = new TextEncoder();
 export async function digest(value: string) {
@@ -25,16 +26,19 @@ export async function sign(value: string, secret: string) {
     .map((b) => b.toString(16).padStart(2, "0"))
     .join("");
 }
-export function configured(env: Env) {
+export function configured(
+  env: Env,
+  settings = runtimeSettings(env as unknown as Record<string, unknown>),
+) {
   return (
-    env.LEADS_ENABLED === "true" &&
+    settings.leadsEnabled &&
     Boolean(
       env.EMAIL &&
       env.TURNSTILE_SECRET_KEY &&
-      env.EMAIL_FROM &&
-      env.ADMIN_EMAIL &&
-      env.BUSINESS_REPLY_TO &&
-      env.SITE_ORIGIN,
+      settings.emailFrom &&
+      settings.adminEmail &&
+      settings.replyTo &&
+      settings.origin,
     )
   );
 }
@@ -64,15 +68,9 @@ export async function validateTurnstile(
     hostname: string;
     action: string;
   };
-  const hosts = (env.ALLOWED_ORIGINS || env.SITE_ORIGIN || "")
-    .split(",")
-    .map((v) => {
-      try {
-        return new URL(v.trim()).hostname;
-      } catch {
-        return "";
-      }
-    });
+  const hosts = runtimeSettings(
+    env as unknown as Record<string, unknown>,
+  ).allowedOrigins.map((v) => new URL(v).hostname);
   return (
     result.success === true &&
     hosts.includes(result.hostname) &&

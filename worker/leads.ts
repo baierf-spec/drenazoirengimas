@@ -1,3 +1,4 @@
+import { runtimeSettings } from "../shared/site-config";
 import { LIMITS, imageType, validateLead } from "../src/lib/validation";
 import type { Env } from "./types";
 import { configured, digest, limitedBody, validateTurnstile } from "./security";
@@ -26,9 +27,9 @@ export async function receiveLead(
       Allow: "POST",
     });
   const origin = request.headers.get("Origin");
-  const allowed = (env.ALLOWED_ORIGINS || env.SITE_ORIGIN || "")
-    .split(",")
-    .map((v) => v.trim());
+  const allowed = runtimeSettings(
+    env as unknown as Record<string, unknown>,
+  ).allowedOrigins;
   if (!origin || !allowed.includes(origin))
     return json({ error: "Užklausa iš šio puslapio neleidžiama." }, 403);
   if (!configured(env))

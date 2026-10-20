@@ -10,12 +10,8 @@
     "html_handling": "force-trailing-slash",
     "run_worker_first": true,
   },
-  "vars": {
-    "SITE_ORIGIN": "https://drenazoirengimas.lt",
-    "ALLOWED_ORIGINS": "https://drenazoirengimas.lt",
-    "LEADS_ENABLED": "true",
-    "SEO_INDEXABLE": "false",
-  },
+  // Preserve existing private email references during migration; other old vars are ignored.
+  "keep_vars": true,
   // Default binding sends to verified account destinations only.
   "send_email": [{ "name": "EMAIL" }],
   "observability": { "enabled": false },
