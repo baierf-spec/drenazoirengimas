@@ -1,3 +1,4 @@
+import { cmsAuth } from "./cms-auth";
 import { runtimeSettings } from "../shared/site-config";
 import type { Env } from "./types";
 import { receiveLead, json } from "./leads";
@@ -37,9 +38,14 @@ export async function handleRequest(
   } catch {
     return new Response("Nerasta", { status: 404 });
   }
+  const cmsPath = /^\/admin(?:\/|$)/.test(decodedPath);
+  const authPath = ["/auth", "/callback"].includes(decodedPath);
   const manager = /^\/gallery-manager(?:\/|\.html|$)/.test(decodedPath);
   const galleryApiPath = /^\/api\/gallery(?:\/|$)/.test(decodedPath);
-  if (manager || galleryApiPath)
+  if (authPath) response = await cmsAuth(request, env);
+  else if (cmsPath && url.origin !== settings.origin)
+    response = json({ error: "Puslapis nerastas." }, 404);
+  else if (manager || galleryApiPath)
     response = json({ error: "Puslapis nerastas." }, 404);
   else if (preview && url.pathname === "/robots.txt")
     response = new Response("User-agent: *\nDisallow: /\n", {
@@ -77,7 +83,14 @@ export async function handleRequest(
   }
   const headers = new Headers(response.headers);
   for (const [key, value] of Object.entries(securityHeaders))
-    headers.set(key, value);
+    if (!(authPath && headers.has(key))) headers.set(key, value);
+  if (cmsPath) {
+    headers.set("Cache-Control", "no-store");
+    headers.set(
+      "Content-Security-Policy",
+      "default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://avatars.githubusercontent.com https://raw.githubusercontent.com https://user-images.githubusercontent.com; font-src 'self' data:; connect-src 'self' https://api.github.com https://raw.githubusercontent.com https://www.netlifystatus.com; frame-src blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
+    );
+  }
   if (url.protocol === "https:")
     headers.set("Strict-Transport-Security", "max-age=31536000");
   if (manager || galleryApiPath) {
@@ -94,6 +107,8 @@ export async function handleRequest(
   }
   if (
     preview ||
+    cmsPath ||
+    authPath ||
     manager ||
     url.pathname.startsWith("/api/") ||
     response.status >= 400

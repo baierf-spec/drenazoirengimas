@@ -1,0 +1,1 @@
+Tik tikrų darbų JSON įrašai. CMS sukuria atskirą failą projektui; failo vardas yra nekintantis viešo adreso slug. Tuščias katalogas yra sąmoningas — neegzistuojančių darbų nekuriame. Nepublikuoti įrašai nesukuria viešų puslapių, tačiau visas viešos GitHub saugyklos turinys ir istorija yra vieši. Čia nedėkite privačių klientų užklausų ar jų nuotraukų.

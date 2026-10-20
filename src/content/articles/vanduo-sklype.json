@@ -1,0 +1,38 @@
+{
+  "slug": "vanduo-sklype",
+  "title": "Vanduo sklype: nuo ko pradėti?",
+  "description": "Ką stebėti, kai kieme laikosi balos, šlampa veja ar rūsys? Praktiškas pasiruošimas vandens problemos įvertinimui.",
+  "intro": "Svarbiausias pirmas žingsnis – užfiksuoti, kada ir kur atsiranda vanduo. Ne kiekvienai balai reikia tokios pačios sistemos.",
+  "image": "yard",
+  "imageAlt": "Iliustracija: balos ir šlapia veja gyvenamojo namo sklype",
+  "sections": [
+    {
+      "title": "Stebėkite, kada kaupiasi vanduo",
+      "text": [
+        "Pasižymėkite, ar problema pasireiškia tik po liūties, pavasarį, ar laikosi nuolat. Užfiksuokite vietas ir apytikslį laiką, per kurį vanduo dingsta.",
+        "Nuotraukose parodykite ne tik pačią balą, bet ir aplinkinius aukščius, pastatus, dangas bei lietvamzdžius. Tai padeda suprasti kontekstą, tačiau nėra galutinė diagnozė."
+      ]
+    },
+    {
+      "title": "Paviršinis ar grunto vanduo?",
+      "text": [
+        "Paviršiumi atitekantis vanduo ir drėgmė grunte gali reikalauti skirtingų sprendimų. Iš vienos nuotraukos patikimai atskirti priežasties ne visuomet įmanoma.",
+        "Pokalbiui su specialistu padės trumpas diagnostikos klausimynas. Jo rezultatas išskiria klausimus pokalbiui."
+      ]
+    },
+    {
+      "title": "Ko nesiimti vien pagal bendrą patarimą?",
+      "text": [
+        "Nepradėkite kasimo šalia pamatų, nežinomų komunikacijų ar kaimyninio sklypo ribos vien pagal interneto schemą. Nekreipkite vandens į kitą sklypą neįvertinę sąlygų ir reikalavimų.",
+        "Jei vanduo kelia tiesioginį pavojų žmonėms, elektros įrangai ar konstrukcijoms, pirmiausia rūpinkitės saugumu. Ši užklausų forma nėra avarinė tarnyba."
+      ]
+    },
+    {
+      "title": "Ką nusiųsti prieš pirmą pokalbį?",
+      "text": [
+        "Nurodykite miestą ar gyvenvietę, pagrindinį simptomą, jo pasikartojimą ir pridėkite kelias nuotraukas. Tikslių vamzdyno metrų ar sprendinio žinoti nereikia."
+      ]
+    }
+  ],
+  "enabled": true
+}

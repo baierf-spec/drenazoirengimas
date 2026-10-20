@@ -8,7 +8,7 @@ export const projectTypes = {
 const image = z.object({
   src: z
     .string()
-    .regex(/^\/images\/projects\/[a-z0-9/-]+\.(webp|jpg|png|avif)$/),
+    .regex(/^\/images\/projects\/[a-z0-9_/-]+\.(webp|jpg|png|avif)$/),
   alt: z.string().trim().min(3).max(200),
   width: z.number().int().positive(),
   height: z.number().int().positive(),
@@ -17,7 +17,7 @@ const image = z.object({
       z.object({
         src: z
           .string()
-          .regex(/^\/images\/projects\/[a-z0-9/-]+\.(webp|jpg|png|avif)$/),
+          .regex(/^\/images\/projects\/[a-z0-9_/-]+\.(webp|jpg|png|avif)$/),
         width: z.number().int().positive(),
       }),
     )
@@ -28,10 +28,17 @@ export const projectSchema = z
     slug: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
     title: z.string().trim().min(3).max(120),
     description: z.string().trim().min(10).max(2000),
+    problem: z.string().max(2000).optional(),
+    solution: z.string().max(3000).optional(),
+    work_scope: z.string().max(2000).optional(),
+    duration: z.string().max(200).optional(),
+    price: z.string().max(200).optional(),
+    seoTitle: z.string().max(120).optional(),
+    seoDescription: z.string().max(180).optional(),
     location: z.string().trim().max(120).optional(),
     completion_date: z
       .string()
-      .regex(/^\d{4}(-\d{2}-\d{2})?$/)
+      .regex(/^(?:\d{4}(-\d{2}-\d{2})?)?$/)
       .optional(),
     project_type: z.enum(["foundation", "plot", "rain", "other"]).optional(),
     status: z.enum(["draft", "published"]),

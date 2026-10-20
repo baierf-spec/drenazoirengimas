@@ -63,7 +63,7 @@ wrangler.jsonc turi keep_vars=true, kad pirmas migracijos diegimas neištrintų 
 
 ## Pirkėjo perkėlimo seka
 
-1. Perduoti / nukopijuoti GitHub saugyklą su nuotraukomis ir src/data/projects.json.
+1. Perduoti / nukopijuoti GitHub saugyklą su nuotraukomis ir src/content/projects/.
 2. Pakeisti site.config.json kontaktus, valdytoją, pašto adresus ir naujo Turnstile valdiklio viešą Site key. Jokio PUBLIC_* kopijavimo nereikia.
 3. Pirkėjo Cloudflare paskyroje prijungti domeną, GitHub saugyklą ir Email Routing; patvirtinti jo gavėjo paštą.
 4. Worker aplinkoje įrašyti naujo valdiklio TURNSTILE_SECRET_KEY. Jei pasirinktos privačios env: nuorodos, įrašyti ir jas.
@@ -77,3 +77,7 @@ site.config.schema.json padeda redaktoriui rasti klaidas; bendras validavimo kod
 SITE_AUDIT_MODE naudojamas tik automatinių testų ir izoliuoto SEO audito viduje. Jo nereikia nustatyti Cloudflare. Nei šis testinis jungiklis, nei senos Cloudflare veiklos reikšmės nėra pirkėjo konfigūravimo eiga.
 
 wrangler.jsonc saugo techninį Worker vardą, assets / EMAIL binding ir suderinamumo datą. Įprastai parduodant tą pačią drenazoirengimas.lt svetainę jų keisti nereikia. Projektų turinys ir kainų tyrimo šaltiniai lieka jiems skirtuose turinio failuose; jie nėra infrastruktūros nustatymai.
+
+## Turinio valdymas
+
+Decap `/admin/` redaguoja tą patį site.config.json — antros nustatymų kopijos nėra. Nauji business laukai saugo CTA, teritorijas ir poraštės tekstą. Canonical / indeksavimo infrastruktūra CMS paslėpta. OAuth raktai pridedami tik Cloudflare; jie nepriskiriami veiklos konfigūracijai. Žr. CMS_SETUP.md.

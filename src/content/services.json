@@ -1,0 +1,28 @@
+{
+  "items": [
+    {
+      "slug": "pamatu-drenazas",
+      "title": "Pamatų drenažas",
+      "tag": "NAMUI",
+      "text": "Vandens valdymas prie esamo ar statomo namo, atsižvelgiant į pamatus ir hidroizoliaciją.",
+      "icon": "house",
+      "enabled": true
+    },
+    {
+      "slug": "sklypo-drenazas",
+      "title": "Sklypo drenažas",
+      "tag": "SKLYPUI",
+      "text": "Sprendimai užmirkstančiam kiemui, molingam gruntui ir užmirkstančioms teritorijoms.",
+      "icon": "trees",
+      "enabled": true
+    },
+    {
+      "slug": "lietaus-vandens-nuvedimas",
+      "title": "Lietaus vandens nuvedimas",
+      "tag": "VANDENS KELIUI",
+      "text": "Nuo stogo ir dangų surenkamas vanduo turi turėti tinkamą priėmimo vietą.",
+      "icon": "water",
+      "enabled": true
+    }
+  ]
+}

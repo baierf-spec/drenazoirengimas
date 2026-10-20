@@ -1,0 +1,92 @@
+{
+  "items": [
+    {
+      "question": "Kada reikalingas drenažas?",
+      "answer": "Drenažą verta svarstyti, kai vanduo grunte nuolat kaupiasi prie pamatų ar sklype. Pirmiausia nustatomas jo šaltinis ir galimybė nuvesti surinktą vandenį. Vien drėgmė ar balos dar nereiškia, kad būtina įrengti drenažą.",
+      "enabled": true,
+      "link": {
+        "href": "/pamatu-drenazas/",
+        "label": "Kada vertinti pamatų drenažą"
+      }
+    },
+    {
+      "question": "Kas lemia drenažo įrengimo kainą?",
+      "answer": "Kainą lemia trasos ilgis, kasimo sąlygos, medžiagos, šuliniai, vandens nuvedimas ir gerbūvio atkūrimas. Lyginant pasiūlymus svarbu patikrinti darbų apimtį. Skaičiuoklė pateikia tik orientacinį scenarijų, ne rangovo sąmatą.",
+      "enabled": true,
+      "link": {
+        "href": "/drenazo-kaina/",
+        "label": "Drenažo kainos veiksniai ir skaičiuoklė"
+      }
+    },
+    {
+      "question": "Kada reikalinga objekto apžiūra?",
+      "answer": "Apžiūros gali reikėti, kai iš nuotraukų neaiškus reljefas, vandens šaltinis, esami tinklai ar nuvedimo galimybės. Nuotraukos padeda pasiruošti pokalbiui, bet nepatvirtina galutinio sprendimo ar kainos.",
+      "enabled": true,
+      "link": {
+        "href": "/gauti-pasiulyma/",
+        "label": "Pateikti objekto situaciją"
+      }
+    },
+    {
+      "question": "Kur nuvedamas drenažo vanduo?",
+      "answer": "Vandens priėmimo vieta parenkama pagal gruntą, reljefą ir taikomus reikalavimus. Ji turi būti techniškai tinkama ir leistina. Šulinys savaime nėra galutinė nuvedimo vieta, o prijungimas prie tinklų negali būti žadamas nepatikrinus sąlygų.",
+      "enabled": true,
+      "link": {
+        "href": "/lietaus-vandens-nuvedimas/",
+        "label": "Vandens surinkimas ir nuvedimas"
+      }
+    },
+    {
+      "question": "Ar drenažas padeda molingame grunte?",
+      "answer": "Gali padėti, tačiau molingam sklypui netinka vienodas sprendimas visais atvejais. Reikia įvertinti vandens šaltinį, grunto laidumą, filtro ir drenuojančio sluoksnio parinkimą bei nuvedimą. Infiltracijos galimybę būtina tikrinti atskirai.",
+      "enabled": true,
+      "link": {
+        "href": "/sklypo-drenazas/#molingas-gruntas",
+        "label": "Drenažas molingame grunte"
+      }
+    },
+    {
+      "question": "Kuo skiriasi pamatų ir sklypo drenažas?",
+      "answer": "Pamatų drenažas sprendžia vandens grunte problemą prie pastato, o sklypo drenažas – užmirkstančiose teritorijos vietose. Abi sistemos priklauso nuo grunto, reljefo ir nuvedimo sąlygų. Pamatų drenažas neatstoja hidroizoliacijos.",
+      "enabled": true,
+      "link": {
+        "href": "/drenazas-ar-lietaus-nuotekos/",
+        "label": "Vandens valdymo sistemų skirtumai"
+      }
+    },
+    {
+      "question": "Kaip suprasti, ar problema susijusi su drenažu?",
+      "answer": "Užfiksuokite, kur, kada ir kiek laiko laikosi vanduo. Balos po lietaus, nuolat šlapias gruntas ir drėgmė rūsyje gali turėti skirtingas priežastis. Jas padeda atskirti objekto įvertinimas; vien simptomų patikimai diagnozei nepakanka.",
+      "enabled": true,
+      "link": {
+        "href": "/vanduo-sklype/",
+        "label": "Ką stebėti šlapiame sklype"
+      }
+    },
+    {
+      "question": "Ar lietaus vanduo ir drenažas yra ta pati sistema?",
+      "answer": "Ne. Drenažu surenkamas vanduo grunte, o lietaus sistema valdo nuo stogo ir dangų surinktą vandenį. Jos gali būti bendro vandens valdymo dalis, tačiau sujungimo ar atskiro nuvedimo sprendimas parenkamas konkrečiam objektui.",
+      "enabled": true
+    },
+    {
+      "question": "Kiek laiko trunka drenažo įrengimas?",
+      "answer": "Terminas priklauso nuo trasos, kasimo sąlygų, privažiavimo, esamų dangų ir derinimų. Darbų eiga bei trukmė aptariamos įvertinus objektą. Vienas terminas visiems sklypams nebūtų patikimas.",
+      "enabled": true
+    },
+    {
+      "question": "Ar reikės ardyti veją ir trinkeles?",
+      "answer": "Kasimo zona ir technikos privažiavimas aptariami prieš darbus. Sąmatoje verta atskirai numatyti dangų ardymą, grunto tvarkymą ir pažeistų vietų atkūrimą.",
+      "enabled": true
+    },
+    {
+      "question": "Ar galima kreiptis ne iš Vilniaus ar Kauno?",
+      "answer": "Taip, užklausą galima pateikti iš visos Lietuvos. Prioritetinės vietovės – Vilnius, Kaunas ir jų rajonai. Rangovo galimybė atvykti konkrečiu adresu tikslinama pagal jo aptarnavimo teritoriją ir užimtumą.",
+      "enabled": true
+    },
+    {
+      "question": "Kas gaus mano užklausą?",
+      "answer": "Užklausa perduodama ją administruojančiam asmeniui ir, jums sutikus, tinkamam nepriklausomam paslaugos teikėjui. Darbų apimtį, kainą ir sutartį suderinate su pasirinktu rangovu. Pateikta užklausa neįpareigoja užsakyti darbų.",
+      "enabled": true
+    }
+  ]
+}

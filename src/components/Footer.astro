@@ -9,14 +9,14 @@ import { site } from "../data/site";
     <div>
       <Logo light />
       <p>
-        Drenažas be spėlionių.
-        <br />
-        Pirmiausia įvertinimas. Tada – sprendimas.
+        {site.footerLines.map((line, i) => (
+          <>
+            {i > 0 && <br />}
+            {line}
+          </>
+        ))}
       </p>
-      <p class="small">
-        Svetainė padeda pateikti užklausą nepriklausomam paslaugos teikėjui.
-        Darbų galimybės ir sąlygos derinamos individualiai.
-      </p>
+      <p class="small">{site.footerDescription}</p>
     </div>
     <div>
       <strong>Sprendimai</strong>
@@ -34,7 +34,7 @@ import { site } from "../data/site";
     <div>
       <strong>Pradėkime nuo jūsų situacijos</strong>
       <a href="/gauti-pasiulyma/">
-        Gauti pasiūlymą <Icon name="arrow" size={16} />
+        {site.primaryCta} <Icon name="arrow" size={16} />
       </a>
       {site.phone && (
         <a href={`tel:${site.phone}`} data-event="phone_click">
@@ -49,13 +49,15 @@ import { site } from "../data/site";
     </div>
   </div>
   <div class="container footer-bottom">
-    <span>© {new Date().getFullYear()} drenazoirengimas.lt</span>
-    <span>Vilnius · Kaunas · Užklausos iš visos Lietuvos</span>
+    <span>
+      © {new Date().getFullYear()} {site.name}
+    </span>
+    <span>{site.footerArea}</span>
   </div>
 </footer>
 <div class="mobile-cta">
   <a class="button" href="/gauti-pasiulyma/" data-event="primary_cta_click">
-    Gauti pasiūlymą <Icon name="arrow" size={18} />
+    {site.primaryCta} <Icon name="arrow" size={18} />
   </a>
   <a
     class="button button-navy"

@@ -1,4 +1,5 @@
 ---
+import { site } from "../data/site";
 import Logo from "./Logo.astro";
 import Icon from "./Icon.astro";
 const { overlay = false, simple = false } = Astro.props;
@@ -33,7 +34,7 @@ const { overlay = false, simple = false } = Astro.props;
             class="button button-small"
             data-event="primary_cta_click"
           >
-            Gauti pasiūlymą
+            {site.primaryCta}
           </a>
         </nav>
       </>

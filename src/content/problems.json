@@ -1,0 +1,32 @@
+{
+  "items": [
+    {
+      "id": "foundations",
+      "title": "Vanduo prie pamatų",
+      "text": "Po lietaus vanduo kaupiasi prie namo. Svarbu suprasti, iš kur jis atiteka.",
+      "icon": "house",
+      "href": "/pamatu-drenazas/"
+    },
+    {
+      "id": "basement",
+      "title": "Drėgnas rūsys",
+      "text": "Drėgmė, pelėsis ar vandens pėdsakai – priežastį svarbu nustatyti prieš renkantis darbus.",
+      "icon": "basement",
+      "href": "/pamatu-drenazas/"
+    },
+    {
+      "id": "yard",
+      "title": "Šlapias kiemas",
+      "text": "Ilgai neišnykstančios balos ir klampi veja trukdo naudotis sklypu.",
+      "icon": "trees",
+      "href": "/sklypo-drenazas/"
+    },
+    {
+      "id": "groundwater",
+      "title": "Gruntinis vanduo",
+      "text": "Nuolat šlapioms vietoms reikia sprendimo pagal grunto ir vandens sąlygas.",
+      "icon": "water",
+      "href": "/vanduo-sklype/"
+    }
+  ]
+}

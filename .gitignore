@@ -17,3 +17,10 @@ coverage/
 .audit-results/
 
 .audit-projects/
+
+src/data/generated-projects.json
+public/images/projects/_generated/
+public/admin/config.json
+public/admin/config.yml
+public/admin/generated/
+src/data/generated-media.json

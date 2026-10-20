@@ -7,7 +7,7 @@ const pages = [];
 async function walk(dir) {
   for (const entry of await readdir(dir, { withFileTypes: true })) {
     const p = path.join(dir, entry.name);
-    if (entry.isDirectory()) await walk(p);
+    if (entry.isDirectory() && entry.name !== "admin") await walk(p);
     else if (p.endsWith(".html")) pages.push(p);
   }
 }
@@ -112,6 +112,17 @@ console.log(
   ),
 );
 
+// The CMS is a separate app shell, deliberately excluded from public article SEO assertions.
+const admin = load(await readFile(path.join(root, "admin/index.html"), "utf8"));
+assert.ok(admin('meta[name="robots"]').attr("content").includes("noindex"));
+assert.ok(admin('script[src*="decap-cms@3.17.1"]').attr("integrity"));
+assert.ok(admin('script[src="/admin/init.js"]').length);
+assert.ok(!sitemap.includes("/admin/"));
+const cmsConfig = JSON.parse(
+  await readFile(path.join(root, "admin/config.json"), "utf8"),
+);
+assert.equal(cmsConfig.backend.repo, "baierf-spec/drenazoirengimas");
+assert.ok(!JSON.stringify(cmsConfig).includes("GITHUB_CLIENT_SECRET"));
 // Smoke the actual packaged Sites Worker in-process without opening a preview server.
 const { default: packaged } = await import("../dist/server/index.js");
 const context = { waitUntil() {} };

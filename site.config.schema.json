@@ -128,6 +128,60 @@
       ],
       "additionalProperties": false
     },
+    "business": {
+      "type": "object",
+      "properties": {
+        "primaryCta": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 60
+        },
+        "serviceAreas": {
+          "minItems": 1,
+          "maxItems": 6,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 100
+          }
+        },
+        "heroArea": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 160
+        },
+        "footerArea": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 180
+        },
+        "footerLines": {
+          "minItems": 2,
+          "maxItems": 2,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 180
+          }
+        },
+        "footerDescription": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 500
+        }
+      },
+      "required": [
+        "primaryCta",
+        "serviceAreas",
+        "heroArea",
+        "footerArea",
+        "footerLines",
+        "footerDescription"
+      ],
+      "additionalProperties": false
+    },
     "email": {
       "type": "object",
       "properties": {
@@ -198,6 +252,7 @@
     "turnstile",
     "analytics",
     "features",
+    "business",
     "email"
   ],
   "additionalProperties": false,

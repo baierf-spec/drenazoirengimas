@@ -1,0 +1,43 @@
+{
+  "slug": "lietaus-vandens-nuvedimas",
+  "title": "Lietaus vandens surinkimas ir nuvedimas",
+  "description": "Lietaus vanduo nuo stogo ir dangų: surinkimo, nuvedimo bei priėmimo principai. Kodėl lietaus sistema nėra tas pats, kas drenažas?",
+  "intro": "Nuo stogo ar kietųjų dangų atitekantį vandenį svarbu valdyti ten, kur jis atsiranda. Tinkamas sprendimas prasideda nuo viso vandens kelio įvertinimo.",
+  "image": "groundwater",
+  "imageAlt": "Iliustracija: vanduo grunto tranšėjoje",
+  "service": true,
+  "sections": [
+    {
+      "title": "Trys klausimai prieš renkantis sistemą",
+      "text": [
+        "Iš kur vanduo atiteka? Kaip jis bus surenkamas? Kur jis galės patekti? Atsakymai turi derėti tarpusavyje ir atitikti konkretaus objekto sąlygas."
+      ],
+      "list": [
+        "Stogo latakai ir lietvamzdžiai",
+        "Vanduo nuo įvažiavimo ir trinkelių",
+        "Teritorijos reljefas ir paviršinis nuotėkis",
+        "Priėmimo vietos galimybės bei taikomi reikalavimai"
+      ]
+    },
+    {
+      "title": "Kur gali būti nuvedamas lietaus vanduo?",
+      "text": [
+        "Gali būti svarstomas vandens kaupimas, tinkamas nuvedimas, infiltracija ar prisijungimas prie leidžiamų tinklų. Galimybės priklauso nuo grunto, reljefo, vandens kiekio ir teritorijos reikalavimų.",
+        "Infiltracija nėra tinkamas pasirinkimas kiekvienam gruntui. Prisijungimas prie tinklų taip pat nėra savaime leidžiamas – sąlygas reikia tikslinti su jų valdytoju."
+      ]
+    },
+    {
+      "title": "Kodėl nereikia visko vadinti drenažu?",
+      "text": [
+        "Drenažas paprastai skirtas vandeniui grunte, o lietaus sistema – nuo paviršių surinktam vandeniui. Šias funkcijas būtina aiškiai atskirti vertinant bendrą objekto vandens valdymą."
+      ]
+    },
+    {
+      "title": "Ką turi apimti darbų sąmata?",
+      "text": [
+        "Svarbu palyginti ne tik vamzdyno kainą, bet ir surinkimo taškus, šulinius, priėmimo sprendimą, žemės darbus bei dangų atkūrimą. Su rangovu aptarkite, kas tiksliai įeina į pasiūlymą."
+      ]
+    }
+  ],
+  "enabled": true
+}

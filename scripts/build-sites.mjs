@@ -1,6 +1,7 @@
 import { readdir, readFile, mkdir, writeFile, rename } from "node:fs/promises";
 import path from "node:path";
 import { build } from "esbuild";
+import { pruneGalleryOriginals } from "./gallery-assets.mjs";
 // Astro's canonical artifact is static. This extra adapter packages the same output for Sites.
 // Cloudflare production uses native Workers Static Assets, not embedded assets.
 const out = path.resolve("dist");
@@ -9,6 +10,8 @@ await mkdir(client, { recursive: true });
 for (const name of await readdir(out))
   if (name !== "client")
     await rename(path.join(out, name), path.join(client, name));
+// Never publish raw uploads/EXIF or unpublished project photos. Optimized referenced files only.
+await pruneGalleryOriginals(client);
 const mime = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
@@ -21,6 +24,7 @@ const mime = {
   ".avif": "image/avif",
   ".webp": "image/webp",
   ".jpg": "image/jpeg",
+  ".yml": "text/yaml; charset=utf-8",
   ".png": "image/png",
 };
 const files = {};

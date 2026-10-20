@@ -1,0 +1,121 @@
+{
+  "text01": "KAI VANDENS PER DAUG",
+  "text02": ["Kokias vandens", "problemas sprendžia drenažas?"],
+  "text03": "Vanduo sklype gali kauptis dėl grunto, reljefo ar lietaus nuvedimo. Tinkamą sprendimą padeda pasirinkti priežasties įvertinimas.",
+  "text04": "Nežinote, ar jums reikia drenažo?",
+  "text05": "Trumpas klausimynas padės pasiruošti pokalbiui su specialistu.",
+  "text06": "AIŠKIAI APIE TAI, KAS PO ŽEME",
+  "text07": ["Kaip veikia", "drenažo sistema?"],
+  "text08": "Ji surenka perteklinį vandenį grunte ir nukreipia jį į konkrečiam objektui tinkamą priėmimo vietą.",
+  "text09": "APGALVOTAS SPRENDIMAS",
+  "text10": "Kodėl verta įvertinti drenažą?",
+  "text11": "SPRENDIMAS PAGAL PROBLEMĄ",
+  "text12": "Sklypo ir pamatų drenažo sprendimai",
+  "text13": "Pamatų drenažas, sklypo sausinimas ir lietaus vandens surinkimas atlieka skirtingas užduotis.",
+  "text14": "NUO SITUACIJOS IKI AIŠKAUS PLANO",
+  "text15": "Kaip vyksta darbai?",
+  "text16": "Rangovą ir darbų apimtį renkatės žinodami, kas siūloma ir kodėl. Kiekvienas etapas derinamas individualiai.",
+  "text17": "KAS ĮEINA Į SĄMATĄ",
+  "text18": ["Drenažo kaina:", "kas ją lemia?"],
+  "text19": "Kainą lemia ne vien metrai. Svarbu gruntas, privažiavimas, vandens nuvedimas ir esamos dangos.",
+  "text20": "JŪSŲ VIETA – SVARBI",
+  "text21": ["Vilnius. Kaunas.", "Ir jūsų sklypas."],
+  "text22": "Užklausą galite pateikti iš bet kurios Lietuvos vietovės. Galimybė pasiūlyti rangovą konkrečioje vietovėje tikslinama pagal partnerių aprėptį ir užimtumą.",
+  "text23": "Pradėti pakanka vietos ir problemos aprašymo",
+  "text24": "Nereikia žinoti vamzdžių ilgio ar grunto sudėties. Parodykite, kur kaupiasi vanduo – klausimus patikslinsime pirmojo pokalbio metu.",
+  "text25": "PRIEŠ APSISPRENDŽIANT",
+  "text26": ["Dažniausi", "klausimai"],
+  "text27": "Apie drenažo poreikį, kainą ir vandens nuvedimą.",
+  "text28": "PIRMAS ŽINGSNIS – PAPRASTAS",
+  "text29": ["Parodykite problemą.", "Pradėkime nuo situacijos."],
+  "text30": [
+    "Objekto vieta, problema ir jūsų kontaktai.",
+    "Nuotraukos neprivalomos, bet labai naudingos."
+  ],
+  "text31": "Be įsipareigojimo užsakyti darbus.",
+  "heroServices": [
+    {
+      "icon": "house",
+      "text": "Namų pamatams"
+    },
+    {
+      "icon": "trees",
+      "text": "Sklypų sausinimui"
+    },
+    {
+      "icon": "basement",
+      "text": "Rūsiams"
+    },
+    {
+      "icon": "land",
+      "text": "Kiemo teritorijoms"
+    }
+  ],
+  "benefits": [
+    {
+      "icon": "shield",
+      "title": "Mažiau drėgmės rizikos",
+      "text": "Tinkamas vandens valdymas padeda mažinti drėgmės poveikį konstrukcijoms."
+    },
+    {
+      "icon": "house",
+      "title": "Rūpestis namo būkle",
+      "text": "Drenažas vertinamas kartu su reljefu, lietaus vandeniu ir hidroizoliacija."
+    },
+    {
+      "icon": "trees",
+      "title": "Patogiau naudotis kiemu",
+      "text": "Sprendžiama, kodėl sklype laikosi balos ir ilgai neišdžiūsta veja."
+    },
+    {
+      "icon": "document",
+      "title": "Aiškesnė darbų apimtis",
+      "text": "Aiškus planas, darbų apimtis ir sąmata prieš priimant sprendimą."
+    }
+  ],
+  "process": [
+    {
+      "title": "Situacija",
+      "text": "Aprašote problemą, vietą ir, jei galite, pridedate nuotraukas."
+    },
+    {
+      "title": "Įvertinimas",
+      "text": "Tikslinamos sąlygos, vandens kelias ir apžiūros poreikis."
+    },
+    {
+      "title": "Sąmata",
+      "text": "Su rangovu suderinate darbų apimtį, kainą ir atsakomybes."
+    },
+    {
+      "title": "Įrengimas",
+      "text": "Darbai atliekami pagal suderintą sprendimą ir sąlygas."
+    },
+    {
+      "title": "Dokumentacija",
+      "text": "Verta sutarti dėl užkasamų darbų nuotraukų ir sistemos schemos."
+    }
+  ],
+  "priceFactors": [
+    {
+      "icon": "land",
+      "text": "Gruntas ir kasimo sąlygos"
+    },
+    {
+      "icon": "water",
+      "text": "Vandens surinkimas ir nuvedimas"
+    },
+    {
+      "icon": "building",
+      "text": "Privažiavimas technikai"
+    },
+    {
+      "icon": "trees",
+      "text": "Gerbūvio atkūrimas"
+    }
+  ],
+  "heroEyebrow": "APGALVOTI VANDENS SPRENDIMAI",
+  "heroTitle": ["Drenažo įrengimas", "sklypui ir", "pamatams"],
+  "heroIntro": "Šlapias kiemas ar drėgni pamatai? Aprašykite problemą – pirmiausia reikia nustatyti, iš kur atiteka vanduo ir kur jį galima nuvesti.",
+  "positioning": "Nepradedame nuo vamzdžių. Pradedame nuo vandens priežasties.",
+  "positioningText": "Pirmiausia svarbu suprasti, iš kur vanduo atiteka ir kur jį galima saugiai nuvesti."
+}

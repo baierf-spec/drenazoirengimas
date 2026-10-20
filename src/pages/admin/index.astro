@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="lt">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex,nofollow" />
+    <meta name="referrer" content="no-referrer" />
+    <title>Svetainės turinio valdymas</title>
+    <link rel="stylesheet" href="/admin/admin.css" />
+  </head>
+  <body>
+    <div id="cms-loading" role="status">
+      Kraunamas turinio valdymas…
+    </div>
+    <noscript>Turinio valdymui įjunkite „JavaScript“.</noscript>
+    <script is:inline src="/admin/prepare.js"></script>
+    <script
+      is:inline
+      src="https://cdn.jsdelivr.net/npm/decap-cms@3.17.1/dist/decap-cms.js"
+      integrity="sha384-d2pbrhjc5asvSK35gKkrgRIk0Wq+2CQynWnXtSsYWQawXCgBXhcAK737jBAKXT4T"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      is:inline
+      type="module"
+      src="/admin/generated/cms-images.js"
+    ></script>
+    <script is:inline src="/admin/lt.js"></script>
+    <script is:inline src="/admin/init.js"></script>
+  </body>
+</html>

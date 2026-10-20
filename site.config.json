@@ -30,5 +30,20 @@
     "from": "env:EMAIL_FROM",
     "to": "env:ADMIN_EMAIL",
     "replyTo": "env:BUSINESS_REPLY_TO"
+  },
+  "business": {
+    "primaryCta": "Gauti pasiūlymą",
+    "serviceAreas": [
+      "Vilnius ir rajonas",
+      "Kaunas ir rajonas",
+      "Kitos Lietuvos vietovės"
+    ],
+    "heroArea": "Vilnius, Kaunas ir užklausos iš visos Lietuvos.",
+    "footerArea": "Vilnius · Kaunas · Užklausos iš visos Lietuvos",
+    "footerLines": [
+      "Drenažas be spėlionių.",
+      "Pirmiausia įvertinimas. Tada – sprendimas."
+    ],
+    "footerDescription": "Svetainė padeda pateikti užklausą nepriklausomam paslaugos teikėjui. Darbų galimybės ir sąlygos derinamos individualiai."
   }
 }

@@ -14,7 +14,7 @@ const files = [];
 async function walk(dir) {
   for (const e of await readdir(dir, { withFileTypes: true })) {
     const f = path.join(dir, e.name);
-    if (e.isDirectory()) await walk(f);
+    if (e.isDirectory() && e.name !== "admin") await walk(f);
     else if (e.name.endsWith(".html")) files.push(f);
   }
 }

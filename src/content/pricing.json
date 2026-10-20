@@ -1,0 +1,22 @@
+{
+  "text01": "Vien metro kaina neparodo viso projekto biudžeto. Pažiūrėkite, kaip ilgis ir darbų sąlygos keičia orientacinį scenarijų.",
+  "text02": "Apytikslė drenažo kaina",
+  "text03": "Skaičiuoklė skirta biudžeto pokalbiui pradėti. Jos dydžiai yra planavimo prielaidos; tai nėra šios svetainės ar rangovo kainoraštis.",
+  "text04": "Interaktyviam skaičiavimui reikalingas „JavaScript“. Pavyzdys: 40 m × 25–45 €/m + 600–1 600 € rezervas = apytiksliai 1 600–3 400 €.",
+  "text05": "Ką reiškia skaičiuoklės prielaidos?",
+  "text06": "Bazinis 25–45 €/m intervalas naudojamas kaip planavimo prielaida. Kombinuoto scenarijaus 40–70 €/m, 25 % riboto priėjimo priedas ir papildomų darbų rezervai yra iliustracinės modelio prielaidos, o ne patvirtinti paslaugos tarifai.",
+  "text07": "Modelis apvalina intervalą iki 100 €. Jis neįvertina individualių grunto tyrimų, projektavimo, konkrečių prijungimo sąlygų, siurblinių, sudėtingo vandens priėmimo sprendimo ar hidroizoliacijos darbų. PVM įtraukimas ir reali darbų kaina turi būti aiškiai nurodyti rangovo pasiūlyme.",
+  "text08": "Kas dažniausiai keičia galutinę sąmatą?",
+  "text09": "Kaip palyginti du pasiūlymus?",
+  "text10": "Paprašykite atskirti medžiagas, žemės darbus, nuvedimą, papildomus darbus ir gerbūvio atstatymą. Palyginimas prasmingas tik tada, kai abiejų pasiūlymų apimtis vienoda.",
+  "factors": [
+    "Kasimo gylis, gruntas, komunikacijos ir pamatų sąlygos.",
+    "Trasos ilgis, vamzdžiai, filtravimo sluoksnis bei šuliniai.",
+    "Vandens priėmimo ir nuvedimo sprendimas.",
+    "Technikos privažiavimas ir darbo vieta.",
+    "Grunto išvežimas, vejos, trinkelių ar terasos atkūrimas.",
+    "Projektavimo ar derinimų poreikis."
+  ],
+  "modelReviewedAt": "2026-10-20",
+  "marketSources": []
+}

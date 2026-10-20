@@ -51,6 +51,16 @@ export const configSchema = z
         referrerAttribution: z.boolean(),
       })
       .strict(),
+    business: z
+      .object({
+        primaryCta: z.string().trim().min(3).max(60),
+        serviceAreas: z.array(z.string().trim().min(2).max(100)).min(1).max(6),
+        heroArea: z.string().trim().min(3).max(160),
+        footerArea: z.string().trim().min(3).max(180),
+        footerLines: z.array(z.string().trim().min(1).max(180)).length(2),
+        footerDescription: z.string().trim().min(10).max(500),
+      })
+      .strict(),
     email: z.object({ from: address, to: address, replyTo: address }).strict(),
   })
   .strict();
@@ -61,6 +71,7 @@ export function publicSettings(
   auditMode?: string,
 ) {
   return {
+    ...config.business,
     origin: new URL(config.site.origin).origin,
     name: config.site.name,
     production: auditMode

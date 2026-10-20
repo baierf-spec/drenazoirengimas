@@ -12,7 +12,7 @@
     "build:production": "node scripts/preflight.mjs && npm run build",
     "preview": "astro preview --host 0.0.0.0",
     "dev:worker": "wrangler dev",
-    "lint": "eslint src shared worker tests scripts astro.config.mjs eslint.config.mjs",
+    "lint": "eslint src shared worker tests scripts astro.config.mjs eslint.config.mjs public/admin/init.js public/admin/prepare.js",
     "typecheck": "astro check && tsc --noEmit -p tsconfig.worker.json",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -26,14 +26,19 @@
     "audit:seo": "node scripts/audit-seo.mjs",
     "audit:projects": "node scripts/audit-projects.mjs",
     "config:check": "node scripts/preflight.mjs",
-    "config:schema": "node scripts/config-schema.mjs"
+    "config:schema": "node scripts/config-schema.mjs",
+    "predev": "npm run cms:prepare",
+    "prebuild": "npm run cms:prepare",
+    "pretypecheck": "npm run cms:prepare",
+    "pretest": "npm run cms:prepare",
+    "cms:prepare": "node scripts/validate-cms-content.mjs && node scripts/generate-cms.mjs && node scripts/prepare-content.mjs"
   },
   "dependencies": {
     "@fontsource-variable/manrope": "5.3.0",
     "astro": "7.4.1",
-    "zod": "4.6.7",
+    "heic-to": "1.6.6",
     "jose": "^6.1.0",
-    "heic-to": "1.6.6"
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.11",
@@ -50,6 +55,7 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "8.71.2",
     "vitest": "5.0.5",
-    "wrangler": "4.151.2"
+    "wrangler": "4.151.2",
+    "yaml": "2.9.1"
   }
 }

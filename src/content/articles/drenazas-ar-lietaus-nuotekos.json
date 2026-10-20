@@ -1,0 +1,39 @@
+{
+  "slug": "drenazas-ar-lietaus-nuotekos",
+  "title": "Drenažas ar lietaus vandens sistema?",
+  "description": "Aiškus palyginimas: vanduo grunte ir nuo stogo bei dangų surinktas lietaus vanduo. Kaip pasirinkti tinkamą sprendimą?",
+  "intro": "Abi sistemos gali būti bendro vandens valdymo dalis, tačiau jų paskirtis skiriasi. Sprendimą lemia vandens šaltinis, o ne pasirinktas vamzdžio pavadinimas.",
+  "sections": [
+    {
+      "title": "Drenažas – vandens grunte valdymui",
+      "text": [
+        "Drenažo tikslas – surinkti perteklinį vandenį iš grunto ir nuvesti jį į tam tinkamą vietą. Sistemos poreikis ir parametrai parenkami įvertinus gruntą, reljefą, konstrukcijas bei priėmimo sąlygas."
+      ]
+    },
+    {
+      "title": "Lietaus sistema – nuo stogo ir dangų surinktam vandeniui",
+      "text": [
+        "Lietaus vandens sistema valdo nuo stogo, įvažiavimo ar kitų paviršių surinktą vandenį. Svarbūs surinkimo taškai, trasos ir priėmimo vieta."
+      ]
+    },
+    {
+      "title": "Kada reikia kompleksinio vertinimo?",
+      "text": [
+        "Kai kartu šlampa pamatai, kieme laikosi balos ir lietvamzdžiai išleidžia vandenį prie namo, atskiras vamzdis gali būti tik dalis sprendimo. Reikalingas bendras vandens kelio planas."
+      ],
+      "list": [
+        "Įvardykite, iš kur vanduo atiteka",
+        "Atskirkite surinkimo ir nuvedimo užduotis",
+        "Patikrinkite priėmimo galimybes",
+        "Sutarkite, kaip sprendimas veiks kartu su esamu gerbūviu"
+      ]
+    },
+    {
+      "title": "Ką palyginti rangovų pasiūlymuose?",
+      "text": [
+        "Palyginkite paskirtį, įtrauktas medžiagas, šulinius, žemės darbus, priėmimo vietą, derinimus ir atstatymą. Mažesnė metro kaina gali reikšti siauresnę darbų apimtį."
+      ]
+    }
+  ],
+  "enabled": true
+}

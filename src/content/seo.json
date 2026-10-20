@@ -1,0 +1,88 @@
+{
+  "pages": [
+    {
+      "path": "/",
+      "title": "Drenažo įrengimas sklypui ir pamatams",
+      "description": "Sklypo ir pamatų drenažas, lietaus vandens nuvedimas. Aprašykite problemą Vilniuje, Kaune ar kitoje Lietuvos vietovėje ir pateikite užklausą.",
+      "ogImage": ""
+    },
+    {
+      "path": "/pamatu-drenazas/",
+      "title": "Pamatų drenažas aplink namą",
+      "description": "Kada verta įvertinti pamatų drenažą, kuo jis skiriasi nuo lietaus vandens nuvedimo ir kas lemia darbų apimtį bei kainą.",
+      "ogImage": ""
+    },
+    {
+      "path": "/sklypo-drenazas/",
+      "title": "Sklypo drenažas ir užmirkusio kiemo sausinimas",
+      "description": "Ilgai stovintis vanduo, klampi veja ar molingas sklypas? Sužinokite, kaip vertinamas sklypo drenažo poreikis ir vandens nuvedimo galimybės.",
+      "ogImage": ""
+    },
+    {
+      "path": "/lietaus-vandens-nuvedimas/",
+      "title": "Lietaus vandens surinkimas ir nuvedimas",
+      "description": "Lietaus vanduo nuo stogo ir dangų: surinkimo, nuvedimo bei priėmimo principai. Kodėl lietaus sistema nėra tas pats, kas drenažas?",
+      "ogImage": ""
+    },
+    {
+      "path": "/vanduo-sklype/",
+      "title": "Vanduo sklype: priežastys ir galimi sprendimai",
+      "description": "Ką stebėti, kai kieme laikosi balos, šlampa veja ar rūsys? Praktiškas pasiruošimas vandens problemos įvertinimui.",
+      "ogImage": ""
+    },
+    {
+      "path": "/drenazas-ar-lietaus-nuotekos/",
+      "title": "Drenažas ir lietaus nuotekos: kuo skiriasi?",
+      "description": "Aiškus palyginimas: vanduo grunte ir nuo stogo bei dangų surinktas lietaus vanduo. Kaip pasirinkti tinkamą sprendimą?",
+      "ogImage": ""
+    },
+    {
+      "path": "/drenazo-kaina/",
+      "title": "Drenažo įrengimo kaina ir skaičiuoklė",
+      "description": "Kas lemia drenažo įrengimo kainą? Palyginkite darbų apimtį, kasimo sąlygas, medžiagas ir atkūrimą. Išbandykite paaiškintą orientacinę skaičiuoklę.",
+      "ogImage": ""
+    },
+    {
+      "path": "/duk/",
+      "title": "Dažniausi klausimai apie drenažą",
+      "description": "Kada reikalingas drenažas, ar jis tinka molingam gruntui, kur nuvedamas vanduo ir kas lemia kainą? Trumpi atsakymai prieš tariantis su rangovu.",
+      "ogImage": ""
+    },
+    {
+      "path": "/privatumo-politika/",
+      "title": "Privatumo ir slapukų informacija",
+      "description": "Kaip tvarkomi užklausos kontaktai, aprašymas ir nuotraukos. Duomenų gavėjai, saugojimas, analitikos pasirinkimas bei jūsų teisės.",
+      "ogImage": ""
+    },
+    {
+      "path": "/projektai/",
+      "title": "Drenažo projektai ir darbų galerija",
+      "description": "Drenažo ir lietaus vandens nuvedimo projektai: darbų nuotraukos, pradinė situacija ir pasirinkti sprendimai.",
+      "ogImage": ""
+    },
+    {
+      "path": "/gauti-pasiulyma/",
+      "title": "Gauti drenažo pasiūlymą",
+      "description": "Nurodykite objekto vietą, vandens problemą ir kontaktus. Jei galite, pridėkite nuotraukų. Užklausą pateikite per trijų žingsnių formą.",
+      "ogImage": ""
+    },
+    {
+      "path": "/diagnostika/",
+      "title": "Ar reikia drenažo? Situacijos klausimynas",
+      "description": "Pasirinkite vandens problemą ir atsakykite į kelis klausimus. Rezultatas padės pasiruošti pokalbiui, bet neatstos objekto apžiūros.",
+      "ogImage": ""
+    },
+    {
+      "path": "/aciu/",
+      "title": "Užklausos patvirtinimas",
+      "description": "Informacija apie pateiktos drenažo užklausos gavimą ir kitą žingsnį. Atidarius puslapį savaime užklausa nėra pateikiama.",
+      "ogImage": ""
+    },
+    {
+      "path": "/404.html",
+      "title": "Puslapis nerastas",
+      "description": "Šio puslapio nėra. Grįžkite į pradžią ir raskite informaciją apie sklypo, pamatų drenažą bei lietaus vandens nuvedimą.",
+      "ogImage": ""
+    }
+  ]
+}

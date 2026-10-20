@@ -1,0 +1,49 @@
+{
+  "slug": "pamatu-drenazas",
+  "title": "Pamatų drenažas ir vandens valdymas aplink namą",
+  "description": "Kada verta įvertinti pamatų drenažą, kuo jis skiriasi nuo lietaus vandens nuvedimo ir kas lemia darbų apimtį bei kainą.",
+  "intro": "Vanduo prie namo, drėgnas rūsys ar nauja statyba – pirmiausia reikia nustatyti vandens priežastį. Vamzdžio paklojimas savaime neišsprendžia visų drėgmės problemų.",
+  "image": "foundations",
+  "imageAlt": "Iliustracija: vanduo prie drėgnos namo pamatų sienos",
+  "service": true,
+  "sections": [
+    {
+      "title": "Kada verta tikrinti pamatų zoną?",
+      "text": [
+        "Vertinimas naudingas, kai problema kartojasi, vanduo telkšo prie namo arba drėgmė pastebima požeminėse patalpose. "
+      ],
+      "list": [
+        "Vanduo prie pamatų po liūčių ar polaidžio",
+        "Drėgmės pėdsakai ar pelėsis rūsyje",
+        "Vandens problemos atsirado pakeitus gerbūvį",
+        "Planuojamas esamo namo remontas ar nauja statyba"
+      ]
+    },
+    {
+      "title": "Ką svarbu įvertinti prieš kasant?",
+      "text": [
+        "Reikia suprasti grunto, reljefo ir vandens sąlygas, pamatų konstrukciją, hidroizoliacijos būklę, esamus požeminius tinklus ir galimą vandens priėmimo vietą.",
+        "Kasimas šalia esamų konstrukcijų turi būti planuojamas atsakingai. Kasimo gylis, nuolydis ir atstumai nustatomi planuojant darbus."
+      ]
+    },
+    {
+      "title": "Drenažas ir hidroizoliacija atlieka skirtingas užduotis",
+      "text": [
+        "Drenažu siekiama surinkti ir nuvesti vandenį grunte, o hidroizoliacija riboja jo patekimą į konstrukcijas. Jei drėgmę lemia pažeista izoliacija, vamzdyno įrengimas nebūtinai išspręs problemą. Vertinami abu klausimai."
+      ]
+    },
+    {
+      "title": "Darbai prie jau gyvenamo namo",
+      "text": [
+        "Prieš sąmatą aptarkite technikos privažiavimą, terasos, trinkelių ir vejos apsaugą. Atskirai susitarkite dėl iškasto grunto, jo išvežimo ir dangų atkūrimo."
+      ],
+      "list": [
+        "Pažymėta darbų zona ir esami tinklai",
+        "Aiškiai numatyti įtraukti bei neįtraukti darbai",
+        "Suderintas vandens surinkimo ir priėmimo principas",
+        "Aptartas darbų fotografavimas prieš užpilant tranšėjas"
+      ]
+    }
+  ],
+  "enabled": true
+}

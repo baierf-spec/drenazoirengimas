@@ -47,3 +47,9 @@ Po sėkmingo diegimo gali pašalinti senus PUBLIC_* build ir SITE_ORIGIN / ALLOW
 ## Gyva patikra
 
 Tikra kontrolinė užklausa su nuotraukomis: Inbox / Spam, priedai ir Reply-To. Patikrink Turnstile, siuntimo klaidą / retry, mobilius failus, privatumo pasirinkimą, telefono off/on ir source consent. Reikia faktinės Cloudflare paskyros; automatinių testų mock nėra tikro pristatymo įrodymas. Patikrink HTTPS, 404, canonical, robots ir sitemap. Search Console ir field CWV tikrinami jau veikiančiame domene.
+
+## Decap CMS / GitHub OAuth
+
+Build ir deploy komandos nesikeičia. `prebuild` automatiškai validuoja turinį, generuoja CMS config ir optimizuoja galerijos vaizdus. `/admin/`, `/auth`, `/callback` aptarnauja tas pats drenazoirengimas Worker. Papildomas domenas / Worker nereikalingas. Pridėti GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET ir bent 32 simbolių OAUTH_STATE_SECRET tik Cloudflare. OAuth App callback: https://drenazoirengimas.lt/callback. Esamų el. pašto / Turnstile laukų netrinti. Žr. CMS_SETUP.md.
+
+Galima alternatyva www prijungimui: domeno zonoje proxied A www → 192.0.2.1 ir 301 Redirect Rule, tiksliai pagal hostname www.drenazoirengimas.lt į concat("https://drenazoirengimas.lt", http.request.uri.path), išsaugant query. Tai nekeičia apex Worker ar pašto DNS.

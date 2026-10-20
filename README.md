@@ -1,6 +1,6 @@
 # drenazoirengimas.lt
 
-Lietuviška drenažo užklausų svetainė: Astro, TypeScript, statiniai SEO puslapiai, Cloudflare Worker, nuotraukų priedai paštu ir GitHub valdoma projektų galerija. D1, R2 ir privati CMS nereikalingi.
+Lietuviška drenažo užklausų svetainė: Astro, TypeScript, statiniai SEO puslapiai, Cloudflare Worker, nuotraukų priedai paštu ir GitHub valdoma projektų galerija. Turinys redaguojamas per Decap CMS `/admin/`, be D1, R2 ar Netlify.
 
 ## Nustatymai vienoje vietoje
 
@@ -21,8 +21,11 @@ Naudok Node 24. `check` vykdo lint, TypeScript, build, SEO auditą, Vitest, HTML
 
 Formoje duomenys ir failai tikrinami serveryje, patvirtinamas Turnstile. Sėkmė grąžinama tik Cloudflare priėmus laišką su priedais. Nėra patvarios užklausų eilės; siuntimo klaidos atveju lankytojas gali bandyti dar kartą. Dedupe ir skaitikliai atmintyje yra tik best-effort viename isolate.
 
-Projektų skiltis išsaugota; realūs darbai įrašomi į src/data/projects.json, optimizuoti failai į public/images/projects/. Po commit ir sėkmingo build atsinaujina listing/detail ir sitemap. Išgalvotų projektų nėra.
+Savininkui skirta **https://drenazoirengimas.lt/admin/**. Decap GitHub backend redaguoja esamus tekstus, kontaktus, DUK, SEO ir tikrus projektus. Vienkartiniam prisijungimui reikia GitHub OAuth App ir trijų Cloudflare OAuth secrets. Pilnas prijungimas ir perdavimas: [CMS_SETUP.md](CMS_SETUP.md).
 
+Projektų įrašai yra src/content/projects/*.json. Nuotraukos įkeliamos per CMS, mažinamos naršyklėje ir build metu, į viešą išvestį patenka tik optimizuotos naudojamos versijos. Po CMS commit ir sėkmingo automatinio Cloudflare build atsinaujina listing/detail ir sitemap. Išgalvotų projektų nėra.
+
+- [CMS_SETUP.md](CMS_SETUP.md): turinio redagavimas, GitHub login, nuotraukos, saugumas ir perdavimas.
 - [CONFIGURATION.md](CONFIGURATION.md): vienas failas, adresų privatumas, migracija ir perdavimas.
 - [DEPLOYMENT.md](DEPLOYMENT.md): Cloudflare diegimas ir domenas.
 - [EMAIL_SETUP.md](EMAIL_SETUP.md): el. pašto prijungimas.

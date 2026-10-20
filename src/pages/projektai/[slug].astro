@@ -38,6 +38,25 @@ const ordered = [
         <p>{text}</p>
       ))}
   </div>
+  {[
+    ["Pradinė situacija", p.problem],
+    ["Pasirinktas sprendimas", p.solution],
+    ["Darbų apimtis", p.work_scope],
+    ["Trukmė", p.duration],
+    ["Projekto kaina", p.price],
+  ]
+    .filter(([, text]) => text)
+    .map(([heading, text]) => (
+      <section>
+        <h2>{heading}</h2>
+        {text!
+          .split(/\n+/)
+          .filter(Boolean)
+          .map((line) => (
+            <p>{line}</p>
+          ))}
+      </section>
+    ))}
   <div class="project-photos">
     {ordered.map((image, i) => (
       <figure>

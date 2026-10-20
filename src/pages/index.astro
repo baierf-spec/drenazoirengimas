@@ -4,6 +4,7 @@ import Icon from "../components/Icon.astro";
 import FAQ from "../components/FAQ.astro";
 import WaterDiagram from "../components/WaterDiagram.astro";
 import { site, problems, services, faq } from "../data/site";
+import home from "../content/home.json";
 const schema = [
   {
     "@context": "https://schema.org",
@@ -52,27 +53,25 @@ const schema = [
     </picture>
     <div class="container hero-content">
       <span class="eyebrow hero-eyebrow">
-        <Icon name="water" size={15} /> APGALVOTI VANDENS SPRENDIMAI
+        <Icon name="water" size={15} /> {home.heroEyebrow}
       </span>
       <h1>
-        Drenažo įrengimas
-        <br />
-        sklypui ir
-        <br />
-        pamatams
+        {home.heroTitle.map((line, i) => (
+          <>
+            {i > 0 && <br />}
+            {line}
+          </>
+        ))}
       </h1>
-      <p>
-        Šlapias kiemas ar drėgni pamatai? Aprašykite problemą – pirmiausia
-        reikia nustatyti, iš kur atiteka vanduo ir kur jį galima nuvesti.
-      </p>
-      <p class="hero-area">Vilnius, Kaunas ir užklausos iš visos Lietuvos.</p>
+      <p>{home.heroIntro}</p>
+      <p class="hero-area">{site.heroArea}</p>
       <div class="hero-actions">
         <a
           class="button"
           href="/gauti-pasiulyma/"
           data-event="primary_cta_click"
         >
-          Gauti pasiūlymą <Icon name="arrow" size={19} />
+          {site.primaryCta} <Icon name="arrow" size={19} />
         </a>
         <a
           class="button button-glass"
@@ -85,12 +84,7 @@ const schema = [
       </div>
     </div>
     <div class="container hero-services">
-      {[
-        ["house", "Namų pamatams"],
-        ["trees", "Sklypų sausinimui"],
-        ["basement", "Rūsiams"],
-        ["land", "Kiemo teritorijoms"],
-      ].map(([icon, text]) => (
+      {home.heroServices.map(({ icon, text }) => (
         <a href="/#paslaugos">
           <Icon name={icon} size={29} />
           <span>{text}</span>
@@ -101,16 +95,16 @@ const schema = [
   <section class="section container" id="problemos">
     <div class="section-heading split">
       <div>
-        <span class="eyebrow">KAI VANDENS PER DAUG</span>
+        <span class="eyebrow">{home.text01}</span>
         <h2>
-          Kokias vandens
-          <br />
-          problemas sprendžia drenažas?
+          {home.text02.map((line, i) => (
+            <>
+              {i > 0 && <br />}
+              {line}
+            </>
+          ))}
         </h2>
-        <p>
-          Vanduo sklype gali kauptis dėl grunto, reljefo ar lietaus nuvedimo.
-          Tinkamą sprendimą padeda pasirinkti priežasties įvertinimas.
-        </p>
+        <p>{home.text03}</p>
       </div>
       <ul class="check-list">
         <li>
@@ -160,8 +154,8 @@ const schema = [
         <Icon name="water" size={27} />
       </div>
       <div>
-        <strong>Nežinote, ar jums reikia drenažo?</strong>
-        <p>Trumpas klausimynas padės pasiruošti pokalbiui su specialistu.</p>
+        <strong>{home.text04}</strong>
+        <p>{home.text05}</p>
       </div>
       <a class="text-link" href="/diagnostika/">
         Įvertinti situaciją <Icon name="arrow" size={19} />
@@ -171,22 +165,18 @@ const schema = [
   <section class="section section-tint" id="veikimas">
     <div class="container diagram-grid">
       <div>
-        <span class="eyebrow">AIŠKIAI APIE TAI, KAS PO ŽEME</span>
+        <span class="eyebrow">{home.text06}</span>
         <h2>
-          Kaip veikia
-          <br />
-          drenažo sistema?
+          {home.text07.map((line, i) => (
+            <>
+              {i > 0 && <br />}
+              {line}
+            </>
+          ))}
         </h2>
+        <p>{home.text08}</p>
         <p>
-          Ji surenka perteklinį vandenį grunte ir nukreipia jį į konkrečiam
-          objektui tinkamą priėmimo vietą.
-        </p>
-        <p>
-          <strong>
-            Nepradedame nuo vamzdžių. Pradedame nuo vandens priežasties.
-          </strong>{" "}
-          Pirmiausia svarbu suprasti, iš kur vanduo atiteka ir kur jį galima
-          saugiai nuvesti.
+          <strong>{home.positioning}</strong> {home.positioningText}
         </p>
         <a class="text-link" href="/drenazas-ar-lietaus-nuotekos/">
           Drenažas ir lietaus vanduo <Icon name="arrow" size={19} />
@@ -197,32 +187,11 @@ const schema = [
   </section>
   <section class="section container benefits">
     <div class="section-heading">
-      <span class="eyebrow">APGALVOTAS SPRENDIMAS</span>
-      <h2>Kodėl verta įvertinti drenažą?</h2>
+      <span class="eyebrow">{home.text09}</span>
+      <h2>{home.text10}</h2>
     </div>
     <div class="benefit-grid">
-      {[
-        [
-          "shield",
-          "Mažiau drėgmės rizikos",
-          "Tinkamas vandens valdymas padeda mažinti drėgmės poveikį konstrukcijoms.",
-        ],
-        [
-          "house",
-          "Rūpestis namo būkle",
-          "Drenažas vertinamas kartu su reljefu, lietaus vandeniu ir hidroizoliacija.",
-        ],
-        [
-          "trees",
-          "Patogiau naudotis kiemu",
-          "Sprendžiama, kodėl sklype laikosi balos ir ilgai neišdžiūsta veja.",
-        ],
-        [
-          "document",
-          "Aiškesnė darbų apimtis",
-          "Aiškus planas, darbų apimtis ir sąmata prieš priimant sprendimą.",
-        ],
-      ].map(([icon, title, text]) => (
+      {home.benefits.map(({ icon, title, text }) => (
         <article>
           <span class="round-icon">
             <Icon name={icon} />
@@ -236,12 +205,9 @@ const schema = [
   <section class="section section-tint" id="paslaugos">
     <div class="container">
       <div class="section-heading">
-        <span class="eyebrow">SPRENDIMAS PAGAL PROBLEMĄ</span>
-        <h2>Sklypo ir pamatų drenažo sprendimai</h2>
-        <p>
-          Pamatų drenažas, sklypo sausinimas ir lietaus vandens surinkimas
-          atlieka skirtingas užduotis.
-        </p>
+        <span class="eyebrow">{home.text11}</span>
+        <h2>{home.text12}</h2>
+        <p>{home.text13}</p>
       </div>
       <div class="service-grid">
         {services.map((s) => (
@@ -263,31 +229,13 @@ const schema = [
   <section class="section container" id="procesas">
     <div class="section-heading split">
       <div>
-        <span class="eyebrow">NUO SITUACIJOS IKI AIŠKAUS PLANO</span>
-        <h2>Kaip vyksta darbai?</h2>
+        <span class="eyebrow">{home.text14}</span>
+        <h2>{home.text15}</h2>
       </div>
-      <p>
-        Rangovą ir darbų apimtį renkatės žinodami, kas siūloma ir kodėl.
-        Kiekvienas etapas derinamas individualiai.
-      </p>
+      <p>{home.text16}</p>
     </div>
     <ol class="process-grid">
-      {[
-        [
-          "Situacija",
-          "Aprašote problemą, vietą ir, jei galite, pridedate nuotraukas.",
-        ],
-        [
-          "Įvertinimas",
-          "Tikslinamos sąlygos, vandens kelias ir apžiūros poreikis.",
-        ],
-        ["Sąmata", "Su rangovu suderinate darbų apimtį, kainą ir atsakomybes."],
-        ["Įrengimas", "Darbai atliekami pagal suderintą sprendimą ir sąlygas."],
-        [
-          "Dokumentacija",
-          "Verta sutarti dėl užkasamų darbų nuotraukų ir sistemos schemos.",
-        ],
-      ].map(([title, text], i) => (
+      {home.process.map(({ title, text }, i) => (
         <li>
           <span class="step-number">0{i + 1}</span>
           <h3>{title}</h3>
@@ -299,27 +247,22 @@ const schema = [
   <section class="price-band">
     <div class="container price-band-inner">
       <div>
-        <span class="eyebrow">KAS ĮEINA Į SĄMATĄ</span>
+        <span class="eyebrow">{home.text17}</span>
         <h2>
-          Drenažo kaina:
-          <br />
-          kas ją lemia?
+          {home.text18.map((line, i) => (
+            <>
+              {i > 0 && <br />}
+              {line}
+            </>
+          ))}
         </h2>
-        <p>
-          Kainą lemia ne vien metrai. Svarbu gruntas, privažiavimas, vandens
-          nuvedimas ir esamos dangos.
-        </p>
+        <p>{home.text19}</p>
         <a href="/drenazo-kaina/" class="button" data-event="primary_cta_click">
           Peržiūrėti kainos skaičiuoklę <Icon name="arrow" size={19} />
         </a>
       </div>
       <div class="price-factor-grid">
-        {[
-          ["land", "Gruntas ir kasimo sąlygos"],
-          ["water", "Vandens surinkimas ir nuvedimas"],
-          ["building", "Privažiavimas technikai"],
-          ["trees", "Gerbūvio atkūrimas"],
-        ].map(([icon, text]) => (
+        {home.priceFactors.map(({ icon, text }) => (
           <div>
             <Icon name={icon} />
             <span>{text}</span>
@@ -331,36 +274,29 @@ const schema = [
   <section class="section container" id="teritorija">
     <div class="area-grid">
       <div>
-        <span class="eyebrow">JŪSŲ VIETA – SVARBI</span>
+        <span class="eyebrow">{home.text20}</span>
         <h2>
-          Vilnius. Kaunas.
-          <br />
-          Ir jūsų sklypas.
+          {home.text21.map((line, i) => (
+            <>
+              {i > 0 && <br />}
+              {line}
+            </>
+          ))}
         </h2>
-        <p>
-          Užklausą galite pateikti iš bet kurios Lietuvos vietovės. Galimybė
-          pasiūlyti rangovą konkrečioje vietovėje tikslinama pagal partnerių
-          aprėptį ir užimtumą.
-        </p>
+        <p>{home.text22}</p>
         <div class="area-tags">
-          <span>
-            <Icon name="pin" size={17} />
-            Vilnius ir rajonas
-          </span>
-          <span>
-            <Icon name="pin" size={17} />
-            Kaunas ir rajonas
-          </span>
-          <span>Kitos Lietuvos vietovės</span>
+          {site.serviceAreas.map((area, i) => (
+            <span>
+              {i < 2 && <Icon name="pin" size={17} />}
+              {area}
+            </span>
+          ))}
         </div>
       </div>
       <div class="area-note">
         <Icon name="camera" size={36} />
-        <h3>Pradėti pakanka vietos ir problemos aprašymo</h3>
-        <p>
-          Nereikia žinoti vamzdžių ilgio ar grunto sudėties. Parodykite, kur
-          kaupiasi vanduo – klausimus patikslinsime pirmojo pokalbio metu.
-        </p>
+        <h3>{home.text23}</h3>
+        <p>{home.text24}</p>
         <a class="text-link" href="/gauti-pasiulyma/?photos=1">
           Atsiųsti objekto nuotraukas <Icon name="arrow" size={18} />
         </a>
@@ -370,13 +306,16 @@ const schema = [
   <section class="section section-tint" id="duk">
     <div class="container faq-grid">
       <div>
-        <span class="eyebrow">PRIEŠ APSISPRENDŽIANT</span>
+        <span class="eyebrow">{home.text25}</span>
         <h2>
-          Dažniausi
-          <br />
-          klausimai
+          {home.text26.map((line, i) => (
+            <>
+              {i > 0 && <br />}
+              {line}
+            </>
+          ))}
         </h2>
-        <p>Apie drenažo poreikį, kainą ir vandens nuvedimą.</p>
+        <p>{home.text27}</p>
         <a href="/duk/" class="text-link">
           Visi atsakymai <Icon name="arrow" size={18} />
         </a>
@@ -387,16 +326,22 @@ const schema = [
   <section class="section container" id="kontaktai">
     <div class="final-cta">
       <div>
-        <span class="eyebrow">PIRMAS ŽINGSNIS – PAPRASTAS</span>
+        <span class="eyebrow">{home.text28}</span>
         <h2>
-          Parodykite problemą.
-          <br />
-          Pradėkime nuo situacijos.
+          {home.text29.map((line, i) => (
+            <>
+              {i > 0 && <br />}
+              {line}
+            </>
+          ))}
         </h2>
         <p>
-          Objekto vieta, problema ir jūsų kontaktai.
-          <br />
-          Nuotraukos neprivalomos, bet labai naudingos.
+          {home.text30.map((line, i) => (
+            <>
+              {i > 0 && <br />}
+              {line}
+            </>
+          ))}
         </p>
       </div>
       <div>
@@ -407,7 +352,7 @@ const schema = [
         >
           Gauti pasiūlymą <Icon name="arrow" />
         </a>
-        <span class="small">Be įsipareigojimo užsakyti darbus.</span>
+        <span class="small">{home.text31}</span>
       </div>
     </div>
   </section>

@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 import sharp from "sharp";
 import { load } from "cheerio";
 // Isolated build fixture, never published or added to source history.
-const original = await readFile("src/data/projects.json", "utf8");
+const contentDir = "src/content/projects";
 const photoDir = "public/images/projects/qa-fixture";
 const output = ".audit-projects";
 const project = {
@@ -29,13 +29,12 @@ try {
   })
     .webp()
     .toFile(photoDir + "/photo.webp");
+  await writeFile(contentDir + "/qa-fixture.json", JSON.stringify(project));
   await writeFile(
-    "src/data/projects.json",
-    JSON.stringify([
-      project,
-      { ...project, slug: "qa-draft", status: "draft" },
-    ]),
+    contentDir + "/qa-draft.json",
+    JSON.stringify({ ...project, status: "draft" }),
   );
+  execFileSync("node", ["scripts/prepare-content.mjs"], { stdio: "inherit" });
   execFileSync("node_modules/.bin/astro", ["build", "--outDir", output], {
     stdio: "inherit",
     env: { ...process.env, SITE_AUDIT_MODE: "production" },
@@ -50,9 +49,10 @@ try {
     $('link[rel="canonical"]').attr("href"),
     "https://drenazoirengimas.lt/projektai/qa-fixture/",
   );
-  assert.equal(
-    $('meta[property="og:image"]').attr("content"),
-    "https://drenazoirengimas.lt" + project.images[0].src,
+  assert.ok(
+    $('meta[property="og:image"]')
+      .attr("content")
+      .startsWith("https://drenazoirengimas.lt/images/projects/_generated/"),
   );
   assert.ok($('meta[name="robots"]').attr("content").startsWith("index"));
   assert.equal($(".project-photos img").attr("alt"), project.images[0].alt);
@@ -71,7 +71,9 @@ try {
     "PASS: published project listing/detail/metadata/cover/schema/sitemap; drafts excluded.",
   );
 } finally {
-  await writeFile("src/data/projects.json", original);
+  await rm(contentDir + "/qa-fixture.json", { force: true });
+  await rm(contentDir + "/qa-draft.json", { force: true });
+  execFileSync("node", ["scripts/prepare-content.mjs"], { stdio: "inherit" });
   await rm(photoDir, { recursive: true, force: true });
   await rm(output, { recursive: true, force: true });
 }
