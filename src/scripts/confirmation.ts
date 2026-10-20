@@ -11,7 +11,7 @@ export function initConfirmation() {
   const copy = document.querySelector("#success-copy");
   if (copy)
     copy.textContent =
-      "Jūsų pateikta informacija ir nuotraukų priedai perduoti el. pašto siuntimo sistemai. Jie bus naudojami situacijai įvertinti ir su jumis susisiekti.";
+      "Ačiū! Susisieksime su jumis ir aptarsime jūsų situaciją.";
   const note = document.querySelector<HTMLElement>("[data-received-note]");
   if (note) note.hidden = false;
   const link = document.querySelector<HTMLAnchorElement>(
