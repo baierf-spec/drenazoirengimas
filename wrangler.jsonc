@@ -22,7 +22,7 @@
     {
       "binding": "DB",
       "database_name": "drenazoirengimas-leads",
-      "database_id": "REPLACE_WITH_D1_DATABASE_ID",
+      "database_id": "a133ad8d-5f63-4ff4-a5d2-4e4765b4a01b",
       "migrations_dir": "migrations",
     },
   ],
