@@ -13,7 +13,7 @@
   "vars": {
     "SITE_ORIGIN": "https://drenazoirengimas.lt",
     "ALLOWED_ORIGINS": "https://drenazoirengimas.lt",
-    "LEADS_ENABLED": "false",
+    "LEADS_ENABLED": "true",
     "SEO_INDEXABLE": "false",
   },
   // Default binding sends to verified account destinations only.
