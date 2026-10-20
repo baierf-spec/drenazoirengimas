@@ -11,7 +11,6 @@ try {
 }
 const missing = [];
 for (const name of [
-  "PUBLIC_PHONE",
   "PUBLIC_CONTACT_EMAIL",
   "PUBLIC_CONTROLLER_NAME",
   "PUBLIC_CONTROLLER_ADDRESS",
@@ -26,7 +25,10 @@ if (
   process.env.PUBLIC_TURNSTILE_SITE_KEY?.startsWith("3x000000")
 )
   missing.push("real Turnstile site key (test key forbidden)");
-if (process.env.PUBLIC_PHONE && !/^\+370\d{8}$/.test(process.env.PUBLIC_PHONE))
+if (
+  process.env.PUBLIC_SHOW_PHONE === "true" &&
+  !/^\+370\d{8}$/.test(process.env.PUBLIC_PHONE || "")
+)
   missing.push("valid PUBLIC_PHONE (+370 and eight digits)");
 if (
   process.env.PUBLIC_CONTACT_EMAIL &&

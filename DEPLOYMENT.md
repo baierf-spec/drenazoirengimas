@@ -47,3 +47,7 @@ GALLERY_MANAGEMENT.md describes GitHub content, responsive images, publishing an
 Submit a controlled lead with several photo attachments; verify Inbox, Spam, Reply-To and no public photo URL. Verify challenge failure, email failure/retry, mobile file preparation, duplicate-submit button protection and consent. Run real iOS/Android tests and live performance checks. These account-level tests remain pending until native configuration is active. No actual Inbox result is claimed by mocked tests.
 
 Analytics tools are optional and consent-gated. Use Search Console DNS/meta verification and submit the canonical sitemap after activation. Configure real owner/privacy details before collecting leads.
+
+### Public phone switch (2026-10-20)
+
+Default `PUBLIC_SHOW_PHONE=false`: hide business phone and phone CTAs throughout the site. Set `PUBLIC_SHOW_PHONE=true` with valid `PUBLIC_PHONE` to turn it on; rebuild after changes. This is a public build option, not a runtime secret. Production preflight only requires a phone when the switch is on. The visitor phone field in the enquiry form is unaffected.

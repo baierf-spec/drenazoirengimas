@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { externalReferrer } from "./attribution";
 export const LIMITS = {
   photos: 5,
   file: 2 * 1024 * 1024,
@@ -54,6 +55,11 @@ export const leadSchema = z.object({
     .max(300)
     .refine((p) => p.startsWith("/") && !p.startsWith("//"))
     .default("/"),
+  referrer: z
+    .string()
+    .max(2048)
+    .default("")
+    .transform((v) => externalReferrer(v)),
   diagnostic: z.string().max(250).default(""),
   estimate: z.string().max(250).default(""),
 });
@@ -73,6 +79,7 @@ export function validateLead(form: FormData) {
       "consent",
       "website",
       "source",
+      "referrer",
       "diagnostic",
       "estimate",
     ].map((key) => [key, form.get(key) ?? ""]),

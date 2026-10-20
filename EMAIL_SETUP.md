@@ -19,3 +19,9 @@ Sėkmė rodoma tik EMAIL.send priėmus laišką, tačiau tai nėra galutinio pri
 - https://developers.cloudflare.com/email-service/api/send-emails/workers-api/
 - https://developers.cloudflare.com/email-service/configuration/send-bindings/
 - https://developers.cloudflare.com/email-service/platform/limits/
+
+## Laiško išvaizda ir atėjimo šaltinis
+
+Pranešime yra tvarkingas HTML išdėstymas ir tekstinė versija. Rodomi tik kliento kontaktai, vieta, situacija, terminas, neprivalomas komentaras ir nuotraukų priedų informacija. Techniniai UUID / sutikimo versija / tušti klausimyno laukai iš laiško turinio pašalinti. Reply-To ir nuotraukų priedai išsaugoti.
+
+Leidus analitiką, šio skirtuko sesijoje iki 24 valandų įsimenamas pirmo atėjimo domenas. Jei naršyklė jo neperduoda arba lankytojas nesutinka, laiške nurodoma „Nenustatytas“. Nenustatomas konkretus Google paieškos raktažodis ar mokama reklama vien iš referrer domeno. Pilni šaltinio adresai / parametrai nesaugomi.

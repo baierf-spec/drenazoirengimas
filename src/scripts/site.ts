@@ -1,3 +1,4 @@
+import { rememberEntrySource, forgetEntrySource } from "./attribution";
 import {
   setAnalyticsConsent,
   track,
@@ -49,7 +50,7 @@ document.addEventListener("click", (e) => {
 const panel = document.querySelector<HTMLElement>(".consent-panel");
 const config = JSON.parse(
   document.querySelector("#analytics-config")?.textContent || "{}",
-) as { ga4?: string; cloudflare?: string };
+) as { ga4?: string; cloudflare?: string; attribution?: boolean };
 let initialized = false;
 function safeReferrer() {
   try {
@@ -61,6 +62,7 @@ function safeReferrer() {
 }
 
 function activate() {
+  rememberEntrySource();
   setAnalyticsConsent(true);
   if (initialized) return;
   initialized = true;
@@ -100,7 +102,9 @@ function activate() {
     document.head.append(script);
   }
 }
-const hasAnalytics = Boolean(config.ga4 || config.cloudflare);
+const hasAnalytics = Boolean(
+  config.ga4 || config.cloudflare || config.attribution,
+);
 let consent: string | null = null;
 try {
   const saved = JSON.parse(localStorage.getItem("drainage-consent") || "null");
@@ -114,6 +118,7 @@ try {
   /* Storage can be unavailable. */
 }
 if (consent === "granted" && hasAnalytics) activate();
+else forgetEntrySource();
 if (!consent && hasAnalytics && panel) panel.hidden = false;
 function revokeCookies() {
   for (const cookie of document.cookie.split(";")) {
@@ -140,6 +145,7 @@ document
       if (panel) panel.hidden = true;
       if (value === "granted" && hasAnalytics) activate();
       else {
+        forgetEntrySource();
         setAnalyticsConsent(false);
         if (initialized) {
           revokeCookies();

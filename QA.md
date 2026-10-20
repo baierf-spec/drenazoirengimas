@@ -19,3 +19,9 @@ Data: 2026-10-20. Dabartinė architektūra pakeičia ankstesnį D1/R2/Access CMS
 - LEADS_ENABLED=false ir SEO_INDEXABLE=false palikti iki aktyvavimo. Public production build preflight vis dar reikalauja tikrų kontaktų / duomenų valdytojo / Turnstile reikšmių. Šiame pakeitime tikri vartotojo duomenys nesugalvoti.
 - Tikri iPhone/Android failai, fizinių telefonų UX, native Cloudflare galutinė versija, DNS / HTTPS, Search Console, realūs CWV ir screen reader patikra šiame pakeitime neatlikti. Ankstesnė responsive patikra buvo su išsaugotu viešu dizainu; šį kartą nepaskelbiama nauja rankinės naršyklės QA išvada.
 - Klientų nuotraukos nepridedamos prie viešos galerijos ar GitHub. Vieši galerijos failai ir Git istorija nėra privati juodraščių saugykla.
+
+## Telefono jungiklis, laiško išdėstymas ir atėjimo šaltinis
+
+2026-10-20: PASS `npm run check` (lint, TypeScript 44 failai be klaidų / perspėjimų, build, SEO, 57/57 testų, 458 resursų ir nuorodų, 43 JSON-LD, Worker smoke, atskiras galerijos generavimo testas). Pridėti testai tikrina telefono off/on, HTML escaping, glaustą laiško turinį / tuščių laukų praleidimą, referrer sanitizavimą, sutikimą, šaltinio išlaikymą tarp vidinių puslapių, atsisakymą ir galiojimą.
+
+PUBLIC_SHOW_PHONE pagal nutylėjimą off; telefono įvedimas kliento formoje nekeistas. Galerija ir bendras dizainas išsaugoti. HTML laiškas naudoja inline stilius ir lenteles, turi plain-text alternatyvą; tikro Gmail/iPhone siuntimo išvaizda po šio pakeitimo dar nepatikrinta. Atėjimo šaltinis – pasirenkamas ir nepatikimas lankytojo pateiktas domenas, nesaugomas iki analitikos sutikimo, be URL parametrų / paieškos žodžių / kelių. Tikras šaltinis ne visada pasiekiamas.

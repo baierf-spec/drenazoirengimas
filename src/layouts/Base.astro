@@ -53,7 +53,11 @@ const baseSchema = [
   },
   ...schema,
 ];
-const config = { ga4: site.ga4, cloudflare: site.cloudflareAnalytics };
+const config = {
+  ga4: site.ga4,
+  cloudflare: site.cloudflareAnalytics,
+  attribution: true,
+};
 ---
 
 <!doctype html>
@@ -134,8 +138,9 @@ const config = { ga4: site.ga4, cloudflare: site.cloudflareAnalytics };
       <div>
         <strong id="consent-title">Jūsų privatumo pasirinkimas</strong>
         <p>
-          Pasirinktinę lankomumo analitiką įjungiame tik jums sutikus. Forma
-          veikia ir jos atsisakius. <a href="/privatumo-politika/">Plačiau</a>
+          Lankomumo analitiką ir atėjimo šaltinio įsiminimą įjungiame tik jums
+          sutikus. Forma veikia ir jos atsisakius.{" "}
+          <a href="/privatumo-politika/">Plačiau</a>
         </p>
       </div>
       <div class="consent-actions">

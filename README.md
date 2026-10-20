@@ -22,3 +22,11 @@ Projects remain in main navigation and render an intentional Lithuanian empty st
 - [QA.md](QA.md), [SEO_AUDIT.md](SEO_AUDIT.md): checks and outstanding real-account verification.
 
 Optional public analytics configuration: PUBLIC_GA4_ID, PUBLIC_CF_ANALYTICS_TOKEN, PUBLIC_GOOGLE_SITE_VERIFICATION. Events: phone_click, quote_started, quote_submitted, photo_uploaded, diagnostic_started, diagnostic_completed, cost_estimator_completed, primary_cta_click. No PII is sent to analytics; trackers load only after consent. Never commit .env, .dev.vars, credentials, customer information or private enquiry photos.
+
+## Public phone visibility
+
+`PUBLIC_SHOW_PHONE=false` is the default: all public phone numbers and `tel:` CTAs are hidden, with existing photo/enquiry actions in their place. Customer phone inputs remain required. To show the business phone, set **build** variable `PUBLIC_SHOW_PHONE=true` and a valid `PUBLIC_PHONE`, then rebuild. No number is required by production preflight while visibility is off.
+
+## Lead email and source
+
+Notifications have HTML and plain-text versions: contacts, location, property/problem, timing, optional comment, photo attachments and source domain. Technical IDs stay in the delivery header, outside the visible message. First-entry attribution uses the existing analytics consent, only an external origin, and per-tab session storage up to 24 hours. No full referrer path, query, fragment, UTM or search term is saved. No source storage before consent; withdrawal clears it. Source may be unknown and is untrusted visitor metadata, not proof of a particular campaign/conversion.

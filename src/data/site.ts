@@ -2,9 +2,11 @@ export const site = {
   origin: "https://drenazoirengimas.lt",
   name: "drenazoirengimas.lt",
   production: import.meta.env.PUBLIC_SITE_MODE === "production",
-  phone: /^\+370\d{8}$/.test(import.meta.env.PUBLIC_PHONE || "")
-    ? import.meta.env.PUBLIC_PHONE
-    : "",
+  phone:
+    import.meta.env.PUBLIC_SHOW_PHONE === "true" &&
+    /^\+370\d{8}$/.test(import.meta.env.PUBLIC_PHONE || "")
+      ? import.meta.env.PUBLIC_PHONE
+      : "",
   email: import.meta.env.PUBLIC_CONTACT_EMAIL || "",
   controller: import.meta.env.PUBLIC_CONTROLLER_NAME || "",
   controllerAddress: import.meta.env.PUBLIC_CONTROLLER_ADDRESS || "",
