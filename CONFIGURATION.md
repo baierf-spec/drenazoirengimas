@@ -85,3 +85,11 @@ Decap `/admin/` redaguoja tą patį site.config.json — antros nustatymų kopij
 ## Google Analytics
 
 analytics.ga4Id dabar G-NF15227P2D (savininko pateiktas viešas matavimo ID). Google pateiktas standartinis async gtag skriptas ir inicializacija įterpiami tiesiai po bendro viešų puslapių <head> pradžios. Gtag įkeliamas atidarius puslapį. Papildomų conversion events, Cloudflare analitikos ir referrer įsiminimo sutikimo logika išlieka atskira. Senas dinaminis GA4 įkėlimas pašalintas, todėl gaunama tik viena inicializacija / page view kiekviename puslapyje. CMS/OAuth žyma nekraunama. Cloudflare papildomo GA4 kintamojo nereikia.
+
+### Gautų užklausų skaičiavimas GA4
+
+`generate_lead` siunčiamas standartiniu bendro head `gtag` po POST `/api/leads` sėkmės ir tik kai atsakyme yra `id` ir `status: "sent"`. Worker grąžina šią būseną tik po `await sendLead(...)` / Cloudflare EMAIL priėmimo. Tai patvirtina siuntimo sistemos priėmimą, ne galutinį pristatymą į Inbox. Įvykio parametrai: `form_name: "kontaktinė_forma"`, `lead_type: "užklausa"`; kontaktai, aprašymas, nuotraukos ir request ID Analytics nesiunčiami. Įvykis, kaip ir pagrindinis Google tag, nepriklauso nuo papildomų įvykių pasirinkimo.
+
+Prieš perėjimą į padėkos puslapį laukiama `event_callback`, daugiausia 1,5 s. Blokuota analitika netrukdo sėkmei. Dubliavimas stabdomas aktyvioje formoje, atmintyje ir skirtuko sessionStorage pagal serverio ID (saugoma iki 50 ID). Padėkos puslapis įvykio nesiunčia. Naršyklės blokatoriai, užvertas langas ar nutrūkęs ryšys gali neleisti GA4 gauti įvykio — tai nėra serverio apskaitos registras; naujų secrets / Measurement Protocol rakto nereikia.
+
+GA4: Admin → Data display → Events → `generate_lead` → Mark as key event. Jei įvykis dar negautas, galima sukurti jį pasirinkus Create with code ir tą patį pavadinimą. Skaičiavimas Once per event. Nekurkite antro `generate_lead` iš `form_submit`, `quote_submitted` ar `/aciu/` page_view — jie neatitinka šios siuntimo sąlygos / dubliuotų įvykį. Tikrinkite Realtime po realios sėkmingos užklausos. LeadHub/API užklausų skaičiui filtruokite būtent `eventName = generate_lead`, metrika `eventCount`.

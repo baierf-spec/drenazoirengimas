@@ -1,6 +1,6 @@
 import { validateLead, LIMITS } from "../lib/validation";
 import { entrySource } from "./attribution";
-import { track } from "../lib/analytics";
+import { track, reportGeneratedLead } from "../lib/analytics";
 export function initQuote() {
   const form = document.querySelector<HTMLFormElement>("#quote-form");
   if (!form) return;
@@ -8,6 +8,7 @@ export function initQuote() {
   let step = 0;
   let started = false;
   let busy = false;
+  let delivered = false;
   let processing = false;
   let photos: File[] = [];
   const photoUrls: string[] = [];
@@ -238,12 +239,18 @@ export function initQuote() {
         body: data,
         signal: AbortSignal.timeout(45000),
       });
-      const result = (await response.json()) as { id?: string; error?: string };
-      if (!response.ok || !result.id)
+      const result = (await response.json()) as {
+        id?: string;
+        status?: string;
+        error?: string;
+      };
+      if (!response.ok || !result.id || result.status !== "sent")
         throw new Error(
           result.error ||
             "Užklausos pateikti nepavyko. Duomenys liko formoje – pabandykite dar kartą.",
         );
+      delivered = true;
+      await reportGeneratedLead(result.id);
       track("quote_submitted", {
         photo_count: photos.length,
         property_type: validation.data.property,
@@ -270,8 +277,8 @@ export function initQuote() {
       status.textContent = "";
       window.turnstile?.reset(widgetId);
     } finally {
-      busy = false;
-      submit.disabled = false;
+      busy = delivered;
+      submit.disabled = delivered;
       form.removeAttribute("aria-busy");
     }
   });

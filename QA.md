@@ -45,3 +45,7 @@ Produkcijos `/admin/` antraštėje patvirtintas `wasm-unsafe-eval`, kuris neleid
 ## OAuth nustatymų diagnostika — 2026-10-21
 
 503 atsakymas dabar nurodo tik trūkstamų runtime laukų pavadinimus arba per trumpą OAUTH_STATE_SECRET; reikšmės negrąžinamos. Tuščios / vien tarpų reikšmės atmetamos. PASS: lint, TypeScript, 79 testai / 11 failų, production build. Gyvų paskyros nustatymų turinys nematomas; realus login lieka nepatvirtintas.
+
+## GA4 generate_lead — 2026-10-21
+
+PASS: lint, TypeScript (46 failai, 0 klaidų), production build, 85 testai / 12 failų. Nauji UI testai tikrina, kad iki atsakymo nėra įvykio; tik `status: sent` + ID + sėkmingas HTTP siunčia vieną generate_lead; HTTP klaida, trūkstama sent būsena ir tinklo klaida jo nesiunčia. Pakartotinis submit ir padėkos atnaujinimas jo nedubliuoja. Vienetiniai testai tikrina session ID dedupe, fiksuotus parametrus be PII, neveikiantį / blokuotą gtag bei 1,5 s fallback. Esamas serverio testas patvirtina, kad atsakymas laukia Cloudflare EMAIL priėmimo ir siuntimo klaida grąžina 503. Tikras laiškas nesiųstas; GA4 Realtime gavimas ir naujo commit deployment gyvai dar nepatvirtinti.

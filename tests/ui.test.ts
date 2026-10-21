@@ -131,7 +131,9 @@ describe("interactive UI against the built Astro pages", () => {
     vi.spyOn(window.location, "assign").mockImplementation(() => {});
     vi.stubGlobal(
       "fetch",
-      vi.fn(async () => Response.json({ id: "photo-lead" }, { status: 201 })),
+      vi.fn(async () =>
+        Response.json({ id: "photo-lead", status: "sent" }, { status: 201 }),
+      ),
     );
     f.dispatchEvent(new Event("submit", { cancelable: true }));
     await vi.waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
@@ -193,13 +195,86 @@ describe("interactive UI against the built Astro pages", () => {
       vi
         .fn()
         .mockResolvedValue(
-          Response.json({ id: "received-id" }, { status: 201 }),
+          Response.json({ id: "received-id", status: "sent" }, { status: 201 }),
         ),
     );
     f.dispatchEvent(new Event("submit", { cancelable: true }));
     await vi.waitFor(() => expect(assign).toHaveBeenCalledWith("/aciu/"));
     expect(sessionStorage.getItem("drainage-received")).toBe("yes");
   });
+  it.each(["sent", "failed", "missing-status", "network"])(
+    "counts a lead only after a confirmed email response: %s",
+    async (outcome) => {
+      page("gauti-pasiulyma");
+      const f = document.querySelector<HTMLFormElement>("#quote-form")!;
+      initQuote();
+      document.querySelector<HTMLButtonElement>("[data-next]")!.click();
+      input("location", "Vilnius");
+      document.querySelectorAll<HTMLButtonElement>("[data-next]")[1].click();
+      input("name", "Tomas");
+      input("phone", "+37061234567");
+      (f.elements.namedItem("consent") as HTMLInputElement).checked = true;
+      const token = document.createElement("input");
+      token.name = "turnstileToken";
+      token.value = "verified";
+      f.append(token);
+      const gtag = vi.fn((_type, _event, params) => params.event_callback());
+      window.gtag = gtag;
+      const assign = vi
+        .spyOn(window.location, "assign")
+        .mockImplementation(() => {});
+      let finish!: (response: Response) => void;
+      let fail!: (error: Error) => void;
+      vi.stubGlobal(
+        "fetch",
+        vi.fn(
+          () =>
+            new Promise<Response>((resolve, reject) => {
+              finish = resolve;
+              fail = reject;
+            }),
+        ),
+      );
+      f.dispatchEvent(new Event("submit", { cancelable: true }));
+      f.dispatchEvent(new Event("submit", { cancelable: true }));
+      expect(fetch).toHaveBeenCalledTimes(1);
+      expect(gtag).not.toHaveBeenCalled();
+      if (outcome === "network") fail(new TypeError("offline"));
+      else
+        finish(
+          Response.json(
+            {
+              id: crypto.randomUUID(),
+              ...(outcome !== "missing-status" ? { status: outcome } : {}),
+            },
+            { status: outcome === "failed" ? 503 : 201 },
+          ),
+        );
+      if (outcome === "sent") {
+        await vi.waitFor(() => expect(assign).toHaveBeenCalledWith("/aciu/"));
+        expect(gtag).toHaveBeenCalledExactlyOnceWith(
+          "event",
+          "generate_lead",
+          expect.objectContaining({
+            form_name: "kontaktinė_forma",
+            lead_type: "užklausa",
+          }),
+        );
+        f.dispatchEvent(new Event("submit", { cancelable: true }));
+        expect(fetch).toHaveBeenCalledTimes(1);
+        expect(gtag).toHaveBeenCalledTimes(1);
+        page("aciu");
+        initConfirmation();
+        initConfirmation();
+        expect(gtag).toHaveBeenCalledTimes(1);
+      } else {
+        await vi.waitFor(() => expect(f.getAttribute("aria-busy")).toBeNull());
+        expect(gtag).not.toHaveBeenCalled();
+        expect(assign).not.toHaveBeenCalled();
+      }
+      delete window.gtag;
+    },
+  );
   it("blocks repeated submits while the first request is pending", () => {
     page("gauti-pasiulyma");
     const f = document.querySelector<HTMLFormElement>("#quote-form")!;
