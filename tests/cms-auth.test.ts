@@ -27,6 +27,26 @@ async function begin() {
 }
 it("fails closed when OAuth secrets are missing", async () =>
   expect((await cmsAuth(req("/auth"), fixture().env)).status).toBe(503));
+it("reports missing binding names and short state keys without disclosing values", async () => {
+  const env = makeEnv();
+  const secret = env.GITHUB_CLIENT_SECRET;
+  env.GITHUB_CLIENT_ID = "";
+  env.OAUTH_STATE_SECRET = "short-private-key";
+  const r = await cmsAuth(req("/auth"), env);
+  expect(r.status).toBe(503);
+  const body = await r.text();
+  expect(body).toContain("Trūksta GITHUB_CLIENT_ID.");
+  expect(body).toContain("OAUTH_STATE_SECRET turi būti bent 32");
+  expect(body).not.toContain(secret);
+  expect(body).not.toContain(env.OAUTH_STATE_SECRET);
+  const missing = await (await cmsAuth(req("/auth"), fixture().env)).text();
+  for (const name of [
+    "GITHUB_CLIENT_ID",
+    "GITHUB_CLIENT_SECRET",
+    "OAUTH_STATE_SECRET",
+  ])
+    expect(missing).toContain(`Trūksta ${name}.`);
+});
 it("rejects foreign hosts, origins, providers, site IDs and methods", async () => {
   const env = makeEnv();
   expect(

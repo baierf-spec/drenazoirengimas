@@ -117,3 +117,7 @@ Node 24. `cms:prepare` validuoja redaguojamą turinį, generuoja `/admin/config.
 ## Patikrų ribos
 
 Tikslius šio įdiegimo rezultatus ir neištestuotas paskyros priklausomybes žr. QA.md. Vietiniai mock testai nėra įrodymas, kad GitHub OAuth buvo autorizuotas ar Cloudflare priėmė CMS publikavimą. To nevadiname užbaigtu gyvu login/publish bandymu, kol nėra realaus patvirtinimo.
+
+### Prisijungimas rodo „nesukonfigūruotas“
+
+Atidarykite `/auth?provider=github&site_id=drenazoirengimas.lt`: 503 tekstas nurodo trūkstamus laukus arba per trumpą `OAUTH_STATE_SECRET` (bent 32 simboliai). Nustatykite `GITHUB_CLIENT_ID`, `GITHUB_CLIENT_SECRET`, `OAUTH_STATE_SECRET` būtent esamo Worker Settings → Variables and Secrets, Production aplinkoje, išsaugokite / įdiekite pakeitimus. GitHub Actions Secrets ir Cloudflare Settings → Build → Variables and secrets nėra Worker runtime nustatymai. Nesiųskite secret reikšmių ekrano nuotraukose.

@@ -41,3 +41,7 @@ Vartotojo prašymu standartinis Google tag G-NF15227P2D įterptas tiesiai po ben
 ## CMS CSP pataisa — 2026-10-21
 
 Produkcijos `/admin/` antraštėje patvirtintas `wasm-unsafe-eval`, kuris neleidžia Decap konfigūracijos JavaScript šablonų vykdymo. Pakeista į `unsafe-eval` tik izoliuotai CMS saugumo politikai. Regresijos testas tikrina, kad admin leidimas yra, o viešuose puslapiuose ir OAuth callback jo nėra. PASS: lint, TypeScript (46 failai, 0 klaidų), 78 testai / 11 failų, production build. Tikras CMS prisijungimas po šio deployment dar nepatvirtintas.
+
+## OAuth nustatymų diagnostika — 2026-10-21
+
+503 atsakymas dabar nurodo tik trūkstamų runtime laukų pavadinimus arba per trumpą OAUTH_STATE_SECRET; reikšmės negrąžinamos. Tuščios / vien tarpų reikšmės atmetamos. PASS: lint, TypeScript, 79 testai / 11 failų, production build. Gyvų paskyros nustatymų turinys nematomas; realus login lieka nepatvirtintas.

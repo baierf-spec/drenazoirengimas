@@ -26,13 +26,23 @@ function message(text: string, status: number, clear = false) {
     },
   });
 }
+function configurationIssues(env: Env): string[] {
+  const issues: string[] = [];
+  for (const name of [
+    "GITHUB_CLIENT_ID",
+    "GITHUB_CLIENT_SECRET",
+    "OAUTH_STATE_SECRET",
+  ] as const) {
+    const value = env[name];
+    if (typeof value !== "string" || !value.trim())
+      issues.push(`Trūksta ${name}.`);
+    else if (name === "OAUTH_STATE_SECRET" && value.trim().length < 32)
+      issues.push("OAUTH_STATE_SECRET turi būti bent 32 simbolių ilgio.");
+  }
+  return issues;
+}
 export function cmsAuthReady(env: Env) {
-  return Boolean(
-    env.GITHUB_CLIENT_ID &&
-    env.GITHUB_CLIENT_SECRET &&
-    env.OAUTH_STATE_SECRET &&
-    env.OAUTH_STATE_SECRET.length >= 32,
-  );
+  return configurationIssues(env).length === 0;
 }
 function popup(token: string) {
   const nonce = crypto.randomUUID();
@@ -60,9 +70,12 @@ export async function cmsAuth(request: Request, env: Env): Promise<Response> {
   const requestOrigin = request.headers.get("Origin");
   if (requestOrigin && requestOrigin !== origin)
     return message("Prisijungimas iš šio puslapio neleidžiamas.", 403);
-  if (!cmsAuthReady(env))
+  const issues = configurationIssues(env);
+  if (issues.length)
     return message(
-      "CMS prisijungimas dar nesukonfigūruotas. Savininkas turi prijungti GitHub OAuth nustatymus Cloudflare aplinkoje.",
+      "CMS prisijungimas dar nesukonfigūruotas.\n" +
+        issues.join("\n") +
+        "\nNustatymus išsaugokite: Cloudflare → Workers & Pages → drenazoirengimas → Settings → Variables and Secrets (ne Build skiltyje). Išsaugokite ir įdiekite pakeitimus į Production.",
       503,
     );
   const key = encoder.encode(env.OAUTH_STATE_SECRET!);
