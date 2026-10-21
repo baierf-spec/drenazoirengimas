@@ -75,7 +75,7 @@ Failai saugomi `public/images/projects/` ir GitHub istorijoje. Build dar kartą 
 - Callback prieš kodo keitimą tikrina cookie/būseną/galiojimą; cookie išvalomas. GitHub authorization code yra vienkartinis. Naujas login tame pačiame browser perrašo ankstesnį bandymą, todėl nereikia vienu metu kelių login langų.
 - Po OAuth tikrinamas `/user` ir tik šios saugyklos `permissions.push`. Read-only ar pašalinė paskyra negauna CMS tokeno.
 - Popup handshake tiksliai tikrina `event.origin`, `event.source` ir fiksuotą pranešimą; tokenas nesiunčiamas į `*`, query, redirect URL ar logus. Callback naudoja vienkartinį CSP nonce, no-store ir no-referrer.
-- `/admin/`, `/auth`, `/callback` turi noindex; jų nėra sitemap. Kitų puslapių CSP nesusilpninta; CMS turi tik jai reikalingą GitHub/CDN/blob/WASM leidimą.
+- `/admin/`, `/auth`, `/callback` turi noindex; jų nėra sitemap. Kitų puslapių CSP nesusilpninta; CMS turi jai reikalingus GitHub/CDN/blob leidimus ir `script-src 'unsafe-eval'`, nes Decap konfigūracijos šablonai naudoja JavaScript vykdymą iš eilutės. Ši išimtis taikoma tik `/admin/` maršrutams; viešuose puslapiuose ir OAuth callback ji neleidžiama.
 - Decap GitHub backend standartinis tokenas yra naršyklės administravimo sesijoje / localStorage. Atsijunk bendrame įrenginyje, nenaudok nepatikimų naršyklės plėtinių. `/admin/` login ekranas viešas; turinio keitimą saugo GitHub.
 - `public_repo` OAuth leidimas GitHub pusėje apima naudotojo viešas saugyklas, ne tik šią. Proxy tikrina būtent šios saugyklos rašymo teisę, bet negali susiaurinti GitHub OAuth tokeno iki vieno repo. Neduodame `repo` / `workflow` scope; pavertus saugyklą privačia reikės atskiro saugumo sprendimo.
 

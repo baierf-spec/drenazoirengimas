@@ -181,10 +181,17 @@ it("isolates CMS CSP/noindex/cache headers from public pages", async () => {
   expect(r.headers.get("Content-Security-Policy")).toContain(
     "https://api.github.com",
   );
+  expect(r.headers.get("Content-Security-Policy")).toContain("'unsafe-eval'");
   const publicPage = await handleRequest(req("/"), f.env, f.ctx);
+  expect(publicPage.headers.get("Content-Security-Policy")).not.toContain(
+    "'unsafe-eval'",
+  );
   expect(publicPage.headers.get("Content-Security-Policy")).not.toContain(
     "https://api.github.com",
   );
   const callback = await handleRequest(req("/callback"), makeEnv(), f.ctx);
   expect(callback.status).toBe(400);
+  expect(callback.headers.get("Content-Security-Policy")).not.toContain(
+    "'unsafe-eval'",
+  );
 });

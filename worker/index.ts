@@ -84,11 +84,13 @@ export async function handleRequest(
   const headers = new Headers(response.headers);
   for (const [key, value] of Object.entries(securityHeaders))
     if (!(authPath && headers.has(key))) headers.set(key, value);
+  // Decap configuration templates require JavaScript evaluation. Keep this
+  // exception scoped to the isolated admin shell; never public pages or OAuth.
   if (cmsPath) {
     headers.set("Cache-Control", "no-store");
     headers.set(
       "Content-Security-Policy",
-      "default-src 'self'; script-src 'self' 'wasm-unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://avatars.githubusercontent.com https://raw.githubusercontent.com https://user-images.githubusercontent.com; font-src 'self' data:; connect-src 'self' https://api.github.com https://raw.githubusercontent.com https://www.netlifystatus.com; frame-src blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
+      "default-src 'self'; script-src 'self' 'unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://avatars.githubusercontent.com https://raw.githubusercontent.com https://user-images.githubusercontent.com; font-src 'self' data:; connect-src 'self' https://api.github.com https://raw.githubusercontent.com https://www.netlifystatus.com; frame-src blob:; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
     );
   }
   if (url.protocol === "https:")
