@@ -89,3 +89,16 @@ export async function reportGeneratedLead(id: string): Promise<void> {
     } // Analytics must never turn a delivered enquiry into an error.
   });
 }
+
+/** GA identifikatoriai iš slapukų, kad serverio įvykis būtų priskirtas lankytojui. */
+export function gaHeaders(): Record<string, string> {
+  const cookie = document.cookie;
+  const cid = /(?:^|;\s*)_ga=GA\d\.\d\.(\d+\.\d+)/.exec(cookie)?.[1];
+  const raw = /(?:^|;\s*)_ga_[A-Z0-9]+=([^;]+)/.exec(cookie)?.[1] ?? "";
+  const sid =
+    /\$?s(\d{9,})/.exec(raw)?.[1] ?? /^GS1\.\d\.(\d{9,})/.exec(raw)?.[1];
+  return {
+    ...(cid && { "X-GA-Client-Id": cid }),
+    ...(sid && { "X-GA-Session-Id": sid }),
+  };
+}

@@ -1,6 +1,6 @@
 import { validateLead, LIMITS } from "../lib/validation";
 import { entrySource } from "./attribution";
-import { track, reportGeneratedLead } from "../lib/analytics";
+import { track, reportGeneratedLead, gaHeaders } from "../lib/analytics";
 export function initQuote() {
   const form = document.querySelector<HTMLFormElement>("#quote-form");
   if (!form) return;
@@ -236,12 +236,14 @@ export function initQuote() {
     try {
       const response = await fetch("/api/leads", {
         method: "POST",
+        headers: gaHeaders(),
         body: data,
         signal: AbortSignal.timeout(45000),
       });
       const result = (await response.json()) as {
         id?: string;
         status?: string;
+        tracked?: boolean;
         error?: string;
       };
       if (!response.ok || !result.id || result.status !== "sent")
@@ -250,7 +252,8 @@ export function initQuote() {
             "Užklausos pateikti nepavyko. Duomenys liko formoje – pabandykite dar kartą.",
         );
       delivered = true;
-      await reportGeneratedLead(result.id);
+      // Serveris jau užskaitė užklausą GA (Measurement Protocol) – nedubliuojame.
+      if (!result.tracked) await reportGeneratedLead(result.id);
       track("quote_submitted", {
         photo_count: photos.length,
         property_type: validation.data.property,

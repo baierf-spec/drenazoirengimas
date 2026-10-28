@@ -1,4 +1,5 @@
-import { runtimeSettings } from "../shared/site-config";
+import { runtimeSettings, siteConfig } from "../shared/site-config";
+import { sendServerLead } from "./ga";
 import { LIMITS, imageType, validateLead } from "../src/lib/validation";
 import type { Env } from "./types";
 import { configured, digest, limitedBody, validateTurnstile } from "./security";
@@ -169,7 +170,14 @@ export async function receiveLead(
   });
   const delivery = await operation;
   if (delivery !== "sent") deliveries.delete(lead.requestId);
-  return deliveryResponse(delivery, lead.requestId, 201);
+  const tracked =
+    delivery === "sent" &&
+    (await sendServerLead({
+      measurementId: siteConfig.analytics.ga4Id,
+      apiSecret: env.GA_API_SECRET,
+      request,
+    }));
+  return deliveryResponse(delivery, lead.requestId, 201, tracked);
 }
 type DeliveryResult = "sent" | "challenge" | "failed";
 const deliveries = new Map<
@@ -177,8 +185,13 @@ const deliveries = new Map<
   { fingerprint: string; expires: number; result: Promise<DeliveryResult> }
 >();
 const rates = new Map<string, { count: number; expires: number }>();
-function deliveryResponse(result: DeliveryResult, id: string, status: number) {
-  if (result === "sent") return json({ id, status: "sent" }, status);
+function deliveryResponse(
+  result: DeliveryResult,
+  id: string,
+  status: number,
+  tracked = false,
+) {
+  if (result === "sent") return json({ id, status: "sent", tracked }, status);
   if (result === "challenge")
     return json(
       { error: "Apsaugos patikra nepavyko. Patvirtinkite ją dar kartą." },

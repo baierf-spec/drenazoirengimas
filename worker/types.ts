@@ -8,4 +8,5 @@ export interface Env {
   EMAIL_FROM?: string;
   ADMIN_EMAIL?: string;
   BUSINESS_REPLY_TO?: string;
+  GA_API_SECRET?: string;
 }
