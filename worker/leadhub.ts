@@ -213,8 +213,9 @@ export async function deliverLead(
 ) {
   const r = await leadRecipient(env, ownerEmail);
   if (!r.isTenant) return send(r.to, "");
+  let sent: unknown;
   try {
-    return await send(r.to, "");
+    sent = await send(r.to, "");
   } catch (error) {
     console.error("Lead to tenant failed, sending to owner", error);
     if (!r.owner) throw error;
@@ -223,6 +224,12 @@ export async function deliverLead(
       `[Persiųsti: ${r.tenant?.company_name || "nuomininkui"} <${r.to}>] `,
     );
   }
+  // The site owner gets the same enquiry (to check it before counting it on the invoice).
+  if (r.owner && r.owner.toLowerCase() !== r.to.toLowerCase())
+    await send(r.owner, `[Kopija: ${r.tenant?.company_name || "nuomininkui"}] `).catch((error) =>
+      console.error("Lead copy to owner failed", error),
+    );
+  return sent;
 }
 
 const json = (
