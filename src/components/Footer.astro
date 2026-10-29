@@ -36,12 +36,7 @@ import { site } from "../data/site";
       <a href="/gauti-pasiulyma/">
         {site.primaryCta} <Icon name="arrow" size={16} />
       </a>
-      {site.phone && (
-        <a href={`tel:${site.phone}`} data-event="phone_click">
-          {site.phone}
-        </a>
-      )}
-      {site.email && <a href={`mailto:${site.email}`}>{site.email}</a>}
+      <div data-lh data-lh-footer hidden></div>
       <a href="/privatumo-politika/">Privatumo informacija</a>
       <button class="text-button cookie-settings" type="button">
         Slapukų nustatymai
@@ -61,10 +56,13 @@ import { site } from "../data/site";
   </a>
   <a
     class="button button-navy"
-    href={site.phone ? `tel:${site.phone}` : "/gauti-pasiulyma/?photos=1"}
-    data-event={site.phone ? "phone_click" : "primary_cta_click"}
+    href="/gauti-pasiulyma/?photos=1"
+    data-event="primary_cta_click"
+    data-lh
+    data-lh-call
   >
-    <Icon name={site.phone ? "phone" : "camera"} size={18} />
-    {site.phone ? "Skambinti" : "Nuotraukos"}
+    <span data-lh-call-icon="camera"><Icon name="camera" size={18} /></span>
+    <span data-lh-call-icon="phone" hidden><Icon name="phone" size={18} /></span>
+    <span data-lh-call-label>Nuotraukos</span>
   </a>
 </div>

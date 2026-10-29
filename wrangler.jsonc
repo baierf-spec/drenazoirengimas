@@ -14,5 +14,9 @@
   "keep_vars": true,
   // Default binding sends to verified account destinations only.
   "send_email": [{ "name": "EMAIL" }],
+  // LeadHub decides whose contacts and photos the site shows and where enquiries go.
+  // The matching secret is the Worker secret LEADHUB_SECRET.
+  "services": [{ "binding": "LEADHUB", "service": "leadhub" }],
+  "vars": { "LEADHUB_SITE_KEY": "drenazoirengimas" },
   "observability": { "enabled": false },
 }

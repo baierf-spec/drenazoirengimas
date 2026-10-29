@@ -69,16 +69,16 @@ export function renderLeadEmail(lead: Lead, photoCount: number) {
   </td></tr></table></body></html>`;
   return { text, html };
 }
-export async function sendLead(lead: Lead, photos: LeadPhoto[], env: Env) {
+export async function sendLead(lead: Lead, photos: LeadPhoto[], env: Env, to?: string, subjectPrefix = "") {
   const settings = runtimeSettings(env as unknown as Record<string, unknown>);
   if (!env.EMAIL || !settings.emailFrom || !settings.adminEmail)
     throw new Error("email_not_configured");
   const content = renderLeadEmail(lead, photos.length);
   await env.EMAIL.send({
     from: settings.emailFrom,
-    to: settings.adminEmail,
+    to: to || settings.adminEmail,
     replyTo: lead.email || settings.replyTo,
-    subject: "Nauja drenažo užklausa – drenazoirengimas.lt",
+    subject: `${subjectPrefix}Nauja drenažo užklausa – drenazoirengimas.lt`,
     ...content,
     attachments: photos.map((photo, i) => ({
       content: photo.bytes,

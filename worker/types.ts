@@ -1,4 +1,5 @@
-export interface Env {
+import type { LeadhubEnv } from "./leadhub";
+export interface Env extends LeadhubEnv {
   ASSETS: Fetcher;
   GITHUB_CLIENT_ID?: string;
   GITHUB_CLIENT_SECRET?: string;

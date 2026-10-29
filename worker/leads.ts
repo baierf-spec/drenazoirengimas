@@ -4,6 +4,7 @@ import { LIMITS, imageType, validateLead } from "../src/lib/validation";
 import type { Env } from "./types";
 import { configured, digest, limitedBody, validateTurnstile } from "./security";
 import { sendLead } from "./email";
+import { deliverLead, leadhubEvent } from "./leadhub";
 export const json = (
   body: unknown,
   status = 200,
@@ -160,7 +161,10 @@ export async function receiveLead(
   const operation = (async () => {
     if (!(await validateTurnstile(token, request, env, lead.requestId)))
       return "challenge" as const;
-    await sendLead(lead, checked, env);
+    // While the site is rented the enquiry goes straight to the tenant (LeadHub).
+    const owner = runtimeSettings(env as unknown as Record<string, unknown>).adminEmail;
+    await deliverLead(env, owner, (to, prefix) => sendLead(lead, checked, env, to, prefix));
+    await leadhubEvent(env, undefined, "form", { hasPhotos: checked.length > 0, source: "site" });
     return "sent" as const;
   })().catch(() => "failed" as const);
   deliveries.set(lead.requestId, {

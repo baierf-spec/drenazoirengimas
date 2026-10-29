@@ -25,6 +25,7 @@ const schema = [
     })),
   },
 ];
+import LeadhubSection from "../components/LeadhubSection.astro";
 ---
 
 <Base
@@ -75,11 +76,14 @@ const schema = [
         </a>
         <a
           class="button button-glass"
-          href={site.phone ? `tel:${site.phone}` : "/gauti-pasiulyma/?photos=1"}
-          data-event={site.phone ? "phone_click" : "primary_cta_click"}
+          href="/gauti-pasiulyma/?photos=1"
+          data-event="primary_cta_click"
+          data-lh
+          data-lh-call
         >
-          <Icon name={site.phone ? "phone" : "camera"} size={19} />
-          {site.phone ? "Skambinti" : "Atsiųsti nuotraukas"}
+          <span data-lh-call-icon="camera"><Icon name="camera" size={19} /></span>
+          <span data-lh-call-icon="phone" hidden><Icon name="phone" size={19} /></span>
+          <span data-lh-call-label>Atsiųsti nuotraukas</span>
         </a>
       </div>
     </div>
@@ -323,6 +327,7 @@ const schema = [
       <FAQ limit={6} />
     </div>
   </section>
+  <LeadhubSection />
   <section class="section container" id="kontaktai">
     <div class="final-cta">
       <div>

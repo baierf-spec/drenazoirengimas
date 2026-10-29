@@ -1,4 +1,5 @@
 import { rememberEntrySource, forgetEntrySource } from "./attribution";
+import "./leadhub";
 import {
   setAnalyticsConsent,
   track,

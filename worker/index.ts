@@ -2,6 +2,7 @@ import { cmsAuth } from "./cms-auth";
 import { runtimeSettings } from "../shared/site-config";
 import type { Env } from "./types";
 import { receiveLead, json } from "./leads";
+import { handleLeadhub } from "./leadhub";
 const securityHeaders: Record<string, string> = {
   "X-Content-Type-Options": "nosniff",
   "Referrer-Policy": "strict-origin-when-cross-origin",
@@ -58,6 +59,8 @@ export async function handleRequest(
     );
   else if (url.pathname === "/api/leads")
     response = await receiveLead(request, env, ctx);
+  else if (url.pathname.startsWith("/api/leadhub/") || url.pathname.startsWith("/leadhub/gallery/"))
+    response = (await handleLeadhub(request, env, ctx)) ?? json({ error: "Puslapis nerastas." }, 404);
   else if (url.pathname.startsWith("/api/"))
     response = json({ error: "Puslapis nerastas." }, 404);
   else {
