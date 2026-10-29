@@ -11,6 +11,28 @@ type Tenant = {
   about: string;
 };
 type Photo = { id: string; caption: string; src: string; srcSet: string };
+type Operator = { name: string; activity_cert: string; vat_code: string; address: string; email: string; phone: string };
+
+/** Privacy page: who runs the site (controller) and who currently receives enquiries. */
+function renderLegal(o: Operator | null, t: Tenant | null) {
+  if (o)
+    for (const box of document.querySelectorAll<HTMLElement>("[data-lh-operator]")) {
+      box.replaceChildren(
+        [
+          o.name,
+          o.activity_cert && `individualios veiklos pažymos Nr. ${o.activity_cert}`,
+          o.vat_code && `PVM mokėtojo kodas ${o.vat_code}`,
+          o.address,
+        ].filter(Boolean).join(", ") + ". ",
+      );
+      if (o.email) box.append("El. paštas: ", el("a", { href: `mailto:${o.email}` }, o.email), ".");
+    }
+  for (const box of document.querySelectorAll<HTMLElement>("[data-lh-provider]")) {
+    if (!t) continue;
+    box.textContent = `Šiuo metu užklausas gauna ir paslaugas teikia ${[t.company_name, t.company_code && `įm. k. ${t.company_code}`, t.address].filter(Boolean).join(", ")}.`;
+    box.hidden = false;
+  }
+}
 
 const tel = (phone: string) => `tel:${phone.replace(/[^\d+]/g, "")}`;
 const el = <K extends keyof HTMLElementTagNameMap>(
@@ -129,7 +151,8 @@ function render(t: Tenant, gallery: Photo[]) {
 if (document.querySelector("[data-lh]"))
   fetch("/api/leadhub/config")
     .then((r) => (r.ok ? r.json() : null))
-    .then((c: { tenant: Tenant | null; gallery: Photo[] } | null) => {
+    .then((c: { tenant: Tenant | null; gallery: Photo[]; operator?: Operator | null } | null) => {
+      renderLegal(c?.operator ?? null, c?.tenant ?? null);
       if (c?.tenant) render(c.tenant, c.gallery ?? []);
     })
     .catch(() => undefined);

@@ -31,6 +31,9 @@ const allowedKeys = new Set([
 ]);
 export function setAnalyticsConsent(value: boolean) {
   enabled = value;
+  // Google consent mode: GA sets no cookies until the visitor agrees (default "denied" is set in the page head).
+  const w = window as unknown as { gtag?: (...args: unknown[]) => void };
+  w.gtag?.("consent", "update", { analytics_storage: value ? "granted" : "denied" });
 }
 export function track(
   event: ConversionEvent,

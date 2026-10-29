@@ -2,7 +2,7 @@ import { runtimeSettings } from "../shared/site-config";
 import type { Env } from "./types";
 import type { Lead } from "../src/lib/validation";
 export type LeadPhoto = { bytes: ArrayBuffer; mime: string };
-const labels: Record<string, string> = {
+export const labels: Record<string, string> = {
   house: "Gyvenamasis namas",
   homestead: "Sodyba / ūkinis pastatas",
   plot: "Sklypas",

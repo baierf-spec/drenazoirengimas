@@ -8,19 +8,25 @@ import { site } from "../data/site";
   description="Kaip naudojami drenažo užklausos kontaktai, aprašymas bei nuotraukos. Saugojimas, gavėjai, analitikos pasirinkimas ir jūsų teisės."
 >
   <p slot="intro">
-    Atnaujinta 2026 m. spalio 20 d. Ši informacija aprašo svetainėje įgyvendintą
+    Atnaujinta 2026 m. spalio 29 d. Ši informacija aprašo svetainėje įgyvendintą
     duomenų srautą.
   </p>
   <h2>Duomenų valdytojas</h2>
-  {site.controller ? (
-    <p>
+  <p>
+    Svetainės valdytojas:{" "}
+    <span data-lh-operator>
       {site.controller}
       {site.controllerAddress && `, ${site.controllerAddress}`}. Privatumo
       klausimais: <a href={`mailto:${site.email}`}>{site.email}</a>.
-    </p>
-  ) : (
-    <p>Dėl privatumo klausimų kreipkitės svetainėje nurodytais kontaktais.</p>
-  )}
+    </span>
+  </p>
+  <p>
+    Kai svetainėje nurodytas paslaugų teikėjas (rangovas), jūsų užklausa
+    perduodama jam: jis atsako į užklausą ir teikia paslaugą kaip savarankiškas
+    duomenų valdytojas, todėl dėl jau gautos užklausos galite kreiptis ir tiesiai
+    į jį.
+  </p>
+  <p data-lh-provider hidden></p>
   <h2>Kokius duomenis renkame?</h2>
   <p>
     Aktyvioje užklausos formoje prašoma vardo, telefono, objekto vietovės,
@@ -45,10 +51,17 @@ import { site } from "../data/site";
   </p>
   <h2>Kas gauna duomenis?</h2>
   <p>
-    Užklausą gauna svetainės administratorius. Jums sutikus, būtina informacija
-    gali būti perduota tinkamam nepriklausomam rangovui užklausai aptarti.
-    Konkretus rangovas ir sutarties sąlygos suderinami prieš užsakant darbus;
-    svetainė pati nežada jų atlikti.
+    Kol svetainėje nurodytas paslaugų teikėjas, užklausa su jūsų kontaktais ir
+    nuotraukomis siunčiama tiesiai jam. Kai paslaugų teikėjas nenurodytas,
+    užklausą gauna svetainės valdytojas ir, jums sutikus, gali ją perduoti
+    tinkamam nepriklausomam rangovui. Darbų sąlygos suderinamos su paslaugų
+    teikėju prieš užsakant darbus.
+  </p>
+  <p>
+    Svetainės valdytojas užklausų apskaitai saugo tik užklausos laiką ir trumpą
+    jos aprašymą (vietovė, problemos tipas, komentaras) be jūsų vardo, telefono
+    ir el. pašto – kad galėtų atskirti tikras užklausas nuo šlamšto. Aprašymas
+    ištrinamas po 180 dienų.
   </p>
   <p>
     Infrastruktūrai, apsaugai ir laiškų siuntimui naudojamas „Cloudflare“
@@ -96,7 +109,9 @@ import { site } from "../data/site";
   <h2>Analitika ir slapukų pasirinkimas</h2>
   <p>
     „Google Analytics 4“ žyma įkeliama atidarius svetainės puslapį ir naudojama
-    lankomumo ir sėkmingai išsiųstų užklausų statistikai. Užklausos įvykiui
+    lankomumo ir sėkmingai išsiųstų užklausų statistikai. Kol neleidžiate
+    analitikos, ji veikia „Google“ sutikimo režimu: slapukų nenaudoja, o
+    „Google“ gauna tik nuasmenintus signalus be slapukų identifikatorių. Užklausos įvykiui
     perduodamas tik formos pavadinimas ir užklausos tipas, be kontaktinių
     duomenų ar aprašymo. Kiti papildomi analitikos įvykiai, „Cloudflare Web
     Analytics“ ir atėjimo šaltinio įsiminimas įjungiami jums leidus analitiką.
@@ -104,7 +119,7 @@ import { site } from "../data/site";
     pavadinimai ar formos turinys.
   </p>
   <p>
-    Jei įjungtas GA4, jis gali naudoti <code>_ga</code> ir <code>_ga_*</code>{" "}
+    Leidus analitiką, GA4 naudoja <code>_ga</code> ir <code>_ga_*</code>{" "}
     analitinius slapukus; jų trukmė priklauso nuo paskyros konfigūracijos,
     paprastai iki 2 metų. Pasirinkimas naršyklės vietinėje saugykloje saugomas
     180 dienų. Klausimyno ir skaičiuoklės kontekstas laikomas tik šio skirtuko

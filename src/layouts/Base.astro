@@ -78,6 +78,8 @@ const config = {
           is:inline
           set:html={`window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', { analytics_storage: 'denied', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied', wait_for_update: 500 });
+try { var c = JSON.parse(localStorage.getItem('drainage-consent') || 'null'); if (c && c.value === 'granted' && Date.now() - c.at < 180 * 864e5) gtag('consent', 'update', { analytics_storage: 'granted' }); } catch (e) {}
 gtag('js', new Date());
 gtag('config', ${JSON.stringify(site.ga4)});`}
         ></script>

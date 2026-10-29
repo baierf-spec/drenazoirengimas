@@ -18,15 +18,26 @@ export type LeadhubTenant = {
   about: string;
 };
 export type LeadhubPhoto = { id: string; caption: string; base: string };
+/** Who runs the site (public identification for the privacy page). */
+export type LeadhubOperator = {
+  name: string;
+  activity_cert: string;
+  vat_code: string;
+  address: string;
+  email: string;
+  phone: string;
+};
 export type LeadhubConfig = {
   tenant: LeadhubTenant | null;
   /** Server only: where enquiries go while rented. Never sent to the browser. */
   lead_email: string | null;
   gallery: LeadhubPhoto[];
+  operator: LeadhubOperator | null;
 };
 /** What the browser gets from GET /api/leadhub/config. */
 export type LeadhubPublicConfig = {
   tenant: LeadhubTenant | null;
+  operator: LeadhubOperator | null;
   gallery: { id: string; caption: string; src: string; srcSet: string }[];
 };
 
@@ -40,7 +51,7 @@ export type LeadhubEnv = {
 };
 type Ctx = { waitUntil(p: Promise<unknown>): void } | undefined;
 
-const EMPTY: LeadhubConfig = { tenant: null, lead_email: null, gallery: [] };
+const EMPTY: LeadhubConfig = { tenant: null, lead_email: null, gallery: [], operator: null };
 const FRESH_MS = 60_000; // changes in LeadHub show up within a minute
 const CACHE_URL = "https://leadhub.cache/site-config";
 const SIZES = [480, 960, 1600] as const;
@@ -85,6 +96,7 @@ export async function leadhubConfig(env: LeadhubEnv): Promise<LeadhubConfig> {
       tenant: body.tenant ?? null,
       lead_email: body.lead_email ?? null,
       gallery: body.gallery ?? [],
+      operator: body.operator ?? null,
     };
     memory = { at: Date.now(), config };
     await cache
@@ -112,6 +124,7 @@ export async function leadhubConfig(env: LeadhubEnv): Promise<LeadhubConfig> {
 export function publicConfig(config: LeadhubConfig): LeadhubPublicConfig {
   return {
     tenant: config.tenant,
+    operator: config.operator ?? null,
     gallery: config.gallery.map((p) => ({
       id: p.id,
       caption: p.caption,
@@ -124,12 +137,29 @@ export function publicConfig(config: LeadhubConfig): LeadhubPublicConfig {
 }
 
 export type LeadhubEventKind = "form" | "phone_click" | "email_click";
+/**
+ * What the visitor asked for, without their name or contacts: LeadHub uses it only to decide whether an
+ * enquiry is real (spam and duplicates are not billed to the tenant). E-mail addresses, phone numbers and
+ * links are removed before anything leaves the site.
+ */
+export function leadSummary(parts: Array<string | number | null | undefined | false>): string {
+  return parts
+    .filter(Boolean)
+    .join(" · ")
+    .replace(/[^\s@]+@[^\s@]+\.[^\s@]+/g, "[el. paštas]")
+    .replace(/https?:\/\/\S+|www\.\S+/gi, "[nuoroda]")
+    .replace(/\+?\d[\d\s().-]{6,}\d/g, "[tel.]")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 600);
+}
+
 /** Records an enquiry or a contact click in LeadHub (no visitor personal data). */
 export function leadhubEvent(
   env: LeadhubEnv,
   ctx: Ctx,
   kind: LeadhubEventKind,
-  opts: { hasPhotos?: boolean | undefined; source?: string | undefined } = {},
+  opts: { hasPhotos?: boolean | undefined; source?: string | undefined; summary?: string | undefined } = {},
 ): Promise<void> {
   if (!connected(env)) return Promise.resolve();
   const send = env
@@ -140,7 +170,7 @@ export function leadhubEvent(
         body: JSON.stringify({
           kind,
           has_photos: !!opts.hasPhotos,
-          source: opts.source ?? "",
+          source: opts.source ?? "", summary: kind === "form" ? leadSummary([opts.summary]) : "",
         }),
       }),
     )
