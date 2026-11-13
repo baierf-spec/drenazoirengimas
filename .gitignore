@@ -24,3 +24,4 @@ public/admin/config.json
 public/admin/config.yml
 public/admin/generated/
 src/data/generated-media.json
+.wrangler-dry-run/

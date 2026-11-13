@@ -1,0 +1,10 @@
+{
+  "site": { "origin": "https://grandiniugalandimas.lt", "name": "grandiniugalandimas.lt", "trailingSlash": "never" },
+  "contact": { "showPhone": false, "phone": "", "email": "marek.cernevic@gmail.com" },
+  "privacy": { "controllerName": "LeadHub", "controllerAddress": "Vilnius, Lithuania" },
+  "turnstile": { "siteKey": "" },
+  "analytics": { "ga4Id": "G-MQ77R50276", "cloudflareToken": "", "googleVerification": "" },
+  "features": { "leadsEnabled": true, "indexingEnabled": true, "referrerAttribution": false },
+  "email": { "from": "env:LEAD_FROM_EMAIL", "to": "env:LEAD_RECIPIENT_EMAIL", "replyTo": "env:LEAD_RECIPIENT_EMAIL" },
+  "business": {}
+}

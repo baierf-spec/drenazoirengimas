@@ -1,0 +1,7 @@
+---
+import Base from "../layouts/Base.astro";
+import PrivacyPage, { privacyHead } from "../views/Privacy";
+---
+<Base head={privacyHead()}>
+  <PrivacyPage client:load />
+</Base>

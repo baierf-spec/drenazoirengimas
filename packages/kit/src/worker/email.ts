@@ -12,7 +12,7 @@ export async function sendLead(lead: Lead, photos: LeadPhoto[], env: Env, to?: s
     from: settings.emailFrom,
     to: to || settings.adminEmail,
     replyTo: lead.email || settings.replyTo,
-    subject: `${subjectPrefix}${leadSubject}`,
+    subject: subjectPrefix + (typeof leadSubject === "string" ? leadSubject : (leadSubject as (l: Lead) => string)(lead)),
     ...content,
     attachments: photos.map((photo, i) => ({
       content: photo.bytes,

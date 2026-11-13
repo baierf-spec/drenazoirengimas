@@ -1,5 +1,6 @@
 import { cmsAuth } from "./cms-auth";
-import { runtimeSettings } from "@site/config";
+import cms from "@site/cms";
+import { runtimeSettings, siteConfig } from "@site/config";
 import type { Env } from "./types";
 import { receiveLead, json } from "./leads";
 import { handleLeadhub } from "./leadhub";
@@ -40,7 +41,8 @@ export async function handleRequest(
     return new Response("Nerasta", { status: 404 });
   }
   const cmsPath = /^\/admin(?:\/|$)/.test(decodedPath);
-  const authPath = ["/auth", "/callback"].includes(decodedPath);
+  // Decap CMS login exists only on sites that configure a CMS repository.
+  const authPath = !!cms.repository && ["/auth", "/callback"].includes(decodedPath);
   const manager = /^\/gallery-manager(?:\/|\.html|$)/.test(decodedPath);
   const galleryApiPath = /^\/api\/gallery(?:\/|$)/.test(decodedPath);
   if (authPath) response = await cmsAuth(request, env);
@@ -72,8 +74,13 @@ export async function handleRequest(
       url.pathname = url.pathname.slice(0, -10);
       return Response.redirect(url.href, 301);
     }
+    // Sites without trailing slashes (/kainos): one permanent redirect from /kainos/ to /kainos.
+    if (siteConfig.site.trailingSlash === "never" && url.pathname.length > 1 && url.pathname.endsWith("/")) {
+      url.pathname = url.pathname.replace(/\/+$/, "");
+      return Response.redirect(url.href, 301);
+    }
     if (url.pathname.endsWith(".html") && url.pathname !== "/404.html") {
-      url.pathname = url.pathname.slice(0, -5) + "/";
+      url.pathname = url.pathname.slice(0, -5) + (siteConfig.site.trailingSlash === "never" ? "" : "/");
       return Response.redirect(url.href, 301);
     }
     // ASSETS handles clean paths and a genuine 404; no SPA fallback.

@@ -1,0 +1,41 @@
+---
+// Page frame: shared head, header, footer (with terms modal), consent banner.
+import "../styles.css";
+import displayFont from "@fontsource-variable/montserrat/files/montserrat-latin-wght-normal.woff2?url";
+import Head from "../components/Head.astro";
+import { Header } from "../components/Header";
+import { ConsentBanner } from "../components/ConsentBanner";
+import FooterIsland from "../islands/FooterIsland";
+import { BUSINESS } from "../config/business";
+import { GA_BOOTSTRAP, GA_ID } from "../lib/analytics";
+const { head, noindex = false } = Astro.props;
+const GSC = (import.meta.env.PUBLIC_GSC_VERIFICATION as string | undefined)?.trim();
+---
+<!doctype html>
+<html lang="lt">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content={BUSINESS.businessName} />
+    <meta name="robots" content={noindex ? "noindex" : "index, follow, max-image-preview:large, max-snippet:-1"} />
+    <meta name="theme-color" content="#f95700" />
+    <meta property="og:site_name" content={BUSINESS.businessName} />
+    {BUSINESS.geo && <meta name="geo.position" content={`${BUSINESS.geo.lat};${BUSINESS.geo.lng}`} />}
+    {BUSINESS.geo && <meta name="ICBM" content={`${BUSINESS.geo.lat}, ${BUSINESS.geo.lng}`} />}
+    {GSC && <meta name="google-site-verification" content={GSC} />}
+    <Head head={head} />
+    <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    {GA_ID && <script is:inline id="ga4-bootstrap" set:html={GA_BOOTSTRAP} />}
+  </head>
+  <body>
+    <div class="min-h-screen bg-[#0d0e12] text-white flex flex-col selection:bg-[#c2410c] selection:text-white">
+      <a href="#pagrindinis-turinys" class="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:text-black focus:p-3">Pereiti prie turinio</a>
+      <Header />
+      <main id="pagrindinis-turinys" class="flex-1 w-full"><slot /></main>
+      <FooterIsland client:visible />
+      <ConsentBanner client:idle />
+    </div>
+  </body>
+</html>

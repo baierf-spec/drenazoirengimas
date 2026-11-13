@@ -1,0 +1,9 @@
+---
+import Base from "../layouts/Base.astro";
+import { ServiceContentPage, contentHead } from "../components/ServiceContentPage";
+import { getServicePages } from "../data/servicePages";
+const page = getServicePages().find((p) => p.slug === "grandiniu-galandimas-pastomatu")!;
+---
+<Base head={contentHead(page)}>
+  <ServiceContentPage page={page} />
+</Base>

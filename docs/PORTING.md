@@ -21,3 +21,16 @@ Rule: the site keeps its design and every URL; only the plumbing changes.
 
 Order: pilot drenazoirengimas (already Astro) → sklypolyginimas (plain JS, small) →
 grandiniugalandimas → pusuformavimas → kelmunaikinimas.
+
+## Notes from grandiniugalandimas
+
+- React sites keep their components: Astro renders them to static HTML and hydrates only the
+  interactive ones as islands (`client:visible` / `client:load`). Components that talked to each
+  other through a parent now use a window event (see `src/islands/Calculators.tsx`).
+- Image imports inside React components need `?url` (Astro otherwise passes an image object).
+- Hooks that read shared browser state (LeadHub) must render the empty state first, or a late
+  island hydrates with different text than the HTML (React error #418).
+- Sites without trailing slashes set `site.trailingSlash: "never"`, Astro `build.format: "file"`
+  and Workers assets `html_handling: "drop-trailing-slash"`; the kit answers `/page/` with a 301.
+- Forms without Turnstile: leave `turnstile.siteKey` empty and export `isBot` (honeypot) from
+  `worker/site.ts`.

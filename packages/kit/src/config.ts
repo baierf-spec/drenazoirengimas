@@ -1,11 +1,15 @@
 // Shared lead-site configuration: schema, public settings for pages, runtime settings for the Worker.
 // Each site passes its own JSON and the schema of its `business` block.
 import { z } from "zod";
-const address = z.union([
-  z.email(),
-  z.enum(["env:EMAIL_FROM", "env:ADMIN_EMAIL", "env:BUSINESS_REPLY_TO"]),
-]);
-export function defineSiteConfig<B extends z.ZodObject>(raw: unknown, business: B) {
+/** Worker variables that config e-mail fields may point at ("env:NAME"). */
+const DEFAULT_ENV = ["EMAIL_FROM", "ADMIN_EMAIL", "BUSINESS_REPLY_TO"] as const;
+export function defineSiteConfig<B extends z.ZodObject>(
+  raw: unknown,
+  business: B,
+  options: { emailEnv?: readonly string[] } = {},
+) {
+  const envRefs = (options.emailEnv ?? DEFAULT_ENV).map((n) => `env:${n}`) as [string, ...string[]];
+  const address = z.union([z.email(), z.enum(envRefs)]);
   const configSchema = z
   .object({
     $schema: z.string().optional(),
@@ -23,6 +27,8 @@ export function defineSiteConfig<B extends z.ZodObject>(raw: unknown, business: 
           );
         }, "site.origin turi būti HTTPS domenas be kelio ar parametrų."),
         name: z.string().min(1).max(120),
+        /** "always": /kainos/ (Astro default); "never": /kainos. Must match the URLs Google knows. */
+        trailingSlash: z.enum(["always", "never"]).default("always"),
       })
       .strict(),
     contact: z

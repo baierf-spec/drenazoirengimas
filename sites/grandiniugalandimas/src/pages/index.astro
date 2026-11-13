@@ -1,0 +1,29 @@
+---
+import Base from "../layouts/Base.astro";
+import { homeHead } from "../views/home";
+import { Hero } from "../components/Hero";
+import { HowItWorks } from "../components/HowItWorks";
+import { ServiceLinks } from "../components/ServiceLinks";
+import { WhyUs } from "../components/WhyUs";
+import { ChainDiagnosticTool } from "../components/ChainDiagnosticTool";
+import { ChainSpecsGuide } from "../components/ChainSpecsGuide";
+import { OperatorDetails } from "../components/OperatorDetails";
+import { Testimonials } from "../components/Testimonials";
+import { Faq } from "../components/Faq";
+import { TrustBar } from "../components/TrustBar";
+import { OrderCalculatorIsland, SavingsCalculatorIsland } from "../islands/Calculators";
+---
+<Base head={homeHead()}>
+  <div data-section="Pradžia (hero)"><Hero /></div>
+  <div id="kaip-veikia" data-section="Kaip veikia"><HowItWorks /></div>
+  <div data-section="Užsakymo skaičiuoklė"><OrderCalculatorIsland client:visible /></div>
+  <ServiceLinks />
+  <div data-section="Sutaupymo skaičiuoklė"><SavingsCalculatorIsland client:visible /></div>
+  <div data-section="Kodėl mes"><WhyUs client:visible /></div>
+  <div data-section="Grandinės diagnostika"><ChainDiagnosticTool client:visible /></div>
+  <div data-section="Grandinių specifikacijos"><ChainSpecsGuide /></div>
+  <OperatorDetails client:visible />
+  <div data-section="Atsiliepimai"><Testimonials /></div>
+  <div data-section="DUK"><Faq client:visible /></div>
+  <div data-section="Pasitikėjimo juosta"><TrustBar /></div>
+</Base>

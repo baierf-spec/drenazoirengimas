@@ -1,4 +1,4 @@
-import { runtimeSettings } from "@site/config";
+import { runtimeSettings, siteConfig } from "@site/config";
 import type { Env } from "./types";
 export const encoder = new TextEncoder();
 export async function digest(value: string) {
@@ -34,7 +34,7 @@ export function configured(
     settings.leadsEnabled &&
     Boolean(
       env.EMAIL &&
-      env.TURNSTILE_SECRET_KEY &&
+      (!siteConfig.turnstile.siteKey || env.TURNSTILE_SECRET_KEY) &&
       settings.emailFrom &&
       settings.adminEmail &&
       settings.replyTo &&

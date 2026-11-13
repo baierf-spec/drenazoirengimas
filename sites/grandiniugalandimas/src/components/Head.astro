@@ -1,0 +1,12 @@
+---
+// Renders a page head written as { meta, links, scripts } (the shape the page heads use).
+type Meta = { title?: string; name?: string; property?: string; content?: string; charSet?: string };
+type HeadDef = { meta?: Meta[]; links?: Record<string, string>[]; scripts?: { type: string; children: string }[] };
+const { head } = Astro.props as { head: HeadDef };
+const title = head.meta?.find((m) => m.title)?.title;
+const metas = (head.meta ?? []).filter((m) => !m.title);
+---
+{title && <title>{title}</title>}
+{metas.map((m) => m.property ? <meta property={m.property} content={m.content} /> : <meta name={m.name} content={m.content} />)}
+{(head.links ?? []).map((l) => <link {...l} />)}
+{(head.scripts ?? []).map((s) => <script is:inline type={s.type} set:html={s.children} />)}

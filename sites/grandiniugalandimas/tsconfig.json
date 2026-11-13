@@ -1,0 +1,12 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "src/**/*", "astro.config.mjs", "../../packages/kit/src/client/**/*.ts"],
+  "exclude": ["dist", "worker", "tests"],
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "types": ["astro/client"],
+    "noUnusedLocals": true,
+    "paths": { "@/*": ["./src/*"], "@site/config": ["./shared/site-config.ts"], "@site/lead": ["./worker/site.ts"], "@site/cms": ["../../packages/kit/no-cms.json"] }
+  }
+}

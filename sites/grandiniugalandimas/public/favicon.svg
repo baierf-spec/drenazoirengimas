@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Solid background disc for high contrast on light & dark browser tabs -->
+  <circle cx="32" cy="32" r="30" fill="#0d0e12" stroke="#f95700" stroke-width="2.5" />
+  
+  <!-- Outer Cog / Sprocket Teeth (Scaled to fit 64x64) -->
+  <path
+    d="M32 10L35 15H41L43 20L48 22L47 28L52 32L49 37L51 43L45 45L43 50L37 49L32 53L27 49L21 50L19 45L13 43L15 37L12 32L17 28L16 22L21 20L23 15H29L32 10Z"
+    fill="#f95700"
+  />
+  
+  <!-- Inner dark socket -->
+  <circle cx="32" cy="33" r="12" fill="#0d0e12" />
+  
+  <!-- Chainsaw Cutter Tooth Blade -->
+  <path
+    d="M25 37L29 29L36 28L39 31L35 36L37 39H28L25 37Z"
+    fill="#ff7a29"
+  />
+  
+  <!-- Precision Sharpening Sparkle Spark -->
+  <path
+    d="M39 24L40 21L41 24L44 25L41 26L40 29L39 26L36 25Z"
+    fill="#ffffff"
+  />
+</svg>

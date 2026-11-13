@@ -1,5 +1,6 @@
 import { runtimeSettings, siteConfig } from "@site/config";
 import { sendServerLead } from "./ga";
+import * as site from "@site/lead";
 import { LIMITS, imageType, validateLead, leadSummaryParts } from "@site/lead";
 import type { Env } from "./types";
 import { configured, digest, limitedBody, validateTurnstile } from "./security";
@@ -73,8 +74,12 @@ export async function receiveLead(
       422,
     );
   const lead = result.data;
+  // Bots that fill the hidden field get a normal-looking answer and nothing is sent.
+  if ((site as { isBot?: (f: FormData) => boolean }).isBot?.(form))
+    return json({ id: String(form.get("requestId") ?? ""), status: "sent", tracked: false }, 201);
+  const turnstile = !!siteConfig.turnstile.siteKey;
   const token = form.get("turnstileToken");
-  if (typeof token !== "string" || !token || token.length > 2048)
+  if (turnstile && (typeof token !== "string" || !token || token.length > 2048))
     return json({ error: "Patvirtinkite apsaugos patikrą." }, 400);
   const photos = form.getAll("photos");
   if (
@@ -159,7 +164,7 @@ export async function receiveLead(
     );
   }
   const operation = (async () => {
-    if (!(await validateTurnstile(token, request, env, lead.requestId)))
+    if (turnstile && !(await validateTurnstile(String(token), request, env, lead.requestId)))
       return "challenge" as const;
     // While the site is rented the enquiry goes straight to the tenant (LeadHub).
     const owner = runtimeSettings(env as unknown as Record<string, unknown>).adminEmail;

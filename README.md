@@ -35,7 +35,7 @@ npm run deploy                    # production build + wrangler deploy
 | drenazoirengimas.lt | `sites/drenazoirengimas` | moved (pilot) |
 | kelmunaikinimas.lt | — | TanStack Start, to be moved |
 | pusuformavimas.lt | — | TanStack Start, to be moved |
-| grandiniugalandimas.lt | — | TanStack Start, to be moved |
+| grandiniugalandimas.lt | `sites/grandiniugalandimas` | moved (Astro + React islands) |
 | sklypolyginimas.lt | — | plain JS, to be moved |
 
 See `docs/ARCHITECTURE.md` and `docs/PORTING.md`.

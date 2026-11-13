@@ -1,0 +1,13 @@
+---
+import Base from "../../layouts/Base.astro";
+import CityIsland from "../../islands/CityIsland";
+import { cityHead } from "../../views/city";
+import { CITIES_DATA } from "../../data/citiesData";
+export function getStaticPaths() {
+  return Object.keys(CITIES_DATA).map((slug) => ({ params: { slug } }));
+}
+const { slug } = Astro.params;
+---
+<Base head={cityHead({ slug: slug! })}>
+  <CityIsland client:load slug={slug!} />
+</Base>
