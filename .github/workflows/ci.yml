@@ -1,13 +1,20 @@
 name: Quality checks
 on:
   push:
-    branches: [main]
+    branches: [main, monorepo]
   pull_request:
 permissions:
   contents: read
 jobs:
-  check:
+  site:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        site: [drenazoirengimas]
+    defaults:
+      run:
+        working-directory: sites/${{ matrix.site }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -15,6 +22,7 @@ jobs:
           node-version: "24"
           cache: npm
       - run: npm ci
+        working-directory: .
       - run: npm run check
       - run: npm run check:secrets
       - run: npm run deploy:dry-run

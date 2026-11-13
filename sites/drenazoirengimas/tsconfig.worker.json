@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "skipLibCheck": true,
+    "lib": [
+      "ES2022",
+      "WebWorker"
+    ],
+    "types": [
+      "@cloudflare/workers-types"
+    ],
+    "noUnusedLocals": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "@site/config": [
+        "./shared/site-config.ts"
+      ],
+      "@site/lead": [
+        "./worker/site.ts"
+      ],
+      "@site/cms": [
+        "./cms.config.json"
+      ]
+    }
+  },
+  "include": [
+    "worker/**/*.ts",
+    "src/lib/validation.ts",
+    "src/lib/estimator.ts",
+    "src/lib/diagnostic.ts",
+    "shared/**/*.ts",
+    "../../packages/kit/src/worker/**/*.ts",
+    "../../packages/kit/src/config.ts",
+    "../../packages/kit/src/client/referrer.ts"
+  ]
+}

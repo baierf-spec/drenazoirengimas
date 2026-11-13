@@ -1,0 +1,28 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "drenazoirengimas",
+  "main": "worker/index.ts",
+  // Slots of the shared kit (keep in sync with packages/kit/aliases.mjs).
+  "alias": {
+    "@site/config": "./shared/site-config.ts",
+    "@site/lead": "./worker/site.ts",
+    "@site/cms": "./cms.config.json",
+  },
+  "compatibility_date": "2026-10-19",
+  "assets": {
+    "directory": "./dist/client",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "html_handling": "force-trailing-slash",
+    "run_worker_first": true,
+  },
+  // Preserve existing private email references during migration; other old vars are ignored.
+  "keep_vars": true,
+  // Default binding sends to verified account destinations only.
+  "send_email": [{ "name": "EMAIL" }],
+  // LeadHub decides whose contacts and photos the site shows and where enquiries go.
+  // The matching secret is the Worker secret LEADHUB_SECRET.
+  "services": [{ "binding": "LEADHUB", "service": "leadhub" }],
+  "vars": { "LEADHUB_SITE_KEY": "drenazoirengimas" },
+  "observability": { "enabled": false },
+}

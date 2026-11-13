@@ -1,35 +1,41 @@
-# drenazoirengimas.lt
+# LeadHub lead sites
 
-Lietuviška drenažo užklausų svetainė: Astro, TypeScript, statiniai SEO puslapiai, Cloudflare Worker, nuotraukų priedai paštu ir GitHub valdoma projektų galerija. Turinys redaguojamas per Decap CMS `/admin/`, be D1, R2 ar Netlify.
+All lead sites that LeadHub rents out, in one repository and on one technology:
+**Astro (static HTML) + one Cloudflare Worker per site**.
 
-## Nustatymai vienoje vietoje
-
-**Redaguok [site.config.json](site.config.json).** Kontaktai, telefono on/off, užklausų on/off, indeksavimas, Turnstile viešas raktas, analitika ir laiškų adresai valdomi čia. Seni PUBLIC_* / Cloudflare veiklos jungikliai nebeskaitomi. Pilna savininko ir pirkėjo instrukcija: [CONFIGURATION.md](CONFIGURATION.md).
-
-Cloudflare privalomai lieka TURNSTILE_SECRET_KEY ir EMAIL infrastruktūros susiejimas. Pašto adresus galima laikyti JSON arba pasirinktinai privačiai per aiškias env: nuorodas; dabartinės nuorodos išsaugo jau veikiantį siuntimą. Saugykla vieša, todėl slapti raktai ir privatūs klientų duomenys į ją nekeliami.
-
-```bash
-npm ci
-npm run dev
-npm run config:check
-npm run check
-npm run build:production
-npm run deploy:dry-run
+```
+packages/kit/            shared runtime, identical for every site
+  src/config.ts          site.config.json schema, public + runtime settings
+  src/worker/            request routing, security headers, enquiry form API, LeadHub link,
+                         e-mail delivery, GA4 Measurement Protocol, Turnstile, Decap CMS login
+  src/client/            browser scripts: LeadHub tenant card + gallery, consent/analytics,
+                         referrer attribution
+  aliases.mjs            the "@site/*" slots each site fills
+sites/<site>/            one folder per site: its own design, pages, content and form
+docs/                    architecture and porting guide
 ```
 
-Naudok Node 24. `check` vykdo lint, TypeScript, build, SEO auditą, Vitest, HTML / nuorodų / Worker ir izoliuotą galerijos generavimo patikrą. Testai nesiunčia tikrų laiškų ir nepatvirtina galutinio pristatymo į Inbox. .env.example aprašo tik vietinius runtime slaptus / pasirenkamus privačius laukus.
+Each site keeps its own look. What every site must do the same way (LeadHub tenant contacts and
+photos, where enquiries go, security, analytics consent) lives once in `packages/kit`.
 
-Formoje duomenys ir failai tikrinami serveryje, patvirtinamas Turnstile. Sėkmė grąžinama tik Cloudflare priėmus laišką su priedais. Nėra patvarios užklausų eilės; siuntimo klaidos atveju lankytojas gali bandyti dar kartą. Dedupe ir skaitikliai atmintyje yra tik best-effort viename isolate.
+## Work on a site
 
-Savininkui skirta **https://drenazoirengimas.lt/admin/**. Decap GitHub backend redaguoja esamus tekstus, kontaktus, DUK, SEO ir tikrus projektus. Vienkartiniam prisijungimui reikia GitHub OAuth App ir trijų Cloudflare OAuth secrets. Pilnas prijungimas ir perdavimas: [CMS_SETUP.md](CMS_SETUP.md).
+```
+npm install                       # once, at the repository root
+cd sites/drenazoirengimas
+npm run dev                       # Astro dev server
+npm run check                     # lint, types, build, SEO audit, tests
+npm run deploy                    # production build + wrangler deploy
+```
 
-Projektų įrašai yra src/content/projects/*.json. Nuotraukos įkeliamos per CMS, mažinamos naršyklėje ir build metu, į viešą išvestį patenka tik optimizuotos naudojamos versijos. Po CMS commit ir sėkmingo automatinio Cloudflare build atsinaujina listing/detail ir sitemap. Išgalvotų projektų nėra.
+## Sites
 
-- [CMS_SETUP.md](CMS_SETUP.md): turinio redagavimas, GitHub login, nuotraukos, saugumas ir perdavimas.
-- [CONFIGURATION.md](CONFIGURATION.md): vienas failas, adresų privatumas, migracija ir perdavimas.
-- [DEPLOYMENT.md](DEPLOYMENT.md): Cloudflare diegimas ir domenas.
-- [EMAIL_SETUP.md](EMAIL_SETUP.md): el. pašto prijungimas.
-- [GALLERY_MANAGEMENT.md](GALLERY_MANAGEMENT.md): projektų turinys ir nuotraukos.
-- [ARCHITECTURE.md](ARCHITECTURE.md), [QA.md](QA.md), [SEO_AUDIT.md](SEO_AUDIT.md): architektūra ir patikros.
+| Site | Folder | Status |
+|---|---|---|
+| drenazoirengimas.lt | `sites/drenazoirengimas` | moved (pilot) |
+| kelmunaikinimas.lt | — | TanStack Start, to be moved |
+| pusuformavimas.lt | — | TanStack Start, to be moved |
+| grandiniugalandimas.lt | — | TanStack Start, to be moved |
+| sklypolyginimas.lt | — | plain JS, to be moved |
 
-Standartinis Google tag įkeltas tiesiai bendro viešų puslapių head pradžioje. Sėkmingai Cloudflare siuntimo sistemos priimtos užklausos siunčia GA4 `generate_lead` (be kontaktinių duomenų). Kiti papildomi analitikos įvykiai, Cloudflare analitika ir atėjimo šaltinio įsiminimas įjungiami tik po sutikimo. Conversion events: phone_click, quote_started, quote_submitted, photo_uploaded, diagnostic_started, diagnostic_completed, cost_estimator_completed, primary_cta_click. PII analitikai nesiunčiama. Nekelk .dev.vars, raktų, klientų užklausų ar privačių nuotraukų į GitHub.
+See `docs/ARCHITECTURE.md` and `docs/PORTING.md`.

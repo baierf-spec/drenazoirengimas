@@ -1,0 +1,15 @@
+{
+  "name": "@leadsites/kit",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared runtime for LeadHub lead sites: Worker (forms, LeadHub, e-mail, security), config schema, browser scripts.",
+  "exports": {
+    "./config": "./src/config.ts",
+    "./aliases": "./aliases.mjs",
+    "./worker": "./src/worker/index.ts",
+    "./worker/*": "./src/worker/*.ts",
+    "./client/*": "./src/client/*.ts"
+  },
+  "dependencies": { "jose": "^6.1.0", "zod": "4.6.7" }
+}
