@@ -1,0 +1,10 @@
+{
+  "site": { "origin": "https://sklypolyginimas.lt", "name": "sklypolyginimas.lt", "trailingSlash": "always" },
+  "contact": { "showPhone": false, "phone": "", "email": "marek.cernevic@gmail.com" },
+  "privacy": { "controllerName": "LeadHub", "controllerAddress": "Vilnius, Lithuania" },
+  "turnstile": { "siteKey": "0x4AAAAAAFljSi-oxU4KlJqh" },
+  "analytics": { "ga4Id": "G-TDK1DCZ6MP", "cloudflareToken": "", "googleVerification": "" },
+  "features": { "leadsEnabled": true, "indexingEnabled": true, "referrerAttribution": false },
+  "email": { "from": "env:EMAIL_FROM", "to": "env:ADMIN_EMAIL", "replyTo": "env:ADMIN_EMAIL" },
+  "business": {}
+}

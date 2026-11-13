@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        site: [drenazoirengimas, grandiniugalandimas]
+        site: [drenazoirengimas, grandiniugalandimas, sklypolyginimas]
     defaults:
       run:
         working-directory: sites/${{ matrix.site }}

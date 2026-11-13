@@ -1,0 +1,33 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "sklypolyginimas",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-10-19",
+  // Slots of the shared kit (keep in sync with packages/kit/aliases.mjs).
+  "alias": {
+    "@site/config": "./shared/site-config.ts",
+    "@site/lead": "./worker/site.ts",
+    "@site/cms": "../../packages/kit/no-cms.json",
+  },
+  "workers_dev": true,
+  "preview_urls": false,
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "html_handling": "force-trailing-slash",
+    "run_worker_first": true,
+  },
+  "send_email": [{ "name": "EMAIL" }],
+  // LeadHub decides whose contacts and photos the site shows and where enquiries go (secret LEADHUB_SECRET).
+  "services": [{ "binding": "LEADHUB", "service": "leadhub" }],
+  "vars": {
+    "ADMIN_EMAIL": "marek.cernevic@gmail.com",
+    // The second sender is used automatically when the first one is refused.
+    "EMAIL_FROM": "uzklausa@sklypolyginimas.lt",
+    "EMAIL_FROM_FALLBACK": "uzklausa@drenazoirengimas.lt",
+    "LEADHUB_SITE_KEY": "sklypolyginimas",
+  },
+  // Secrets: TURNSTILE_SECRET_KEY, LEADHUB_SECRET, GA_API_SECRET (optional).
+  "observability": { "enabled": true },
+}

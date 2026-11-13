@@ -1,0 +1,7 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "src/**/*", "astro.config.mjs"],
+  "exclude": ["dist", "worker", "tests"],
+  "compilerOptions": { "allowJs": true, "checkJs": false, "types": ["astro/client"], "noUnusedLocals": true,
+    "paths": { "@site/config": ["./shared/site-config.ts"], "@site/lead": ["./worker/site.ts"], "@site/cms": ["../../packages/kit/no-cms.json"] } }
+}

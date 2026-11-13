@@ -7,6 +7,8 @@ export interface Env extends LeadhubEnv {
   EMAIL?: SendEmail;
   TURNSTILE_SECRET_KEY?: string;
   EMAIL_FROM?: string;
+  /** Second sender on another onboarded domain, used when the first one is refused. */
+  EMAIL_FROM_FALLBACK?: string;
   ADMIN_EMAIL?: string;
   BUSINESS_REPLY_TO?: string;
   GA_API_SECRET?: string;

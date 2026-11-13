@@ -34,3 +34,15 @@ grandiniugalandimas → pusuformavimas → kelmunaikinimas.
   and Workers assets `html_handling: "drop-trailing-slash"`; the kit answers `/page/` with a 301.
 - Forms without Turnstile: leave `turnstile.siteKey` empty and export `isBot` (honeypot) from
   `worker/site.ts`.
+
+## Notes from sklypolyginimas
+
+- Plain-JS template sites can move first with their page modules intact (`src/content/*.mjs`):
+  the Astro layout renders the head and frame, the bodies come in as HTML. Convert a page to a
+  real `.astro` component when it is next edited.
+- Fonts are self-hosted (no Google Fonts request; the shared CSP allows only our own fonts).
+- Extra forms that are not client enquiries (contractor sign-up) stay in the site's
+  `worker/index.ts` in front of the kit and reuse its helpers.
+- Site lead options: `photoField` (file input name), `LIMITS`, `imageType` (HEIC accepted),
+  `EMAIL_FROM_FALLBACK` (second sender), Turnstile field `cf-turnstile-response` with
+  `data-action="lead"` on the widget.

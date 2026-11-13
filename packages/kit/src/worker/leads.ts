@@ -78,10 +78,12 @@ export async function receiveLead(
   if ((site as { isBot?: (f: FormData) => boolean }).isBot?.(form))
     return json({ id: String(form.get("requestId") ?? ""), status: "sent", tracked: false }, 201);
   const turnstile = !!siteConfig.turnstile.siteKey;
-  const token = form.get("turnstileToken");
+  // Our own forms send turnstileToken; the plain Turnstile widget adds cf-turnstile-response.
+  const token = form.get("turnstileToken") ?? form.get("cf-turnstile-response");
   if (turnstile && (typeof token !== "string" || !token || token.length > 2048))
     return json({ error: "Patvirtinkite apsaugos patikrą." }, 400);
-  const photos = form.getAll("photos");
+  // Field name of the photo input (sites choose it; default "photos").
+  const photos = form.getAll((site as { photoField?: string }).photoField ?? "photos");
   if (
     photos.length > LIMITS.photos ||
     photos.some((f) => typeof f === "string")
@@ -102,7 +104,9 @@ export async function receiveLead(
       );
     const bytes = await file.arrayBuffer();
     const mime = imageType(new Uint8Array(bytes));
-    if (!mime || file.type !== mime)
+    // HEIC and HEIF are the same container; browsers label them either way.
+    const sameType = file.type === mime || (/^image\/hei[cf]$/.test(file.type) && /^image\/hei[cf]$/.test(mime ?? ""));
+    if (!mime || !sameType)
       return json(
         { error: "Tinka tik tikros JPG, PNG arba WebP nuotraukos." },
         422,

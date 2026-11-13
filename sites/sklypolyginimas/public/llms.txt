@@ -1,0 +1,36 @@
+# sklypolyginimas.lt
+
+> Sklypų lyginimas ir planiravimas Vilniuje, Kaune ir visoje Lietuvoje. Lyginame sklypus, formuojame nuolydžius nuo namo, paruošiame vejai, frezuojame, atvežame juodžemį ir paruošiame sklypus statyboms. Kaina nuo 30 €/val., matavimas nemokamas, kaina pateikiama raštu prieš darbus.
+
+## Paslaugos
+- Grubus sklypo lyginimas ir planiravimas – nukasame kauburius, užpildome duobes, aukščius susiejame su namu ir keliu.
+- Paruošimas vejai – frezavimas, akmenų išrinkimas, lyginimas (leistinas nuokrypis ±2 cm), volavimas.
+- Nuolydžiai ir vandens nuvedimas – 2–5 % nuolydis nuo pamatų pirmuosius 3 metrus, drenažas, balų taisymas.
+- Frezavimas ir akmenų rinkimas – 15–20 cm gylio, tik išdžiūvusi žemė.
+- Juodžemio atvežimas ir paskleidimas – vejai 15–18 cm, t. y. 15–18 m³ vienam arui.
+- Sklypo paruošimas statyboms – krūmai, kelmai, statybinės atliekos, laikinas privažiavimas.
+
+## Kainos (2026)
+- Sklypo lyginimas mini krautuvu: 30–45 € už technikos valandą su operatoriumi.
+- Sklypo lyginimas buldozeriu: 50–70 € už valandą.
+- Kasimo darbai mini ekskavatoriumi: 25–35 € už valandą.
+- Drenažas: 10–30 € už metrą. Technikos atvežimas: nuo 30 €.
+- Matavimas: nemokamas. Įprastą 10–15 arų sklypą išlyginame per 1–2 darbo dienas.
+
+## Kaip užsakyti
+1. Užpildote užklausą: https://sklypolyginimas.lt/uzklausa/
+2. Paskambiname tą pačią arba kitą darbo dieną ir nemokamai išmatuojame sklypą nivelyru.
+3. Atsiunčiame kainą raštu ir sutartą dieną atliekame darbus.
+
+## Puslapiai
+- [Pagrindinis](https://sklypolyginimas.lt/)
+- [Paslaugos](https://sklypolyginimas.lt/paslaugos/)
+- [Kainos ir skaičiuoklė](https://sklypolyginimas.lt/kaina/)
+- [Sklypo lyginimas Vilniuje](https://sklypolyginimas.lt/vilnius/)
+- [Sklypo lyginimas Kaune](https://sklypolyginimas.lt/kaunas/)
+- [Užklausa](https://sklypolyginimas.lt/uzklausa/)
+
+## Daugiau
+- [Visas svetainės turinys tekstu](https://sklypolyginimas.lt/llms-full.txt)
+- [Sitemap](https://sklypolyginimas.lt/sitemap.xml)
+- El. paštas: info@sklypolyginimas.lt
