@@ -52,6 +52,13 @@ export function defineSiteConfig<B extends z.ZodObject>(
         googleVerification: z.string().max(200),
       })
       .strict(),
+    /** Optional advertising. Setting adsenseClient loads AdSense and widens the page CSP for it. */
+    ads: z
+      .object({
+        adsenseClient: z.string().refine((v) => !v || /^ca-pub-\d{10,20}$/.test(v)),
+      })
+      .strict()
+      .optional(),
     features: z
       .object({
         leadsEnabled: z.boolean(),

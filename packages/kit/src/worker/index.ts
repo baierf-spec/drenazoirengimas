@@ -12,6 +12,19 @@ const securityHeaders: Record<string, string> = {
   "Content-Security-Policy":
     "default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://www.googletagmanager.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.google-analytics.com; font-src 'self'; connect-src 'self' https://challenges.cloudflare.com https://*.google-analytics.com https://*.analytics.google.com https://cloudflareinsights.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'",
 };
+// Sites that set ads.adsenseClient in site.config.json: AdSense loads scripts, frames and
+// creatives from many Google hosts, so public pages get these extra sources. Other sites keep
+// the strict policy above.
+const ADS_HOSTS =
+  "https://*.googlesyndication.com https://*.doubleclick.net https://*.google.com https://*.adtrafficquality.google";
+const adsensePolicy = (policy: string) =>
+  policy
+    .replace("script-src 'self'", `script-src 'self' ${ADS_HOSTS} https://www.googletagservices.com https://www.gstatic.com`)
+    .replace("style-src 'self'", "style-src 'self' https://fonts.googleapis.com")
+    .replace("img-src 'self'", "img-src 'self' https:")
+    .replace("font-src 'self'", "font-src 'self' https://fonts.gstatic.com")
+    .replace("connect-src 'self'", `connect-src 'self' ${ADS_HOSTS} https://*.gstatic.com`)
+    .replace("frame-src", `frame-src ${ADS_HOSTS}`);
 export async function handleRequest(
   request: Request,
   env: Env,
@@ -94,6 +107,8 @@ export async function handleRequest(
   const headers = new Headers(response.headers);
   for (const [key, value] of Object.entries(securityHeaders))
     if (!(authPath && headers.has(key))) headers.set(key, value);
+  if (siteConfig.ads?.adsenseClient && !cmsPath && !authPath && !manager && !url.pathname.startsWith("/api/"))
+    headers.set("Content-Security-Policy", adsensePolicy(securityHeaders["Content-Security-Policy"]));
   // Decap configuration templates require JavaScript evaluation. Keep this
   // exception scoped to the isolated admin shell; never public pages or OAuth.
   if (cmsPath) {
