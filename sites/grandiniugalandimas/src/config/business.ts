@@ -73,17 +73,17 @@ export const BUSINESS = {
     currency: "EUR",
     /** Naudojama "tiers" režime. Kaina vienetui apskaičiuojama automatiškai. */
     tiers: [
-      { quantity: 1, total: 4.5 },
-      { quantity: 2, total: 9.0 },
-      { quantity: 4, total: 16.0, popular: true },
-      { quantity: 5, total: 20.0 },
-      { quantity: 10, total: 36.0 },
+      { quantity: 1, total: 7.0 },
+      { quantity: 2, total: 14.0 },
+      { quantity: 4, total: 24.8, popular: true },
+      { quantity: 5, total: 31.0 },
+      { quantity: 10, total: 56.0 },
     ] as PriceTier[],
     /** "fixed" režimas: kaina už 1 grandinę. */
-    fixedPrice: 4.5,
+    fixedPrice: 7.0,
     /** "range" režimas. */
-    rangeFrom: 3.6,
-    rangeTo: 4.5,
+    rangeFrom: 5.6,
+    rangeTo: 7.0,
     /** Kiekiai, kuriuos galima pasirinkti "fixed" / "range" režimuose. */
     quantityOptions: [1, 2, 4, 5, 10],
   },
@@ -192,7 +192,7 @@ export function getPriceRange(): { low: number; high: number } | null {
   }
 }
 
-/** Trumpas kainos tekstas, pvz. „nuo 3,60 €/vnt.“ arba null. */
+/** Trumpas kainos tekstas, pvz. „nuo 5,60 €/vnt.“ arba null. */
 export function priceFromLabel(): string | null {
   const r = getPriceRange();
   if (!r) return null;

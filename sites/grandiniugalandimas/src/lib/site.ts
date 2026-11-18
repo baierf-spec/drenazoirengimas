@@ -10,7 +10,7 @@ export const SITE = {
   currency: BUSINESS.pricing.currency,
 } as const;
 
-/** Pavadinimo pabaiga su kaina, pvz. " | nuo 3,60 €/vnt.", arba tuščia. */
+/** Pavadinimo pabaiga su kaina, pvz. " | nuo 5,60 €/vnt.", arba tuščia. */
 export const priceSuffix = () => {
   const p = priceFromLabel();
   return p ? ` | ${p}` : "";

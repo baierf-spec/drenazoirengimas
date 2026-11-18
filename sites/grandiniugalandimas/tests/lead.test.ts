@@ -21,7 +21,7 @@ describe("užklausos validacija", () => {
 describe("laiško suvestinė", () => {
   it("nepasitiki kliento pateikta suma ir išskiria tik grąžinimą", () => {
     const email = renderLeadEmail(leadSchema.parse({ ...base, estimatedTotal: 0.01 }));
-    expect(email.text).toContain("Klientui pateikta orientacinė suma: 16,00 €");
+    expect(email.text).toContain("Klientui pateikta orientacinė suma: 24,80 €");
     expect(email.text).toContain("Grąžinimas klientui: 0,00 €");
     expect(email.text).toContain("apmoka vežėjui atskirai");
     expect(email.text).not.toContain("0.01");
