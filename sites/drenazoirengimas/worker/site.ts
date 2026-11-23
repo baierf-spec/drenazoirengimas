@@ -13,3 +13,13 @@ export const leadSummaryParts = (lead: Lead) => [
   labels[lead.timing],
   lead.message,
 ];
+
+/** Row for the owner's enquiries sheet ("Lead domains" → Užklausos). */
+export const sheetSite = "drenazoirengimas.lt";
+export const sheetLead = (lead: Lead) => ({
+  vardas: lead.name,
+  telefonas: lead.phone,
+  pastas: lead.email,
+  vietove: lead.location,
+  uzklausa: [labels[lead.property], labels[lead.problem], labels[lead.timing], lead.message].filter(Boolean).join(" · "),
+});

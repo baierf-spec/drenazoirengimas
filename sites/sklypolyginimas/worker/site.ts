@@ -78,3 +78,13 @@ export const leadSummaryParts = ({ data }: Lead) => [
   data.kada && `Kada: ${data.kada}`,
   data.pastabos,
 ];
+
+/** Row for the owner's enquiries sheet ("Lead domains" → Užklausos). */
+export const sheetSite = "sklypolyginimas.lt";
+export const sheetLead = ({ data }: Lead) => ({
+  vardas: data.vardas,
+  telefonas: data.tel,
+  pastas: data.email,
+  vietove: [data.vieta, data.savivaldybe].filter(Boolean).join(", "),
+  uzklausa: [data.arai && `${data.arai} a`, data.bukle, data.darbai, data.kada && `Kada: ${data.kada}`, data.pastabos].filter(Boolean).join(" · "),
+});

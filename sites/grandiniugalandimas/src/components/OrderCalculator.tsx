@@ -112,6 +112,10 @@ export function OrderCalculator({ initialQuantity, selectionVersion, defaultCity
       const body = new FormData();
       for (const [key, value] of Object.entries(payload)) if (value !== null && value !== undefined) body.append(key, String(value));
       body.append('requestId', requestId.current);
+      try {
+        const entry = JSON.parse(sessionStorage.getItem('lead-entry') || '{}') as Record<string, string>;
+        for (const k of ['entry_ref', 'entry_page', 'utm_source', 'utm_medium', 'utm_campaign', 'gclid', 'fbclid']) if (entry[k]) body.append(k, String(entry[k]));
+      } catch { /* no storage: source stays unknown */ }
       const res = await fetch('/api/leads', { method: 'POST', headers: gaHeaders(), body });
       const data = (await res.json().catch(() => null)) as { status?: string; tracked?: boolean; error?: string } | null;
       if (!res.ok || data?.status !== 'sent') {
