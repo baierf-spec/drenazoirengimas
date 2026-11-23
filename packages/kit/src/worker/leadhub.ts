@@ -185,6 +185,38 @@ export function leadhubEvent(
 }
 
 /**
+ * Stores the whole enquiry in the owner's LeadHub register (table `leads`), in the same shape as the
+ * "Lead domains" sheet row. Unlike `leadhubEvent` this carries the visitor's contacts: it goes only over
+ * the service binding to the owner's own Worker. Never throws; `false` when LeadHub is not connected
+ * or did not accept it (the enquiry e-mail has already been sent by then).
+ */
+export async function leadhubLead(
+  env: LeadhubEnv,
+  row: Record<string, string | undefined>,
+  opts: { requestId?: string | undefined; hasPhotos?: boolean | undefined } = {},
+): Promise<boolean> {
+  if (!connected(env)) return false;
+  try {
+    const res = await env.LEADHUB!.fetch(
+      new Request("https://leadhub/api/site/lead", {
+        method: "POST",
+        headers: { ...authHeaders(env), "content-type": "application/json" },
+        body: JSON.stringify({
+          request_id: opts.requestId || crypto.randomUUID(),
+          has_photos: !!opts.hasPhotos,
+          row,
+        }),
+      }),
+    );
+    if (!res.ok) console.error("LeadHub lead not stored", res.status);
+    return res.ok;
+  } catch (error) {
+    console.error("LeadHub lead not stored", error);
+    return false;
+  }
+}
+
+/**
  * Where an enquiry e-mail goes: the tenant while the site is rented, otherwise the site owner.
  * `routedTo` is reported to LeadHub statistics by LeadHub itself.
  */
