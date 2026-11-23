@@ -1,3 +1,20 @@
+/* Įėjimo šaltinis: sesijai įsimenamas tik išorinio puslapio domenas, įėjimo puslapis ir UTM žymės (be asmens duomenų). */
+(function () {
+  try {
+    if (sessionStorage.getItem('lead-entry')) return;
+    var q = new URLSearchParams(location.search), ref = '';
+    try {
+      var u = new URL(document.referrer);
+      if (u.hostname.replace(/^www\./, '') !== location.hostname.replace(/^www\./, '')) ref = u.hostname;
+    } catch (_) {}
+    var e = { entry_ref: ref, entry_page: location.pathname };
+    ['utm_source', 'utm_medium', 'utm_campaign'].forEach(function (k) { if (q.get(k)) e[k] = q.get(k).slice(0, 150); });
+    if (q.get('gclid') || q.get('gbraid') || q.get('wbraid')) e.gclid = '1';
+    if (q.get('fbclid')) e.fbclid = '1';
+    sessionStorage.setItem('lead-entry', JSON.stringify(e));
+  } catch (_) {}
+})();
+
 /* sklypolyginimas.lt — progressive enhancement (no dependencies) */
 (function () {
   'use strict';
@@ -202,7 +219,6 @@
       fd.delete('foto');
       photos.get().forEach(function (p) { fd.append('foto', p.blob, p.name); });
       fd.append('puslapis', location.pathname);
-      var ref = document.referrer; if (ref) fd.append('referrer', ref);
       var ck = document.cookie, cid = /(?:^|;\s*)_ga=GA\d\.\d\.(\d+\.\d+)/.exec(ck), sc = /(?:^|;\s*)_ga_TDK1DCZ6MP=([^;]+)/.exec(ck);
       var sid = sc && (/\$?s(\d{9,})/.exec(sc[1]) || /^GS1\.\d\.(\d{9,})/.exec(sc[1]));
       // GA ids go as headers so the server can count the lead even with ad blockers (no personal data).
@@ -210,7 +226,9 @@
       if (cid) headers['X-GA-Client-Id'] = cid[1];
       if (sid) headers['X-GA-Session-Id'] = sid[1];
       fd.append('requestId', requestId);
-      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'gclid'].forEach(function (k) { var v = q.get(k); if (v) fd.append(k, v); });
+      var entry = {}; try { entry = JSON.parse(sessionStorage.getItem('lead-entry') || '{}') || {}; } catch (_) {}
+      ['entry_ref', 'entry_page', 'utm_source', 'utm_medium', 'utm_campaign', 'gclid', 'fbclid'].forEach(function (k) { if (entry[k]) fd.append(k, entry[k]); });
+      var term = q.get('utm_term'); if (term) fd.append('utm_term', term);
       var btn = form.querySelector('[type="submit"]');
       btn.disabled = true; var old = btn.textContent; btn.textContent = 'Siunčiama…';
       fetch(endpoint, { method: 'POST', body: fd, headers: headers })

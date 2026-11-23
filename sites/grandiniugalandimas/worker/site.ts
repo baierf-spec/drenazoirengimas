@@ -55,3 +55,13 @@ export const attachmentName = "nuotrauka";
 export const leadSummaryParts = (lead: Lead) => [lead.city, `${lead.quantity} grandin.`, lead.chainInfo, lead.message];
 
 export { renderLeadEmail } from "./email";
+
+/** Row for the owner's enquiries sheet ("Lead domains" → Užklausos). */
+export const sheetSite = "grandiniugalandimas.lt";
+export const sheetLead = (lead: Lead) => ({
+  vardas: lead.name,
+  telefonas: lead.phone,
+  pastas: lead.email ?? "",
+  vietove: lead.city,
+  uzklausa: [`${lead.quantity} grandin.`, lead.chainInfo, lead.message].filter(Boolean).join(" · "),
+});

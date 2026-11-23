@@ -12,4 +12,7 @@ export interface Env extends LeadhubEnv {
   ADMIN_EMAIL?: string;
   BUSINESS_REPLY_TO?: string;
   GA_API_SECRET?: string;
+  /** Apps Script /exec address of the enquiries sheet (optional). */
+  SHEET_WEBHOOK_URL?: string;
+  SHEET_WEBHOOK_TOKEN?: string;
 }

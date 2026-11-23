@@ -10,6 +10,8 @@ import { BUSINESS } from "../config/business";
 import { GA_BOOTSTRAP, GA_ID } from "../lib/analytics";
 import { siteConfig } from "@site/config";
 const ADSENSE = siteConfig.ads?.adsenseClient;
+// Entry source for this session (external site domain, landing page, UTM tags; no personal data).
+const ENTRY_SOURCE = "/* Įėjimo šaltinis: sesijai įsimenamas tik išorinio puslapio domenas, įėjimo puslapis ir UTM žymės (be asmens duomenų). */\n(function () {\n  try {\n    if (sessionStorage.getItem('lead-entry')) return;\n    var q = new URLSearchParams(location.search), ref = '';\n    try {\n      var u = new URL(document.referrer);\n      if (u.hostname.replace(/^www\\./, '') !== location.hostname.replace(/^www\\./, '')) ref = u.hostname;\n    } catch (_) {}\n    var e = { entry_ref: ref, entry_page: location.pathname };\n    ['utm_source', 'utm_medium', 'utm_campaign'].forEach(function (k) { if (q.get(k)) e[k] = q.get(k).slice(0, 150); });\n    if (q.get('gclid') || q.get('gbraid') || q.get('wbraid')) e.gclid = '1';\n    if (q.get('fbclid')) e.fbclid = '1';\n    sessionStorage.setItem('lead-entry', JSON.stringify(e));\n  } catch (_) {}\n})();\n";
 const { head, noindex = false } = Astro.props;
 const GSC = (import.meta.env.PUBLIC_GSC_VERIFICATION as string | undefined)?.trim();
 ---
@@ -29,6 +31,7 @@ const GSC = (import.meta.env.PUBLIC_GSC_VERIFICATION as string | undefined)?.tri
     <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin="anonymous" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/favicon.svg" />
+    <script is:inline set:html={ENTRY_SOURCE} />
     {GA_ID && <script is:inline id="ga4-bootstrap" set:html={GA_BOOTSTRAP} />}
     {ADSENSE && <script is:inline async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE}`} crossorigin="anonymous" />}
   </head>
