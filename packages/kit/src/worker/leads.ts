@@ -5,7 +5,7 @@ import { LIMITS, imageType, validateLead, leadSummaryParts } from "@site/lead";
 import type { Env } from "./types";
 import { configured, digest, limitedBody, validateTurnstile } from "./security";
 import { sendLead } from "./email";
-import { deliverLead, leadhubEvent, leadSummary } from "./leadhub";
+import { deliverLead, leadhubEvent, leadhubLead, leadSummary } from "./leadhub";
 import { formEntry, sendToSheet, sheetRow, type SheetLead } from "./sheet";
 export const json = (
   body: unknown,
@@ -178,10 +178,14 @@ export async function receiveLead(
       source: "site",
       summary: leadSummary(leadSummaryParts(lead)),
     });
-    // Optional copy to the owner's enquiries sheet; a failure there never affects the visitor.
+    // The owner's enquiry register: LeadHub (awaited, a few ms over the binding) and, while it is
+    // still in use, the "Lead domains" sheet. A failure in either never affects the visitor.
     const sheet = site as { sheetSite?: string; sheetLead?: (l: typeof lead) => SheetLead };
-    if (sheet.sheetSite && sheet.sheetLead && typeof ctx?.waitUntil === "function")
-      ctx.waitUntil(sendToSheet(env, sheetRow(sheet.sheetSite, formEntry(form), sheet.sheetLead(lead))));
+    if (sheet.sheetSite && sheet.sheetLead) {
+      const row = sheetRow(sheet.sheetSite, formEntry(form), sheet.sheetLead(lead));
+      await leadhubLead(env, row, { requestId: lead.requestId, hasPhotos: checked.length > 0 });
+      if (typeof ctx?.waitUntil === "function") ctx.waitUntil(sendToSheet(env, row));
+    }
     return "sent" as const;
   })().catch(() => "failed" as const);
   deliveries.set(lead.requestId, {
